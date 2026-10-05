@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio profesional - Proyectos, habilidades y trayectoria de desarrollo web y software.">
+  <meta name="author" content="Rafa">
+  <title>Portfolio | Desarrollo Web & Software</title>
+  
+  <!-- Tipografía moderna -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Iconos (Lucide Icons via CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra de navegación -->
+  <header class="header" id="header">
+    <nav class="navbar container">
+      <a href="#hero" class="logo">
+        <span class="logo-bracket">&lt;</span>Rafa<span class="logo-accent">.dev</span><span class="logo-bracket">/&gt;</span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú de navegación">
+        <i data-lucide="menu"></i>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item"><a href="#hero" class="nav-link active">Inicio</a></li>
+        <li class="nav-item"><a href="#about" class="nav-link">Sobre mí</a></li>
+        <li class="nav-item"><a href="#skills" class="nav-link">Habilidades</a></li>
+        <li class="nav-item"><a href="#projects" class="nav-link">Proyectos</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link nav-btn">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Sección Hero -->
+    <section class="hero section" id="hero">
+      <div class="container hero-container">
+        <div class="hero-badge">
+          <span class="status-indicator"></span>
+          <span>Disponible para nuevas oportunidades</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Hola, soy <span class="gradient-text">Rafa</span> 👋<br>
+          <span class="hero-role">Desarrollador de Software</span>
+        </h1>
+        
+        <p class="hero-description">
+          Transformo ideas en soluciones digitales eficientes, funcionales y bien diseñadas. 
+          Especializado en crear aplicaciones web modernas y código limpio.
+        </p>
+        
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">
+            <span>Ver Proyectos</span>
+            <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="#contact" class="btn btn-secondary">
+            <span>Contactar</span>
+            <i data-lucide="mail"></i>
+          </a>
+        </div>
+
+        <div class="hero-socials">
+          <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+            <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+              <path d="M9 18c-4.51 2-5-2-7-2"></path>
+            </svg>
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+            <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+          <a href="mailto:tu-correo@ejemplo.com" class="social-link" title="Email">
+            <i data-lucide="mail"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section class="about section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Conóceme</span>
+          <h2 class="section-title">Sobre mí</h2>
+        </div>
+
+        <div class="about-content">
+          <div class="about-text">
+            <p>
+              Soy un desarrollador apasionado por la tecnología, la resolución lógica de problemas 
+              y la creación de experiencias digitales de alto rendimiento.
+            </p>
+            <p>
+              Me gusta aprender constantemente nuevas herramientas, optimizar código y cuidar tanto 
+              la lógica del backend como la estética y usabilidad del frontend.
+            </p>
+            
+            <div class="about-highlights">
+              <div class="highlight-card">
+                <i data-lucide="code-2" class="highlight-icon"></i>
+                <div>
+                  <h4>Código Limpio</h4>
+                  <p>Buenas prácticas y arquitectura mantenible.</p>
+                </div>
+              </div>
+              <div class="highlight-card">
+                <i data-lucide="zap" class="highlight-icon"></i>
+                <div>
+                  <h4>Rendimiento</h4>
+                  <p>Aplicaciones rápidas, accesibles y responsivas.</p>
+                </div>
+              </div>
+              <div class="highlight-card">
+                <i data-lucide="git-branch" class="highlight-icon"></i>
+                <div>
+                  <h4>Colaboración</h4>
+                  <p>Control de versiones y trabajo en equipo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Habilidades -->
+    <section class="skills section" id="skills">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Stack Técnico</span>
+          <h2 class="section-title">Mis Habilidades</h2>
+        </div>
+
+        <div class="skills-grid">
+          <!-- Categoría Frontend -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">
+              <i data-lucide="layout"></i> Frontend
+            </h3>
+            <ul class="skill-list">
+              <li class="skill-tag">HTML5</li>
+              <li class="skill-tag">CSS3 / SASS</li>
+              <li class="skill-tag">JavaScript (ES6+)</li>
+              <li class="skill-tag">React / Framework</li>
+              <li class="skill-tag">Diseño Responsivo</li>
+            </ul>
+          </div>
+
+          <!-- Categoría Backend -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">
+              <i data-lucide="server"></i> Backend & BBDD
+            </h3>
+            <ul class="skill-list">
+              <li class="skill-tag">Node.js</li>
+              <li class="skill-tag">Python / Java</li>
+              <li class="skill-tag">SQL (MySQL / PostgreSQL)</li>
+              <li class="skill-tag">APIs RESTful</li>
+            </ul>
+          </div>
+
+          <!-- Categoría Herramientas -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">
+              <i data-lucide="wrench"></i> Herramientas
+            </h3>
+            <ul class="skill-list">
+              <li class="skill-tag">Git & GitHub</li>
+              <li class="skill-tag">VS Code</li>
+              <li class="skill-tag">Docker (Básico)</li>
+              <li class="skill-tag">Linux / Terminal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section class="projects section" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Portfolio</span>
+          <h2 class="section-title">Proyectos Destacados</h2>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Proyecto 1 (Plantilla base) -->
+          <article class="project-card">
+            <div class="project-img-placeholder">
+              <i data-lucide="folder-git-2"></i>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>JavaScript</span>
+                <span>API REST</span>
+                <span>CSS Moderno</span>
+              </div>
+              <h3 class="project-title">Proyecto Destacado #1</h3>
+              <p class="project-desc">
+                Descripción del proyecto: problema que resuelve, funcionalidades clave y los retos técnicos superados durante su construcción.
+              </p>
+              <div class="project-links">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn" title="Ver Demo en Vivo">
+                  <i data-lucide="external-link"></i> Demo
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn secondary" title="Ver Código en GitHub">
+                  <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                  </svg>
+                  <span>Código</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto 2 (Plantilla base) -->
+          <article class="project-card">
+            <div class="project-img-placeholder">
+              <i data-lucide="database"></i>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>Backend</span>
+                <span>BBDD</span>
+                <span>Node.js</span>
+              </div>
+              <h3 class="project-title">Proyecto Destacado #2</h3>
+              <p class="project-desc">
+                Plataforma web con autenticación, persistencia de datos y panel interactivo con métricas en tiempo real.
+              </p>
+              <div class="project-links">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn" title="Ver Demo en Vivo">
+                  <i data-lucide="external-link"></i> Demo
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn secondary" title="Ver Código en GitHub">
+                  <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                  </svg>
+                  <span>Código</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto 3 (Plantilla base) -->
+          <article class="project-card">
+            <div class="project-img-placeholder">
+              <i data-lucide="layers"></i>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>Fullstack</span>
+                <span>Responsive</span>
+                <span>Clean Code</span>
+              </div>
+              <h3 class="project-title">Proyecto Destacado #3</h3>
+              <p class="project-desc">
+                Aplicación full-stack optimizada para dispositivos móviles con diseño accesible y experiencia de usuario intuitiva.
+              </p>
+              <div class="project-links">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn" title="Ver Demo en Vivo">
+                  <i data-lucide="external-link"></i> Demo
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn secondary" title="Ver Código en GitHub">
+                  <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                  </svg>
+                  <span>Código</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section class="contact section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Hablemos</span>
+          <h2 class="section-title">¿Tienes una idea o proyecto?</h2>
+        </div>
+
+        <div class="contact-box">
+          <p class="contact-text">
+            Estoy abierto a nuevas propuestas, colaboraciones o consultas técnicas. ¡No dudes en escribirme!
+          </p>
+
+          <div class="contact-cards">
+            <a href="mailto:tu-correo@ejemplo.com" class="contact-card">
+              <i data-lucide="mail" class="contact-card-icon"></i>
+              <div>
+                <h4>Correo electrónico</h4>
+                <p>tu-correo@ejemplo.com</p>
+              </div>
+            </a>
+
+            <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <svg class="contact-card-icon icon-svg" viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                <path d="M9 18c-4.51 2-5-2-7-2"></path>
+              </svg>
+              <div>
+                <h4>GitHub</h4>
+                <p>github.com/Rafags04</p>
+              </div>
+            </a>
+
+            <a href="#" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <svg class="contact-card-icon icon-svg" viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+              <div>
+                <h4>LinkedIn</h4>
+                <p>Conecta conmigo</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <p class="footer-copy">
+        © <span id="year"></span> Rafa. Creado para GitHub Pages.
+      </p>
+      <a href="#hero" class="back-to-top" title="Volver arriba">
+        <i data-lucide="chevron-up"></i>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
