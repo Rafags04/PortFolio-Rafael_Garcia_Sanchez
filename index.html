@@ -3,24 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio profesional - Proyectos, habilidades y trayectoria de desarrollo web y software.">
+  <meta name="description" content="Portfolio de Rafa - Desarrollador de Software & Creative Engineer. Experiencia interactiva 3D con despiece arquitectónico de hardware y código.">
   <meta name="author" content="Rafa">
-  <title>Portfolio | Desarrollo Web & Software</title>
+  <title>Rafa | Desarrollador de Software & Arquitectura 3D</title>
   
-  <!-- Tipografía moderna -->
+  <!-- Tipografía moderna (Plus Jakarta Sans + JetBrains Mono para HUD) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Iconos (Lucide Icons via CDN) -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Three.js (Motor de renderizado 3D WebGL) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   
   <!-- Estilos -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Barra de navegación -->
+  <!-- ====================================================================
+       ESCENARIO 3D INTERACTIVO FIJO (CANVAS Y HUD TELEMETRÍA)
+       ==================================================================== -->
+  <div id="pc3d-canvas-container" class="pc3d-viewport" aria-hidden="true">
+    <canvas id="pc3d-canvas"></canvas>
+    <div class="pc3d-vignette"></div>
+
+    <!-- HUD Superior: Telemetría y Controles RGB en Vivo -->
+    <header class="hud-top-bar">
+      <div class="hud-telemetry-group">
+        <div class="hud-status-chip">
+          <span class="hud-pulse-dot"></span>
+          <span id="hud-active-stage">SISTEMA ENSAMBLADO</span>
+        </div>
+        <div class="hud-metrics">
+          <span class="hud-metric-item">
+            <span class="metric-label">TEMP:</span>
+            <strong id="hud-temp-val" class="metric-val">38°C</strong>
+          </span>
+          <span class="hud-metric-item">
+            <span class="metric-label">DESPIECE:</span>
+            <strong id="hud-disassembly-percent" class="metric-val accent">0%</strong>
+          </span>
+          <span class="hud-metric-item d-none-mobile">
+            <span class="metric-label">VRAM:</span>
+            <span class="metric-val">24GB GDDR6X</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Selector interactivo de iluminación RGB -->
+      <div class="hud-theme-panel">
+        <span class="theme-title">RGB:</span>
+        <div class="theme-buttons" id="theme-selector">
+          <button class="theme-btn active" data-theme="cyber" title="Cyber Cyan (Predeterminado)" style="--pill-color: #00f0ff"></button>
+          <button class="theme-btn" data-theme="neon" title="Neon Cyberpunk" style="--pill-color: #ff007f"></button>
+          <button class="theme-btn" data-theme="matrix" title="Matrix Emerald" style="--pill-color: #10b981"></button>
+          <button class="theme-btn" data-theme="solar" title="Solar Amber" style="--pill-color: #f59e0b"></button>
+          <button class="theme-btn" data-theme="stealth" title="Titanium White" style="--pill-color: #ffffff"></button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Barra de progreso de despiece superior -->
+    <div class="hud-progress-track">
+      <div class="hud-progress-fill" id="hud-progress-fill"></div>
+    </div>
+
+    <!-- Indicador de interacción 3D flotante (Bottom-Left) -->
+    <div class="hud-interaction-tip">
+      <i data-lucide="orbit"></i>
+      <span>Arrastra para rotar en 3D | Scroll para desmontar</span>
+    </div>
+
+    <!-- Scrubber de navegación rápida por componentes (Pills flotantes Bottom-Right) -->
+    <nav class="hud-nav-pills" aria-label="Navegación rápida de hardware">
+      <a href="#hero" class="hud-pill active" data-step="0">
+        <span class="pill-dot"></span><span class="pill-text">00. PC</span>
+      </a>
+      <a href="#about" class="hud-pill" data-step="1">
+        <span class="pill-dot"></span><span class="pill-text">01. Chasis</span>
+      </a>
+      <a href="#skills-frontend" class="hud-pill" data-step="2">
+        <span class="pill-dot"></span><span class="pill-text">02. GPU</span>
+      </a>
+      <a href="#skills-backend" class="hud-pill" data-step="3">
+        <span class="pill-dot"></span><span class="pill-text">03. CPU</span>
+      </a>
+      <a href="#skills-storage" class="hud-pill" data-step="4">
+        <span class="pill-dot"></span><span class="pill-text">04. RAM/SSD</span>
+      </a>
+      <a href="#projects" class="hud-pill" data-step="5">
+        <span class="pill-dot"></span><span class="pill-text">05. PSU</span>
+      </a>
+      <a href="#contact" class="hud-pill" data-step="6">
+        <span class="pill-dot"></span><span class="pill-text">06. Enlace</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ====================================================================
+       BARRA DE NAVEGACIÓN SUPERIOR (NAVBAR)
+       ==================================================================== -->
   <header class="header" id="header">
     <nav class="navbar container">
       <a href="#hero" class="logo">
@@ -34,328 +119,506 @@
       <ul class="nav-menu" id="nav-menu">
         <li class="nav-item"><a href="#hero" class="nav-link active">Inicio</a></li>
         <li class="nav-item"><a href="#about" class="nav-link">Sobre mí</a></li>
-        <li class="nav-item"><a href="#skills" class="nav-link">Habilidades</a></li>
+        <li class="nav-item"><a href="#skills-frontend" class="nav-link">Frontend</a></li>
+        <li class="nav-item"><a href="#skills-backend" class="nav-link">Backend</a></li>
+        <li class="nav-item"><a href="#skills-storage" class="nav-link">Datos & Cloud</a></li>
         <li class="nav-item"><a href="#projects" class="nav-link">Proyectos</a></li>
         <li class="nav-item"><a href="#contact" class="nav-link nav-btn">Contacto</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
-    <!-- Sección Hero -->
-    <section class="hero section" id="hero">
-      <div class="container hero-container">
-        <div class="hero-badge">
-          <span class="status-indicator"></span>
-          <span>Disponible para nuevas oportunidades</span>
-        </div>
-        
-        <h1 class="hero-title">
-          Hola, soy <span class="gradient-text">Rafa</span> 👋<br>
-          <span class="hero-role">Desarrollador de Software</span>
-        </h1>
-        
-        <p class="hero-description">
-          Transformo ideas en soluciones digitales eficientes, funcionales y bien diseñadas. 
-          Especializado en crear aplicaciones web modernas y código limpio.
-        </p>
-        
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">
-            <span>Ver Proyectos</span>
-            <i data-lucide="arrow-right"></i>
-          </a>
-          <a href="#contact" class="btn btn-secondary">
-            <span>Contactar</span>
-            <i data-lucide="mail"></i>
-          </a>
-        </div>
+  <!-- ====================================================================
+       CONTENIDO PRINCIPAL - NARRATIVA ENCAPSULADA EN ETAPAS DE DESPIECE
+       ==================================================================== -->
+  <main class="story-wrapper">
 
-        <div class="hero-socials">
-          <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
-            <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-              <path d="M9 18c-4.51 2-5-2-7-2"></path>
-            </svg>
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
-            <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-              <rect x="2" y="9" width="4" height="12"></rect>
-              <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-          </a>
-          <a href="mailto:tu-correo@ejemplo.com" class="social-link" title="Email">
-            <i data-lucide="mail"></i>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección Sobre Mí -->
-    <section class="about section" id="about">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Conóceme</span>
-          <h2 class="section-title">Sobre mí</h2>
-        </div>
-
-        <div class="about-content">
-          <div class="about-text">
-            <p>
-              Soy un desarrollador apasionado por la tecnología, la resolución lógica de problemas 
-              y la creación de experiencias digitales de alto rendimiento.
-            </p>
-            <p>
-              Me gusta aprender constantemente nuevas herramientas, optimizar código y cuidar tanto 
-              la lógica del backend como la estética y usabilidad del frontend.
-            </p>
-            
-            <div class="about-highlights">
-              <div class="highlight-card">
-                <i data-lucide="code-2" class="highlight-icon"></i>
-                <div>
-                  <h4>Código Limpio</h4>
-                  <p>Buenas prácticas y arquitectura mantenible.</p>
-                </div>
-              </div>
-              <div class="highlight-card">
-                <i data-lucide="zap" class="highlight-icon"></i>
-                <div>
-                  <h4>Rendimiento</h4>
-                  <p>Aplicaciones rápidas, accesibles y responsivas.</p>
-                </div>
-              </div>
-              <div class="highlight-card">
-                <i data-lucide="git-branch" class="highlight-icon"></i>
-                <div>
-                  <h4>Colaboración</h4>
-                  <p>Control de versiones y trabajo en equipo.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección Habilidades -->
-    <section class="skills section" id="skills">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Stack Técnico</span>
-          <h2 class="section-title">Mis Habilidades</h2>
-        </div>
-
-        <div class="skills-grid">
-          <!-- Categoría Frontend -->
-          <div class="skill-category">
-            <h3 class="skill-category-title">
-              <i data-lucide="layout"></i> Frontend
-            </h3>
-            <ul class="skill-list">
-              <li class="skill-tag">HTML5</li>
-              <li class="skill-tag">CSS3 / SASS</li>
-              <li class="skill-tag">JavaScript (ES6+)</li>
-              <li class="skill-tag">React / Framework</li>
-              <li class="skill-tag">Diseño Responsivo</li>
-            </ul>
+    <!-- ------------------------------------------------------------------
+         ETAPA 0: HERO (PC ENSAMBLADO Y ÓPTIMO)
+         ------------------------------------------------------------------ -->
+    <section class="stage-section hero-stage" id="hero" data-stage="0">
+      <div class="container stage-container">
+        <div class="glass-card hero-glass-card">
+          <div class="hardware-badge">
+            <span class="hw-chip"><i data-lucide="cpu"></i> HARDWARE ENSAMBLADO</span>
+            <span class="hw-status">100% OPERATIVO</span>
           </div>
 
-          <!-- Categoría Backend -->
-          <div class="skill-category">
-            <h3 class="skill-category-title">
-              <i data-lucide="server"></i> Backend & BBDD
-            </h3>
-            <ul class="skill-list">
-              <li class="skill-tag">Node.js</li>
-              <li class="skill-tag">Python / Java</li>
-              <li class="skill-tag">SQL (MySQL / PostgreSQL)</li>
-              <li class="skill-tag">APIs RESTful</li>
-            </ul>
-          </div>
+          <h1 class="hero-title">
+            Hola, soy <span class="gradient-text">Rafa</span> 👋<br>
+            <span class="hero-role">Desarrollador de Software</span>
+          </h1>
 
-          <!-- Categoría Herramientas -->
-          <div class="skill-category">
-            <h3 class="skill-category-title">
-              <i data-lucide="wrench"></i> Herramientas
-            </h3>
-            <ul class="skill-list">
-              <li class="skill-tag">Git & GitHub</li>
-              <li class="skill-tag">VS Code</li>
-              <li class="skill-tag">Docker (Básico)</li>
-              <li class="skill-tag">Linux / Terminal</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección Proyectos -->
-    <section class="projects section" id="projects">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Portfolio</span>
-          <h2 class="section-title">Proyectos Destacados</h2>
-        </div>
-
-        <div class="projects-grid">
-          <!-- Proyecto 1 (Plantilla base) -->
-          <article class="project-card">
-            <div class="project-img-placeholder">
-              <i data-lucide="folder-git-2"></i>
-            </div>
-            <div class="project-info">
-              <div class="project-tags">
-                <span>JavaScript</span>
-                <span>API REST</span>
-                <span>CSS Moderno</span>
-              </div>
-              <h3 class="project-title">Proyecto Destacado #1</h3>
-              <p class="project-desc">
-                Descripción del proyecto: problema que resuelve, funcionalidades clave y los retos técnicos superados durante su construcción.
-              </p>
-              <div class="project-links">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn" title="Ver Demo en Vivo">
-                  <i data-lucide="external-link"></i> Demo
-                </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn secondary" title="Ver Código en GitHub">
-                  <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                  </svg>
-                  <span>Código</span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Proyecto 2 (Plantilla base) -->
-          <article class="project-card">
-            <div class="project-img-placeholder">
-              <i data-lucide="database"></i>
-            </div>
-            <div class="project-info">
-              <div class="project-tags">
-                <span>Backend</span>
-                <span>BBDD</span>
-                <span>Node.js</span>
-              </div>
-              <h3 class="project-title">Proyecto Destacado #2</h3>
-              <p class="project-desc">
-                Plataforma web con autenticación, persistencia de datos y panel interactivo con métricas en tiempo real.
-              </p>
-              <div class="project-links">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn" title="Ver Demo en Vivo">
-                  <i data-lucide="external-link"></i> Demo
-                </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn secondary" title="Ver Código en GitHub">
-                  <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                  </svg>
-                  <span>Código</span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Proyecto 3 (Plantilla base) -->
-          <article class="project-card">
-            <div class="project-img-placeholder">
-              <i data-lucide="layers"></i>
-            </div>
-            <div class="project-info">
-              <div class="project-tags">
-                <span>Fullstack</span>
-                <span>Responsive</span>
-                <span>Clean Code</span>
-              </div>
-              <h3 class="project-title">Proyecto Destacado #3</h3>
-              <p class="project-desc">
-                Aplicación full-stack optimizada para dispositivos móviles con diseño accesible y experiencia de usuario intuitiva.
-              </p>
-              <div class="project-links">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn" title="Ver Demo en Vivo">
-                  <i data-lucide="external-link"></i> Demo
-                </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" class="project-btn secondary" title="Ver Código en GitHub">
-                  <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                  </svg>
-                  <span>Código</span>
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección Contacto -->
-    <section class="contact section" id="contact">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Hablemos</span>
-          <h2 class="section-title">¿Tienes una idea o proyecto?</h2>
-        </div>
-
-        <div class="contact-box">
-          <p class="contact-text">
-            Estoy abierto a nuevas propuestas, colaboraciones o consultas técnicas. ¡No dudes en escribirme!
+          <p class="hero-description">
+            Diseño arquitecturas digitales robustas, desde la lógica interna de cálculo 
+            hasta experiencias interactivas de última generación. Haz scroll para 
+            <strong>desmontar el sistema en 3D</strong> componente por componente.
           </p>
 
-          <div class="contact-cards">
-            <a href="mailto:tu-correo@ejemplo.com" class="contact-card">
-              <i data-lucide="mail" class="contact-card-icon"></i>
+          <div class="hero-actions">
+            <a href="#about" class="btn btn-primary" id="btn-start-disassembly">
+              <i data-lucide="wrench"></i>
+              <span>Desmontar Arquitectura</span>
+            </a>
+            <a href="#projects" class="btn btn-secondary">
+              <i data-lucide="layers"></i>
+              <span>Ver Proyectos</span>
+            </a>
+          </div>
+
+          <div class="hero-socials">
+            <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+              <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                <path d="M9 18c-4.51 2-5-2-7-2"></path>
+              </svg>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+              <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+            <a href="mailto:tu-correo@ejemplo.com" class="social-link" title="Correo">
+              <i data-lucide="mail"></i>
+            </a>
+          </div>
+
+          <div class="scroll-cue">
+            <span class="scroll-cue-text">DESLIZA PARA DESMONTAR EL PC</span>
+            <div class="scroll-mouse-icon">
+              <div class="scroll-wheel"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         ETAPA 1: SOBRE MÍ (DESPIECE: CHASIS & PANEL DE CRISTAL)
+         ------------------------------------------------------------------ -->
+    <section class="stage-section" id="about" data-stage="1">
+      <div class="container stage-container stage-align-left">
+        <div class="glass-card hardware-card">
+          <div class="card-hw-header">
+            <span class="hw-stage-tag">ETAPA 01 // DESMONTAJE EXTERIOR</span>
+            <span class="hw-part-name"><i data-lucide="box"></i> Chasis & Panel Templado</span>
+          </div>
+
+          <h2 class="stage-title">Sobre mí: Estructura & Fundamentos</h2>
+          
+          <p class="stage-intro">
+            Así como un chasis de alta ingeniería proporciona el soporte estructural, 
+            la gestión térmica y el orden de los componentes, mis fundamentos como desarrollador 
+            garantizan un código limpio, estructurado y escalable.
+          </p>
+
+          <p class="stage-text">
+            Me apasiona la tecnología, la resolución algorítmica de problemas y la ingeniería de software moderna.
+            No solo construyo funcionalidades: cuido la arquitectura para que cada proyecto sea mantenible 
+            a largo plazo y soporte un alto rendimiento.
+          </p>
+
+          <div class="about-highlights-grid">
+            <div class="highlight-mini-card">
+              <div class="mini-icon"><i data-lucide="code-2"></i></div>
               <div>
-                <h4>Correo electrónico</h4>
+                <h4>Arquitectura Limpia</h4>
+                <p>Patrones de diseño desacoplados, código legible y mantenible.</p>
+              </div>
+            </div>
+            <div class="highlight-mini-card">
+              <div class="mini-icon"><i data-lucide="zap"></i></div>
+              <div>
+                <h4>Flujo & Rendimiento</h4>
+                <p>Optimización de latencia, renderizado veloz y bajo consumo.</p>
+              </div>
+            </div>
+            <div class="highlight-mini-card">
+              <div class="mini-icon"><i data-lucide="git-branch"></i></div>
+              <div>
+                <h4>Colaboración & CI/CD</h4>
+                <p>Control de versiones riguroso y despliegues automatizados.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hw-specs-strip">
+            <span><strong>CHASIS:</strong> Acero SPCC & Cristal 4mm</span>
+            <span><strong>FLUJO:</strong> Presión Positiva</span>
+            <span><strong>ENFOQUE:</strong> Robustez</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         ETAPA 2: FRONTEND (DESPIECE: TARJETA GRÁFICA / GPU RTX)
+         ------------------------------------------------------------------ -->
+    <section class="stage-section" id="skills-frontend" data-stage="2">
+      <div class="container stage-container stage-align-right">
+        <div class="glass-card hardware-card">
+          <div class="card-hw-header">
+            <span class="hw-stage-tag">ETAPA 02 // ACELERACIÓN GRÁFICA</span>
+            <span class="hw-part-name"><i data-lucide="cpu"></i> GPU RTX 24GB // Front Engine</span>
+          </div>
+
+          <h2 class="stage-title">Frontend & Experiencias Visuales</h2>
+
+          <p class="stage-intro">
+            La GPU procesa millones de operaciones visuales en paralelo para pintar cada frame.
+            En la web, transformo especificaciones y diseño en interfaces intuitivas, rápidas y vivas 
+            con gráficos y micro-animaciones fluidas.
+          </p>
+
+          <div class="tech-stack-container">
+            <h4 class="tech-subheading">TECNOLOGÍAS FRONTEND CLAVE:</h4>
+            <div class="tech-chips-cloud">
+              <span class="tech-chip"><i data-lucide="layout"></i> HTML5 Semántico</span>
+              <span class="tech-chip"><i data-lucide="palette"></i> CSS3 / Modern Flex & Grid</span>
+              <span class="tech-chip"><i data-lucide="sparkles"></i> Three.js / WebGL 3D</span>
+              <span class="tech-chip"><i data-lucide="file-code"></i> JavaScript (ES6+ / Async)</span>
+              <span class="tech-chip"><i data-lucide="code"></i> TypeScript</span>
+              <span class="tech-chip"><i data-lucide="component"></i> React / Next.js</span>
+              <span class="tech-chip"><i data-lucide="smartphone"></i> Responsive & Mobile-First</span>
+              <span class="tech-chip"><i data-lucide="eye"></i> UI/UX & Accesibilidad (a11y)</span>
+            </div>
+          </div>
+
+          <div class="hw-benchmark-box">
+            <div class="benchmark-row">
+              <span>Tasa de Refresco Visual:</span>
+              <div class="benchmark-bar"><div class="bench-fill" style="width: 95%"></div></div>
+              <strong>60/120 FPS</strong>
+            </div>
+            <div class="benchmark-row">
+              <span>Interactividad Reactiva:</span>
+              <div class="benchmark-bar"><div class="bench-fill" style="width: 92%"></div></div>
+              <strong>&lt; 50ms</strong>
+            </div>
+          </div>
+
+          <div class="hw-specs-strip">
+            <span><strong>BUS:</strong> PCIe 5.0 x16</span>
+            <span><strong>VRAM:</strong> 24GB GDDR6X</span>
+            <span><strong>PIPELINE:</strong> UI Hardware-Accelerated</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         ETAPA 3: BACKEND (DESPIECE: CPU 16-CORE & REFRIGERACIÓN LÍQUIDA)
+         ------------------------------------------------------------------ -->
+    <section class="stage-section" id="skills-backend" data-stage="3">
+      <div class="container stage-container stage-align-left">
+        <div class="glass-card hardware-card">
+          <div class="card-hw-header">
+            <span class="hw-stage-tag">ETAPA 03 // NÚCLEO DE CÁLCULO</span>
+            <span class="hw-part-name"><i data-lucide="zap"></i> CPU & Refrigeración Líquida</span>
+          </div>
+
+          <h2 class="stage-title">Backend & Lógica Central</h2>
+
+          <p class="stage-intro">
+            El procesador central orquesta cada ciclo de reloj mientras la refrigeración líquida 
+            mantiene la estabilidad bajo cargas pesadas. En el servidor, construyo APIs de alto rendimiento,
+            servicios confiables y lógica de negocio segura.
+          </p>
+
+          <div class="tech-stack-container">
+            <h4 class="tech-subheading">TECNOLOGÍAS BACKEND & SISTEMAS:</h4>
+            <div class="tech-chips-cloud">
+              <span class="tech-chip"><i data-lucide="server"></i> Node.js & Express</span>
+              <span class="tech-chip"><i data-lucide="terminal"></i> Python (FastAPI / Scripts)</span>
+              <span class="tech-chip"><i data-lucide="coffee"></i> Java & OOP</span>
+              <span class="tech-chip"><i data-lucide="network"></i> APIs RESTful & GraphQL</span>
+              <span class="tech-chip"><i data-lucide="shield-check"></i> Autenticación JWT / OAuth</span>
+              <span class="tech-chip"><i data-lucide="cpu"></i> Concurrencia & Procesos Asíncronos</span>
+              <span class="tech-chip"><i data-lucide="boxes"></i> Microservicios & Modularidad</span>
+            </div>
+          </div>
+
+          <div class="hw-benchmark-box">
+            <div class="benchmark-row">
+              <span>Throughput de API:</span>
+              <div class="benchmark-bar"><div class="bench-fill" style="width: 90%"></div></div>
+              <strong>Alta Concurrencia</strong>
+            </div>
+            <div class="benchmark-row">
+              <span>Disipación Térmica / Eficiencia:</span>
+              <div class="benchmark-bar"><div class="bench-fill" style="width: 96%"></div></div>
+              <strong>AIO 360mm // Óptimo</strong>
+            </div>
+          </div>
+
+          <div class="hw-specs-strip">
+            <span><strong>SOCKET:</strong> LGA-1700</span>
+            <span><strong>CLOCK:</strong> 5.4 GHz Boost</span>
+            <span><strong>THREADING:</strong> Multi-Core Asíncrono</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         ETAPA 4: MEMORIA & PERSISTENCIA (DESPIECE: RAM DDR5 & NVMe SSD)
+         ------------------------------------------------------------------ -->
+    <section class="stage-section" id="skills-storage" data-stage="4">
+      <div class="container stage-container stage-align-right">
+        <div class="glass-card hardware-card">
+          <div class="card-hw-header">
+            <span class="hw-stage-tag">ETAPA 04 // MEMORIA & PERSISTENCIA</span>
+            <span class="hw-part-name"><i data-lucide="hard-drive"></i> RAM DDR5 & NVMe Gen5 SSD</span>
+          </div>
+
+          <h2 class="stage-title">Bases de Datos & Cloud DevOps</h2>
+
+          <p class="stage-intro">
+            La RAM DDR5 provee lectura ultrarrápida en memoria mientras que el NVMe Gen5 garantiza 
+            persistencia a velocidades de más de 7000 MB/s. Gestiono el modelado de datos, 
+            el almacenamiento confiable y los entornos en la nube.
+          </p>
+
+          <div class="tech-stack-container">
+            <h4 class="tech-subheading">PERSISTENCIA, DATOS & INFRAESTRUCTURA:</h4>
+            <div class="tech-chips-cloud">
+              <span class="tech-chip"><i data-lucide="database"></i> PostgreSQL & MySQL</span>
+              <span class="tech-chip"><i data-lucide="layers"></i> MongoDB (NoSQL)</span>
+              <span class="tech-chip"><i data-lucide="zap"></i> Redis (Caché & Sesiones)</span>
+              <span class="tech-chip"><i data-lucide="container"></i> Docker & Contenedores</span>
+              <span class="tech-chip"><i data-lucide="git-pull-request"></i> Git & GitHub Workflows</span>
+              <span class="tech-chip"><i data-lucide="cloud"></i> Linux / Bash / Cloud Deploy</span>
+            </div>
+          </div>
+
+          <div class="storage-metrics-cards">
+            <div class="metric-card-mini">
+              <span class="metric-num">DDR5</span>
+              <span class="metric-desc">Baja Latencia & Caché</span>
+            </div>
+            <div class="metric-card-mini">
+              <span class="metric-num">NVMe</span>
+              <span class="metric-desc">Persistencia Transaccional ACID</span>
+            </div>
+            <div class="metric-card-mini">
+              <span class="metric-num">Docker</span>
+              <span class="metric-desc">Aislamiento & Portabilidad</span>
+            </div>
+          </div>
+
+          <div class="hw-specs-strip">
+            <span><strong>ANCHO DE BANDA:</strong> 6000 MT/s</span>
+            <span><strong>LECTURA NVMe:</strong> 7450 MB/s</span>
+            <span><strong>INTEGRIDAD:</strong> Alta Disponibilidad</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         ETAPA 5: PROYECTOS (DESPIECE: PSU 1000W & ENERGÍA MODULAR)
+         ------------------------------------------------------------------ -->
+    <section class="stage-section" id="projects" data-stage="5">
+      <div class="container stage-container stage-align-center">
+        <div class="glass-card hardware-card projects-showcase-card">
+          <div class="card-hw-header">
+            <span class="hw-stage-tag">ETAPA 05 // FLUJO DE POTENCIA ACTIVO</span>
+            <span class="hw-part-name"><i data-lucide="battery-charging"></i> Fuente PSU & Proyectos en Ejecución</span>
+          </div>
+
+          <h2 class="stage-title">Proyectos Destacados</h2>
+
+          <p class="stage-intro text-center">
+            La fuente de poder suministra energía modular a cada componente. 
+            Aquí puedes ver el resultado de esta arquitectura en proyectos reales terminados y funcionales.
+          </p>
+
+          <div class="projects-grid">
+            <!-- Proyecto 1 -->
+            <article class="project-card">
+              <div class="project-header-visual">
+                <div class="project-icon-badge"><i data-lucide="monitor"></i></div>
+                <span class="project-status-dot online">Activo</span>
+              </div>
+              <div class="project-info">
+                <div class="project-tags">
+                  <span>Three.js</span>
+                  <span>JavaScript</span>
+                  <span>UI/UX 3D</span>
+                </div>
+                <h3 class="project-title">Explorador Interactivo 3D</h3>
+                <p class="project-desc">
+                  Experiencia web tridimensional con despiece procedimental de hardware, shaders en tiempo real y navegación guiada por scroll cinemático.
+                </p>
+                <div class="project-links">
+                  <a href="#hero" class="project-btn">
+                    <i data-lucide="eye"></i> En Vivo
+                  </a>
+                  <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+                    <i data-lucide="code-2"></i> Código
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Proyecto 2 -->
+            <article class="project-card">
+              <div class="project-header-visual">
+                <div class="project-icon-badge"><i data-lucide="database"></i></div>
+                <span class="project-status-dot online">Activo</span>
+              </div>
+              <div class="project-info">
+                <div class="project-tags">
+                  <span>Node.js</span>
+                  <span>PostgreSQL</span>
+                  <span>REST API</span>
+                </div>
+                <h3 class="project-title">Sistema de Gestión & Métricas</h3>
+                <p class="project-desc">
+                  Plataforma backend de alto rendimiento con autenticación de usuarios, persistencia transaccional y panel analítico en tiempo real.
+                </p>
+                <div class="project-links">
+                  <a href="#" class="project-btn">
+                    <i data-lucide="external-link"></i> Demo
+                  </a>
+                  <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+                    <i data-lucide="code-2"></i> Código
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Proyecto 3 -->
+            <article class="project-card">
+              <div class="project-header-visual">
+                <div class="project-icon-badge"><i data-lucide="layers"></i></div>
+                <span class="project-status-dot online">Activo</span>
+              </div>
+              <div class="project-info">
+                <div class="project-tags">
+                  <span>Full Stack</span>
+                  <span>React</span>
+                  <span>Docker</span>
+                </div>
+                <h3 class="project-title">Plataforma Web Modular</h3>
+                <p class="project-desc">
+                  Aplicación web responsive completa con arquitectura de microservicios, soporte multilingüe y experiencia de usuario optimizada para móviles.
+                </p>
+                <div class="project-links">
+                  <a href="#" class="project-btn">
+                    <i data-lucide="external-link"></i> Demo
+                  </a>
+                  <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
+                    <i data-lucide="code-2"></i> Código
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="hw-specs-strip">
+            <span><strong>EFICIENCIA:</strong> 80-Plus Titanium</span>
+            <span><strong>MODULARIDAD:</strong> Total</span>
+            <span><strong>CÓDIGO:</strong> 100% Producción</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         ETAPA 6: CONTACTO (DESPIECE: BLUEPRINT COMPLETO & ENLACE DE REDES)
+         ------------------------------------------------------------------ -->
+    <section class="stage-section" id="contact" data-stage="6">
+      <div class="container stage-container stage-align-center">
+        <div class="glass-card hardware-card contact-terminal-card">
+          <div class="card-hw-header">
+            <span class="hw-stage-tag">ETAPA 06 // CONEXIÓN ESTABLECIDA</span>
+            <span class="hw-part-name"><i data-lucide="radio"></i> Blueprint Holográfico // Telemetría Final</span>
+          </div>
+
+          <h2 class="stage-title">¿Listo para Ensamblar un Proyecto Juntos?</h2>
+
+          <p class="stage-intro text-center">
+            El sistema ha completado su despiece total. Ya sea que busques construir una 
+            aplicación web desde cero, optimizar una arquitectura existente o colaborar 
+            en soluciones tecnológicas desafiantes, hablemos.
+          </p>
+
+          <div class="contact-channels-grid">
+            <a href="mailto:tu-correo@ejemplo.com" class="contact-card">
+              <div class="contact-card-icon-wrap"><i data-lucide="mail"></i></div>
+              <div class="contact-card-info">
+                <h4>Correo Electrónico</h4>
                 <p>tu-correo@ejemplo.com</p>
               </div>
             </a>
 
             <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="contact-card">
-              <svg class="contact-card-icon icon-svg" viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                <path d="M9 18c-4.51 2-5-2-7-2"></path>
-              </svg>
-              <div>
+              <div class="contact-card-icon-wrap">
+                <svg class="icon-svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                </svg>
+              </div>
+              <div class="contact-card-info">
                 <h4>GitHub</h4>
                 <p>github.com/Rafags04</p>
               </div>
             </a>
 
             <a href="#" target="_blank" rel="noopener noreferrer" class="contact-card">
-              <svg class="contact-card-icon icon-svg" viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect x="2" y="9" width="4" height="12"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-              <div>
+              <div class="contact-card-icon-wrap">
+                <svg class="icon-svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </div>
+              <div class="contact-card-info">
                 <h4>LinkedIn</h4>
-                <p>Conecta conmigo</p>
+                <p>Conecta conmigo en red</p>
               </div>
             </a>
+          </div>
+
+          <!-- Botón de acción para reensamblar el PC suavemente -->
+          <div class="reassemble-action-area">
+            <button class="btn btn-primary" id="btn-reassemble-pc">
+              <i data-lucide="rotate-ccw"></i>
+              <span>Reensamblar Ordenador 3D (Volver al Inicio)</span>
+            </button>
+          </div>
+
+          <div class="hw-specs-strip">
+            <span><strong>ESTADO:</strong> Disponible para Nuevas Oportunidades</span>
+            <span><strong>LATENCIA:</strong> Respuesta Rápida</span>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!-- Footer -->
+  <!-- ====================================================================
+       FOOTER
+       ==================================================================== -->
   <footer class="footer">
     <div class="container footer-container">
       <p class="footer-copy">
-        © <span id="year"></span> Rafa. Creado para GitHub Pages.
+        © <span id="year"></span> Rafa. Diseñado con Three.js, CSS Moderno & Arquitectura Web.
       </p>
-      <a href="#hero" class="back-to-top" title="Volver arriba">
+      <a href="#hero" class="back-to-top" title="Volver al inicio">
         <i data-lucide="chevron-up"></i>
       </a>
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- ====================================================================
+       SCRIPTS: MOTOR 3D Y LÓGICA DE INTERFAZ
+       ==================================================================== -->
+  <script src="pc3d.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
