@@ -3,630 +3,269 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio de Rafa - Desarrollador de Software & Creative Engineer. Experiencia interactiva 3D con despiece arquitectónico de hardware y código.">
+  <title>Rafa (@Rafags04) | Portfolio de Desarrollo de Software</title>
+  <meta name="description" content="Portfolio personal de Rafa (@Rafags04) alojado en GitHub Pages: proyectos reales, tecnologías verificadas, actividad en GitHub y currículum imprimible.">
   <meta name="author" content="Rafa">
-  <title>Rafa | Desarrollador de Software & Arquitectura 3D</title>
-  
-  <!-- Tipografía moderna (Plus Jakarta Sans + JetBrains Mono para HUD) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Iconos (Lucide Icons via CDN) -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Three.js (Motor de renderizado 3D WebGL) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  
-  <!-- Three.js Post-Processing (Bloom Óptico Cinemático & Shaders) -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-  
-  <!-- Estilos -->
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rafa (@Rafags04) | Portfolio de Desarrollo de Software">
+  <meta property="og:description" content="Proyectos reales con problema, solución y código fuente en GitHub, lenguajes medidos en vivo y CV imprimible.">
+  <meta property="og:url" content="https://rafags04.github.io/PortFolio/">
+  <meta property="og:image" content="https://rafags04.github.io/PortFolio/favicon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Rafa (@Rafags04) | Portfolio">
+  <meta name="twitter:description" content="Portfolio estático en GitHub Pages: proyectos reales, datos en vivo de GitHub y terminal interactiva.">
+
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="canonical" href="https://rafags04.github.io/PortFolio/">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="modulepreload" href="./src/data/profile.js">
+  <link rel="modulepreload" href="./src/modules/modal.js">
+  <link rel="modulepreload" href="./src/modules/github.js">
+  <script type="module" src="./src/main.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
-  <!-- ====================================================================
-       ESCENARIO 3D INTERACTIVO FIJO (CANVAS Y HUD TELEMETRÍA)
-       ==================================================================== -->
-  <div id="pc3d-canvas-container" class="pc3d-viewport" aria-hidden="true">
-    <canvas id="pc3d-canvas"></canvas>
-    <div class="pc3d-vignette"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#hero">
+        <span class="brand-mark" aria-hidden="true">&lt;R/&gt;</span>
+        <span>Rafa</span>
+      </a>
 
-    <!-- HUD Superior: Telemetría y Controles RGB en Vivo -->
-    <header class="hud-top-bar">
-      <div class="hud-telemetry-group">
-        <div class="hud-status-chip">
-          <span class="hud-pulse-dot"></span>
-          <span id="hud-active-stage">SISTEMA ENSAMBLADO</span>
-        </div>
-        <div class="hud-metrics">
-          <span class="hud-metric-item">
-            <span class="metric-label">TEMP:</span>
-            <strong id="hud-temp-val" class="metric-val">38°C</strong>
-          </span>
-          <span class="hud-metric-item">
-            <span class="metric-label">DESPIECE:</span>
-            <strong id="hud-disassembly-percent" class="metric-val accent">0%</strong>
-          </span>
-          <span class="hud-metric-item d-none-mobile">
-            <span class="metric-label">VRAM:</span>
-            <span class="metric-val">24GB GDDR6X</span>
-          </span>
-        </div>
-      </div>
-
-      <!-- Selector interactivo de iluminación RGB -->
-      <div class="hud-theme-panel">
-        <span class="theme-title">RGB:</span>
-        <div class="theme-buttons" id="theme-selector">
-          <button class="theme-btn active" data-theme="cyber" title="Cyber Cyan (Predeterminado)" style="--pill-color: #00f0ff"></button>
-          <button class="theme-btn" data-theme="neon" title="Neon Cyberpunk" style="--pill-color: #ff007f"></button>
-          <button class="theme-btn" data-theme="matrix" title="Matrix Emerald" style="--pill-color: #10b981"></button>
-          <button class="theme-btn" data-theme="solar" title="Solar Amber" style="--pill-color: #f59e0b"></button>
-          <button class="theme-btn" data-theme="stealth" title="Titanium White" style="--pill-color: #ffffff"></button>
-        </div>
-      </div>
-    </header>
-
-    <!-- Barra de progreso de despiece superior -->
-    <div class="hud-progress-track">
-      <div class="hud-progress-fill" id="hud-progress-fill"></div>
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="#proyectos">Proyectos</a>
+        <a href="#actividad-github">GitHub</a>
+        <a href="#trayectoria">Trayectoria</a>
+        <a href="#habilidades">Stack</a>
+        <a href="#terminal">Terminal</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
     </div>
-
-    <!-- Indicador de interacción 3D flotante (Bottom-Left) -->
-    <div class="hud-interaction-tip">
-      <i data-lucide="orbit"></i>
-      <span>Arrastra para rotar en 3D | Scroll para desmontar</span>
-    </div>
-
-    <!-- Scrubber de navegación rápida por componentes (Pills flotantes Bottom-Right) -->
-    <nav class="hud-nav-pills" aria-label="Navegación rápida de hardware">
-      <a href="#hero" class="hud-pill active" data-step="0">
-        <span class="pill-dot"></span><span class="pill-text">00. PC</span>
-      </a>
-      <a href="#about" class="hud-pill" data-step="1">
-        <span class="pill-dot"></span><span class="pill-text">01. Chasis</span>
-      </a>
-      <a href="#skills-frontend" class="hud-pill" data-step="2">
-        <span class="pill-dot"></span><span class="pill-text">02. GPU</span>
-      </a>
-      <a href="#skills-backend" class="hud-pill" data-step="3">
-        <span class="pill-dot"></span><span class="pill-text">03. CPU</span>
-      </a>
-      <a href="#skills-storage" class="hud-pill" data-step="4">
-        <span class="pill-dot"></span><span class="pill-text">04. RAM/SSD</span>
-      </a>
-      <a href="#projects" class="hud-pill" data-step="5">
-        <span class="pill-dot"></span><span class="pill-text">05. PSU</span>
-      </a>
-      <a href="#contact" class="hud-pill" data-step="6">
-        <span class="pill-dot"></span><span class="pill-text">06. Enlace</span>
-      </a>
-    </nav>
-  </div>
-
-  <!-- ====================================================================
-       BARRA DE NAVEGACIÓN SUPERIOR (NAVBAR)
-       ==================================================================== -->
-  <header class="header" id="header">
-    <nav class="navbar container">
-      <a href="#hero" class="logo">
-        <span class="logo-bracket">&lt;</span>Rafa<span class="logo-accent">.dev</span><span class="logo-bracket">/&gt;</span>
-      </a>
-
-      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú de navegación">
-        <i data-lucide="menu"></i>
-      </button>
-
-      <ul class="nav-menu" id="nav-menu">
-        <li class="nav-item"><a href="#hero" class="nav-link active">Inicio</a></li>
-        <li class="nav-item"><a href="#about" class="nav-link">Sobre mí</a></li>
-        <li class="nav-item"><a href="#skills-frontend" class="nav-link">Frontend</a></li>
-        <li class="nav-item"><a href="#skills-backend" class="nav-link">Backend</a></li>
-        <li class="nav-item"><a href="#skills-storage" class="nav-link">Datos & Cloud</a></li>
-        <li class="nav-item"><a href="#projects" class="nav-link">Proyectos</a></li>
-        <li class="nav-item"><a href="#contact" class="nav-link nav-btn">Contacto</a></li>
-      </ul>
-    </nav>
   </header>
 
-  <!-- ====================================================================
-       CONTENIDO PRINCIPAL - NARRATIVA ENCAPSULADA EN ETAPAS DE DESPIECE
-       ==================================================================== -->
-  <main class="story-wrapper">
+  <main id="main-content" class="container main-layout">
+    <!-- ================================================================
+         HERO DE 30 SEGUNDOS (QUIÉN SOY, QUÉ HAGO, CONTACTO Y CV/PDF)
+         ================================================================ -->
+    <section id="hero" class="hero-section surface-card" aria-labelledby="hero-name">
+      <p class="eyebrow">Portfolio Estático · GitHub Pages</p>
+      <h1 id="hero-name" class="hero-title">Rafa (TODO: Añadir apellidos)</h1>
+      <p id="hero-role" class="hero-role"><span class="todo-badge">TODO</span> Definir rol objetivo (p. ej. Desarrollador Full-Stack Junior)</p>
+      <p id="hero-headline" class="hero-lead"><span class="todo-badge">TODO</span> Escribir resumen de 1-2 frases sobre quién eres y qué aportas.</p>
 
-    <!-- ------------------------------------------------------------------
-         ETAPA 0: HERO (PC ENSAMBLADO Y ÓPTIMO)
-         ------------------------------------------------------------------ -->
-    <section class="stage-section hero-stage" id="hero" data-stage="0">
-      <div class="container stage-container">
-        <div class="glass-card hero-glass-card">
-          <div class="hardware-badge">
-            <span class="hw-chip"><i data-lucide="cpu"></i> HARDWARE ENSAMBLADO</span>
-            <span class="hw-status">100% OPERATIVO</span>
-          </div>
-
-          <h1 class="hero-title">
-            Hola, soy <span class="gradient-text">Rafa</span> 👋<br>
-            <span class="hero-role">Desarrollador de Software</span>
-          </h1>
-
-          <p class="hero-description">
-            Diseño arquitecturas digitales robustas, desde la lógica interna de cálculo 
-            hasta experiencias interactivas de última generación. Haz scroll para 
-            <strong>desmontar el sistema en 3D</strong> componente por componente.
-          </p>
-
-          <div class="hero-actions">
-            <a href="#about" class="btn btn-primary" id="btn-start-disassembly">
-              <i data-lucide="wrench"></i>
-              <span>Desmontar Arquitectura</span>
-            </a>
-            <a href="#projects" class="btn btn-secondary">
-              <i data-lucide="layers"></i>
-              <span>Ver Proyectos</span>
-            </a>
-          </div>
-
-          <div class="hero-socials">
-            <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
-              <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                <path d="M9 18c-4.51 2-5-2-7-2"></path>
-              </svg>
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
-              <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect x="2" y="9" width="4" height="12"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-            </a>
-            <a href="mailto:tu-correo@ejemplo.com" class="social-link" title="Correo">
-              <i data-lucide="mail"></i>
-            </a>
-          </div>
-
-          <div class="scroll-cue">
-            <span class="scroll-cue-text">DESLIZA PARA DESMONTAR EL PC</span>
-            <div class="scroll-mouse-icon">
-              <div class="scroll-wheel"></div>
-            </div>
-          </div>
+      <dl class="hero-meta">
+        <div>
+          <dt>Ubicación</dt>
+          <dd id="hero-location"><span class="todo-badge">TODO</span> Ciudad / País (Modalidad remoto / híbrido / presencial)</dd>
         </div>
+        <div>
+          <dt>Disponibilidad</dt>
+          <dd id="hero-availability"><span class="todo-badge">TODO</span> Indicar disponibilidad actual (p. ej. Abierto a prácticas o puesto junior)</dd>
+        </div>
+      </dl>
+
+      <div class="hero-actions">
+        <button type="button" id="btn-open-cv" class="btn btn-primary">
+          Ver / Imprimir CV (PDF)
+        </button>
+        <a class="btn btn-secondary" href="#proyectos">Ver proyectos reales</a>
+        <a id="hero-github-link" class="btn btn-ghost" href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer">
+          GitHub (@Rafags04)
+        </a>
+      </div>
+
+      <div id="hero-contact-strip" class="hero-contact-strip" aria-label="Contacto rápido">
+        <div class="contact-pill"><span class="contact-pill-label">Email: </span><span><span class="todo-badge">TODO</span> tu-email-real@dominio.com</span></div>
+        <div class="contact-pill"><span class="contact-pill-label">LinkedIn: </span><span><span class="todo-badge">TODO</span> https://www.linkedin.com/in/tu-usuario</span></div>
       </div>
     </section>
 
-    <!-- ------------------------------------------------------------------
-         ETAPA 1: SOBRE MÍ (DESPIECE: CHASIS & PANEL DE CRISTAL)
-         ------------------------------------------------------------------ -->
-    <section class="stage-section" id="about" data-stage="1">
-      <div class="container stage-container stage-align-left">
-        <div class="glass-card hardware-card">
-          <div class="card-hw-header">
-            <span class="hw-stage-tag">ETAPA 01 // DESMONTAJE EXTERIOR</span>
-            <span class="hw-part-name"><i data-lucide="box"></i> Chasis & Panel Templado</span>
-          </div>
-
-          <h2 class="stage-title">Sobre mí: Estructura & Fundamentos</h2>
-          
-          <p class="stage-intro">
-            Así como un chasis de alta ingeniería proporciona el soporte estructural, 
-            la gestión térmica y el orden de los componentes, mis fundamentos como desarrollador 
-            garantizan un código limpio, estructurado y escalable.
-          </p>
-
-          <p class="stage-text">
-            Me apasiona la tecnología, la resolución algorítmica de problemas y la ingeniería de software moderna.
-            No solo construyo funcionalidades: cuido la arquitectura para que cada proyecto sea mantenible 
-            a largo plazo y soporte un alto rendimiento.
-          </p>
-
-          <div class="about-highlights-grid">
-            <div class="highlight-mini-card">
-              <div class="mini-icon"><i data-lucide="code-2"></i></div>
-              <div>
-                <h4>Arquitectura Limpia</h4>
-                <p>Patrones de diseño desacoplados, código legible y mantenible.</p>
-              </div>
-            </div>
-            <div class="highlight-mini-card">
-              <div class="mini-icon"><i data-lucide="zap"></i></div>
-              <div>
-                <h4>Flujo & Rendimiento</h4>
-                <p>Optimización de latencia, renderizado veloz y bajo consumo.</p>
-              </div>
-            </div>
-            <div class="highlight-mini-card">
-              <div class="mini-icon"><i data-lucide="git-branch"></i></div>
-              <div>
-                <h4>Colaboración & CI/CD</h4>
-                <p>Control de versiones riguroso y despliegues automatizados.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="hw-specs-strip">
-            <span><strong>CHASIS:</strong> Acero SPCC & Cristal 4mm</span>
-            <span><strong>FLUJO:</strong> Presión Positiva</span>
-            <span><strong>ENFOQUE:</strong> Robustez</span>
-          </div>
+    <!-- ================================================================
+         PROYECTOS REALES (PROBLEMA -> SOLUCIÓN -> STACK -> REPO/DEMO)
+         ================================================================ -->
+    <section id="proyectos" class="content-section" aria-labelledby="projects-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">01 · Trabajo Real</p>
+          <h2 id="projects-heading">Proyectos</h2>
         </div>
+        <p class="section-subtitle">
+          Cada proyecto documenta problema, solución, tecnologías usadas y enlaces directos al repositorio.
+        </p>
+      </div>
+      <div id="projects-list" class="projects-grid"></div>
+    </section>
+
+    <!-- ================================================================
+         ACTIVIDAD REAL DE GITHUB (REPOS SIN FORKS Y LENGUAJES POR BYTES)
+         ================================================================ -->
+    <section id="actividad-github" class="content-section" aria-labelledby="github-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">02 · Datos en Vivo</p>
+          <h2 id="github-heading">Actividad en GitHub (@Rafags04)</h2>
+        </div>
+        <button type="button" id="btn-retry-github" class="btn btn-secondary btn-sm">
+          Actualizar desde GitHub
+        </button>
+      </div>
+
+      <div id="github-status" class="status-banner" role="status" aria-live="polite">
+        Consultando API pública de GitHub…
+      </div>
+
+      <div id="github-content" class="github-grid" hidden>
+        <article class="surface-card" aria-labelledby="gh-lang-heading">
+          <h3 id="gh-lang-heading">Lenguajes por bytes (repositorios propios)</h3>
+          <div id="github-lang-bar" class="lang-bar" role="img" aria-label="Distribución de lenguajes por bytes"></div>
+          <ul id="github-lang-list" class="lang-list"></ul>
+        </article>
+
+        <article class="surface-card" aria-labelledby="gh-repos-heading">
+          <h3 id="gh-repos-heading">Repositorios recientes (sin forks)</h3>
+          <ul id="github-repos-list" class="repo-list"></ul>
+        </article>
       </div>
     </section>
 
-    <!-- ------------------------------------------------------------------
-         ETAPA 2: FRONTEND (DESPIECE: TARJETA GRÁFICA / GPU RTX)
-         ------------------------------------------------------------------ -->
-    <section class="stage-section" id="skills-frontend" data-stage="2">
-      <div class="container stage-container stage-align-right">
-        <div class="glass-card hardware-card">
-          <div class="card-hw-header">
-            <span class="hw-stage-tag">ETAPA 02 // ACELERACIÓN GRÁFICA</span>
-            <span class="hw-part-name"><i data-lucide="cpu"></i> GPU RTX 24GB // Front Engine</span>
-          </div>
-
-          <h2 class="stage-title">Frontend & Experiencias Visuales</h2>
-
-          <p class="stage-intro">
-            La GPU procesa millones de operaciones visuales en paralelo para pintar cada frame.
-            En la web, transformo especificaciones y diseño en interfaces intuitivas, rápidas y vivas 
-            con gráficos y micro-animaciones fluidas.
-          </p>
-
-          <div class="tech-stack-container">
-            <h4 class="tech-subheading">TECNOLOGÍAS FRONTEND CLAVE:</h4>
-            <div class="tech-chips-cloud">
-              <span class="tech-chip"><i data-lucide="layout"></i> HTML5 Semántico</span>
-              <span class="tech-chip"><i data-lucide="palette"></i> CSS3 / Modern Flex & Grid</span>
-              <span class="tech-chip"><i data-lucide="sparkles"></i> Three.js / WebGL 3D</span>
-              <span class="tech-chip"><i data-lucide="file-code"></i> JavaScript (ES6+ / Async)</span>
-              <span class="tech-chip"><i data-lucide="code"></i> TypeScript</span>
-              <span class="tech-chip"><i data-lucide="component"></i> React / Next.js</span>
-              <span class="tech-chip"><i data-lucide="smartphone"></i> Responsive & Mobile-First</span>
-              <span class="tech-chip"><i data-lucide="eye"></i> UI/UX & Accesibilidad (a11y)</span>
-            </div>
-          </div>
-
-          <div class="hw-benchmark-box">
-            <div class="benchmark-row">
-              <span>Tasa de Refresco Visual:</span>
-              <div class="benchmark-bar"><div class="bench-fill" style="width: 95%"></div></div>
-              <strong>60/120 FPS</strong>
-            </div>
-            <div class="benchmark-row">
-              <span>Interactividad Reactiva:</span>
-              <div class="benchmark-bar"><div class="bench-fill" style="width: 92%"></div></div>
-              <strong>&lt; 50ms</strong>
-            </div>
-          </div>
-
-          <div class="hw-specs-strip">
-            <span><strong>BUS:</strong> PCIe 5.0 x16</span>
-            <span><strong>VRAM:</strong> 24GB GDDR6X</span>
-            <span><strong>PIPELINE:</strong> UI Hardware-Accelerated</span>
-          </div>
+    <!-- ================================================================
+         FORMACIÓN Y EXPERIENCIA
+         ================================================================ -->
+    <section id="trayectoria" class="content-section" aria-labelledby="timeline-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">03 · Recorrido</p>
+          <h2 id="timeline-heading">Formación y Experiencia</h2>
         </div>
+      </div>
+      <ol id="timeline-list" class="timeline-list"></ol>
+    </section>
+
+    <!-- ================================================================
+         TECNOLOGÍAS QUE DOMINO DE VERDAD
+         ================================================================ -->
+    <section id="habilidades" class="content-section" aria-labelledby="skills-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">04 · Capacidades</p>
+          <h2 id="skills-heading">Tecnologías</h2>
+        </div>
+      </div>
+      <div id="skills-list" class="skills-grid"></div>
+    </section>
+
+    <!-- ================================================================
+         ÚNICO ELEMENTO "WOW": TERMINAL INTERACTIVA (CARGA DIFERIDA)
+         ================================================================ -->
+    <section id="terminal" class="content-section" aria-labelledby="terminal-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">05 · Modo Interactivo</p>
+          <h2 id="terminal-heading">Terminal de Consulta Rápida</h2>
+        </div>
+        <p class="section-subtitle">
+          Cargada de forma diferida al entrar en pantalla. Escribe <code>help</code> o pulsa un comando.
+        </p>
+      </div>
+
+      <div class="terminal-card">
+        <div class="terminal-topbar">
+          <div class="terminal-status-left">
+            <canvas id="terminal-pulse-canvas" class="terminal-pulse-canvas" width="20" height="20" aria-hidden="true"></canvas>
+            <span class="terminal-static-dot" aria-hidden="true"></span>
+            <span class="terminal-title">rafa@github-pages:~</span>
+          </div>
+          <span id="terminal-loader-badge" class="terminal-badge">En espera de carga diferida…</span>
+        </div>
+
+        <div class="terminal-chips" aria-label="Comandos rápidos">
+          <button type="button" class="term-cmd-btn" data-cmd="help">help</button>
+          <button type="button" class="term-cmd-btn" data-cmd="whoami">whoami</button>
+          <button type="button" class="term-cmd-btn" data-cmd="projects">projects</button>
+          <button type="button" class="term-cmd-btn" data-cmd="github">github</button>
+          <button type="button" class="term-cmd-btn" data-cmd="skills">skills</button>
+          <button type="button" class="term-cmd-btn" data-cmd="contact">contact</button>
+          <button type="button" class="term-cmd-btn" data-cmd="todos">todos</button>
+          <button type="button" class="term-cmd-btn" data-cmd="cv">cv</button>
+          <button type="button" class="term-cmd-btn" data-cmd="clear">clear</button>
+        </div>
+
+        <div id="terminal-output" class="terminal-output" role="log" aria-live="polite" aria-label="Salida de la terminal"></div>
+
+        <form id="terminal-form" class="terminal-form">
+          <label for="terminal-input" class="terminal-prompt">$</label>
+          <input
+            id="terminal-input"
+            class="terminal-input"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Escribe un comando (ej. help) y pulsa Enter…"
+          >
+          <button type="submit" class="btn btn-secondary btn-sm">Ejecutar</button>
+        </form>
       </div>
     </section>
 
-    <!-- ------------------------------------------------------------------
-         ETAPA 3: BACKEND (DESPIECE: CPU 16-CORE & REFRIGERACIÓN LÍQUIDA)
-         ------------------------------------------------------------------ -->
-    <section class="stage-section" id="skills-backend" data-stage="3">
-      <div class="container stage-container stage-align-left">
-        <div class="glass-card hardware-card">
-          <div class="card-hw-header">
-            <span class="hw-stage-tag">ETAPA 03 // NÚCLEO DE CÁLCULO</span>
-            <span class="hw-part-name"><i data-lucide="zap"></i> CPU & Refrigeración Líquida</span>
-          </div>
-
-          <h2 class="stage-title">Backend & Lógica Central</h2>
-
-          <p class="stage-intro">
-            El procesador central orquesta cada ciclo de reloj mientras la refrigeración líquida 
-            mantiene la estabilidad bajo cargas pesadas. En el servidor, construyo APIs de alto rendimiento,
-            servicios confiables y lógica de negocio segura.
-          </p>
-
-          <div class="tech-stack-container">
-            <h4 class="tech-subheading">TECNOLOGÍAS BACKEND & SISTEMAS:</h4>
-            <div class="tech-chips-cloud">
-              <span class="tech-chip"><i data-lucide="server"></i> Node.js & Express</span>
-              <span class="tech-chip"><i data-lucide="terminal"></i> Python (FastAPI / Scripts)</span>
-              <span class="tech-chip"><i data-lucide="coffee"></i> Java & OOP</span>
-              <span class="tech-chip"><i data-lucide="network"></i> APIs RESTful & GraphQL</span>
-              <span class="tech-chip"><i data-lucide="shield-check"></i> Autenticación JWT / OAuth</span>
-              <span class="tech-chip"><i data-lucide="cpu"></i> Concurrencia & Procesos Asíncronos</span>
-              <span class="tech-chip"><i data-lucide="boxes"></i> Microservicios & Modularidad</span>
-            </div>
-          </div>
-
-          <div class="hw-benchmark-box">
-            <div class="benchmark-row">
-              <span>Throughput de API:</span>
-              <div class="benchmark-bar"><div class="bench-fill" style="width: 90%"></div></div>
-              <strong>Alta Concurrencia</strong>
-            </div>
-            <div class="benchmark-row">
-              <span>Disipación Térmica / Eficiencia:</span>
-              <div class="benchmark-bar"><div class="bench-fill" style="width: 96%"></div></div>
-              <strong>AIO 360mm // Óptimo</strong>
-            </div>
-          </div>
-
-          <div class="hw-specs-strip">
-            <span><strong>SOCKET:</strong> LGA-1700</span>
-            <span><strong>CLOCK:</strong> 5.4 GHz Boost</span>
-            <span><strong>THREADING:</strong> Multi-Core Asíncrono</span>
-          </div>
+    <!-- ================================================================
+         CONTACTO DIRECTO Y LISTA HONESTA DE TODOs PENDIENTES
+         ================================================================ -->
+    <section id="contacto" class="content-section" aria-labelledby="contact-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">06 · Hablemos</p>
+          <h2 id="contact-heading">Contacto</h2>
         </div>
       </div>
+
+      <div id="contact-list" class="contact-grid"></div>
+
+      <aside id="todo-audit-box" class="todo-audit-box" aria-labelledby="todo-audit-heading" hidden>
+        <h3 id="todo-audit-heading">Datos pendientes por completar en <code>src/data/profile.js</code></h3>
+        <p>Esta sección desaparecerá automáticamente en cuanto sustituyas todos los marcadores <code>TODO:</code>.</p>
+        <ul id="todo-audit-list" class="todo-audit-list"></ul>
+      </aside>
     </section>
-
-    <!-- ------------------------------------------------------------------
-         ETAPA 4: MEMORIA & PERSISTENCIA (DESPIECE: RAM DDR5 & NVMe SSD)
-         ------------------------------------------------------------------ -->
-    <section class="stage-section" id="skills-storage" data-stage="4">
-      <div class="container stage-container stage-align-right">
-        <div class="glass-card hardware-card">
-          <div class="card-hw-header">
-            <span class="hw-stage-tag">ETAPA 04 // MEMORIA & PERSISTENCIA</span>
-            <span class="hw-part-name"><i data-lucide="hard-drive"></i> RAM DDR5 & NVMe Gen5 SSD</span>
-          </div>
-
-          <h2 class="stage-title">Bases de Datos & Cloud DevOps</h2>
-
-          <p class="stage-intro">
-            La RAM DDR5 provee lectura ultrarrápida en memoria mientras que el NVMe Gen5 garantiza 
-            persistencia a velocidades de más de 7000 MB/s. Gestiono el modelado de datos, 
-            el almacenamiento confiable y los entornos en la nube.
-          </p>
-
-          <div class="tech-stack-container">
-            <h4 class="tech-subheading">PERSISTENCIA, DATOS & INFRAESTRUCTURA:</h4>
-            <div class="tech-chips-cloud">
-              <span class="tech-chip"><i data-lucide="database"></i> PostgreSQL & MySQL</span>
-              <span class="tech-chip"><i data-lucide="layers"></i> MongoDB (NoSQL)</span>
-              <span class="tech-chip"><i data-lucide="zap"></i> Redis (Caché & Sesiones)</span>
-              <span class="tech-chip"><i data-lucide="container"></i> Docker & Contenedores</span>
-              <span class="tech-chip"><i data-lucide="git-pull-request"></i> Git & GitHub Workflows</span>
-              <span class="tech-chip"><i data-lucide="cloud"></i> Linux / Bash / Cloud Deploy</span>
-            </div>
-          </div>
-
-          <div class="storage-metrics-cards">
-            <div class="metric-card-mini">
-              <span class="metric-num">DDR5</span>
-              <span class="metric-desc">Baja Latencia & Caché</span>
-            </div>
-            <div class="metric-card-mini">
-              <span class="metric-num">NVMe</span>
-              <span class="metric-desc">Persistencia Transaccional ACID</span>
-            </div>
-            <div class="metric-card-mini">
-              <span class="metric-num">Docker</span>
-              <span class="metric-desc">Aislamiento & Portabilidad</span>
-            </div>
-          </div>
-
-          <div class="hw-specs-strip">
-            <span><strong>ANCHO DE BANDA:</strong> 6000 MT/s</span>
-            <span><strong>LECTURA NVMe:</strong> 7450 MB/s</span>
-            <span><strong>INTEGRIDAD:</strong> Alta Disponibilidad</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ------------------------------------------------------------------
-         ETAPA 5: PROYECTOS (DESPIECE: PSU 1000W & ENERGÍA MODULAR)
-         ------------------------------------------------------------------ -->
-    <section class="stage-section" id="projects" data-stage="5">
-      <div class="container stage-container stage-align-center">
-        <div class="glass-card hardware-card projects-showcase-card">
-          <div class="card-hw-header">
-            <span class="hw-stage-tag">ETAPA 05 // FLUJO DE POTENCIA ACTIVO</span>
-            <span class="hw-part-name"><i data-lucide="battery-charging"></i> Fuente PSU & Proyectos en Ejecución</span>
-          </div>
-
-          <h2 class="stage-title">Proyectos Destacados</h2>
-
-          <p class="stage-intro text-center">
-            La fuente de poder suministra energía modular a cada componente. 
-            Aquí puedes ver el resultado de esta arquitectura en proyectos reales terminados y funcionales.
-          </p>
-
-          <div class="projects-grid">
-            <!-- Proyecto 1 -->
-            <article class="project-card">
-              <div class="project-header-visual">
-                <div class="project-icon-badge"><i data-lucide="monitor"></i></div>
-                <span class="project-status-dot online">Activo</span>
-              </div>
-              <div class="project-info">
-                <div class="project-tags">
-                  <span>Three.js</span>
-                  <span>JavaScript</span>
-                  <span>UI/UX 3D</span>
-                </div>
-                <h3 class="project-title">Explorador Interactivo 3D</h3>
-                <p class="project-desc">
-                  Experiencia web tridimensional con despiece procedimental de hardware, shaders en tiempo real y navegación guiada por scroll cinemático.
-                </p>
-                <div class="project-links">
-                  <a href="#hero" class="project-btn">
-                    <i data-lucide="eye"></i> En Vivo
-                  </a>
-                  <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
-                    <i data-lucide="code-2"></i> Código
-                  </a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Proyecto 2 -->
-            <article class="project-card">
-              <div class="project-header-visual">
-                <div class="project-icon-badge"><i data-lucide="database"></i></div>
-                <span class="project-status-dot online">Activo</span>
-              </div>
-              <div class="project-info">
-                <div class="project-tags">
-                  <span>Node.js</span>
-                  <span>PostgreSQL</span>
-                  <span>REST API</span>
-                </div>
-                <h3 class="project-title">Sistema de Gestión & Métricas</h3>
-                <p class="project-desc">
-                  Plataforma backend de alto rendimiento con autenticación de usuarios, persistencia transaccional y panel analítico en tiempo real.
-                </p>
-                <div class="project-links">
-                  <a href="#" class="project-btn">
-                    <i data-lucide="external-link"></i> Demo
-                  </a>
-                  <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
-                    <i data-lucide="code-2"></i> Código
-                  </a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Proyecto 3 -->
-            <article class="project-card">
-              <div class="project-header-visual">
-                <div class="project-icon-badge"><i data-lucide="layers"></i></div>
-                <span class="project-status-dot online">Activo</span>
-              </div>
-              <div class="project-info">
-                <div class="project-tags">
-                  <span>Full Stack</span>
-                  <span>React</span>
-                  <span>Docker</span>
-                </div>
-                <h3 class="project-title">Plataforma Web Modular</h3>
-                <p class="project-desc">
-                  Aplicación web responsive completa con arquitectura de microservicios, soporte multilingüe y experiencia de usuario optimizada para móviles.
-                </p>
-                <div class="project-links">
-                  <a href="#" class="project-btn">
-                    <i data-lucide="external-link"></i> Demo
-                  </a>
-                  <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="project-btn secondary">
-                    <i data-lucide="code-2"></i> Código
-                  </a>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <div class="hw-specs-strip">
-            <span><strong>EFICIENCIA:</strong> 80-Plus Titanium</span>
-            <span><strong>MODULARIDAD:</strong> Total</span>
-            <span><strong>CÓDIGO:</strong> 100% Producción</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ------------------------------------------------------------------
-         ETAPA 6: CONTACTO (DESPIECE: BLUEPRINT COMPLETO & ENLACE DE REDES)
-         ------------------------------------------------------------------ -->
-    <section class="stage-section" id="contact" data-stage="6">
-      <div class="container stage-container stage-align-center">
-        <div class="glass-card hardware-card contact-terminal-card">
-          <div class="card-hw-header">
-            <span class="hw-stage-tag">ETAPA 06 // CONEXIÓN ESTABLECIDA</span>
-            <span class="hw-part-name"><i data-lucide="radio"></i> Blueprint Holográfico // Telemetría Final</span>
-          </div>
-
-          <h2 class="stage-title">¿Listo para Ensamblar un Proyecto Juntos?</h2>
-
-          <p class="stage-intro text-center">
-            El sistema ha completado su despiece total. Ya sea que busques construir una 
-            aplicación web desde cero, optimizar una arquitectura existente o colaborar 
-            en soluciones tecnológicas desafiantes, hablemos.
-          </p>
-
-          <div class="contact-channels-grid">
-            <a href="mailto:tu-correo@ejemplo.com" class="contact-card">
-              <div class="contact-card-icon-wrap"><i data-lucide="mail"></i></div>
-              <div class="contact-card-info">
-                <h4>Correo Electrónico</h4>
-                <p>tu-correo@ejemplo.com</p>
-              </div>
-            </a>
-
-            <a href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer" class="contact-card">
-              <div class="contact-card-icon-wrap">
-                <svg class="icon-svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                </svg>
-              </div>
-              <div class="contact-card-info">
-                <h4>GitHub</h4>
-                <p>github.com/Rafags04</p>
-              </div>
-            </a>
-
-            <a href="#" target="_blank" rel="noopener noreferrer" class="contact-card">
-              <div class="contact-card-icon-wrap">
-                <svg class="icon-svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect x="2" y="9" width="4" height="12"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </div>
-              <div class="contact-card-info">
-                <h4>LinkedIn</h4>
-                <p>Conecta conmigo en red</p>
-              </div>
-            </a>
-          </div>
-
-          <!-- Botón de acción para reensamblar el PC suavemente -->
-          <div class="reassemble-action-area">
-            <button class="btn btn-primary" id="btn-reassemble-pc">
-              <i data-lucide="rotate-ccw"></i>
-              <span>Reensamblar Ordenador 3D (Volver al Inicio)</span>
-            </button>
-          </div>
-
-          <div class="hw-specs-strip">
-            <span><strong>ESTADO:</strong> Disponible para Nuevas Oportunidades</span>
-            <span><strong>LATENCIA:</strong> Respuesta Rápida</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ====================================================================
-       FOOTER
-       ==================================================================== -->
-  <footer class="footer">
-    <div class="container footer-container">
-      <p class="footer-copy">
-        © <span id="year"></span> Rafa. Diseñado con Three.js, CSS Moderno & Arquitectura Web.
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>
+        <span id="footer-year"></span> · <span id="footer-name">Rafa</span> · Sitio estático en HTML, CSS y ES Modules para GitHub Pages.
       </p>
-      <a href="#hero" class="back-to-top" title="Volver al inicio">
-        <i data-lucide="chevron-up"></i>
-      </a>
+      <button type="button" id="btn-open-cv-footer" class="footer-link-btn">Abrir versión CV imprimible</button>
     </div>
   </footer>
 
-  <!-- ====================================================================
-       SCRIPTS: MOTOR 3D Y LÓGICA DE INTERFAZ
-       ==================================================================== -->
-  <script src="pc3d.js"></script>
-  <script src="script.js"></script>
+  <!-- ================================================================
+       DIÁLOGO ACCESIBLE DE CV (TRAMPA Y RETORNO DE FOCO + IMPRESIÓN)
+       ================================================================ -->
+  <div id="cv-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title" hidden>
+    <div class="modal-dialog">
+      <header class="modal-header no-print">
+        <h2 id="cv-modal-title">Currículum Vitae</h2>
+        <button type="button" id="btn-close-cv-top" class="btn btn-ghost btn-sm" aria-label="Cerrar currículum">
+          Cerrar (Esc)
+        </button>
+      </header>
+
+      <div id="cv-modal-content" class="cv-sheet"></div>
+
+      <footer class="modal-footer no-print">
+        <a id="cv-pdf-link" class="btn btn-ghost" href="#" target="_blank" rel="noopener noreferrer" hidden>
+          Abrir archivo PDF
+        </a>
+        <button type="button" id="btn-print-cv" class="btn btn-primary">
+          Imprimir / Guardar como PDF
+        </button>
+        <button type="button" id="btn-close-cv" class="btn btn-secondary">
+          Cerrar
+        </button>
+      </footer>
+    </div>
+  </div>
 </body>
 </html>
