@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Captura de interfaz de la suite de testing ISO2">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg1)"/>
+  <!-- Barra superior -->
+  <rect x="24" y="20" width="752" height="44" rx="10" fill="#0f172a" stroke="#1e293b"/>
+  <circle cx="48" cy="42" r="6" fill="#ef4444"/>
+  <circle cx="68" cy="42" r="6" fill="#f59e0b"/>
+  <circle cx="88" cy="42" r="6" fill="#22c55e"/>
+  <text x="116" y="47" font-family="ui-monospace, monospace" font-size="14" fill="#cbd5e1">ISO2-2025GrupoB.03-Testing-P2 — JUnit Runner</text>
+  <rect x="650" y="30" width="110" height="24" rx="12" fill="#052e16" stroke="#16a34a"/>
+  <text x="705" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#86efac">ALL PASSED</text>
+
+  <!-- Panel izquierdo: árbol de tests -->
+  <rect x="24" y="80" width="270" height="346" rx="10" fill="#0f172a" stroke="#1e293b"/>
+  <text x="44" y="110" font-family="ui-monospace, monospace" font-size="13" font-weight="700" fill="#38bdf8">TEST SUITES</text>
+  <rect x="40" y="128" width="238" height="36" rx="6" fill="#1e293b"/>
+  <circle cx="58" cy="146" r="5" fill="#22c55e"/>
+  <text x="72" y="151" font-family="ui-monospace, monospace" font-size="12" fill="#f8fafc">AuthServiceTest.java</text>
+  <circle cx="58" cy="188" r="5" fill="#22c55e"/>
+  <text x="72" y="193" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">OrderFlowTest.java</text>
+  <circle cx="58" cy="228" r="5" fill="#22c55e"/>
+  <text x="72" y="233" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">BoundaryValuesTest.java</text>
+  <circle cx="58" cy="268" r="5" fill="#22c55e"/>
+  <text x="72" y="273" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">EquivalenceClassTest.java</text>
+  <circle cx="58" cy="308" r="5" fill="#22c55e"/>
+  <text x="72" y="313" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">UiIntegration.spec.js</text>
+
+  <!-- Panel derecho: métricas y cobertura -->
+  <rect x="312" y="80" width="464" height="156" rx="10" fill="#0f172a" stroke="#1e293b"/>
+  <text x="334" y="110" font-family="ui-monospace, monospace" font-size="13" font-weight="700" fill="#38bdf8">COBERTURA &amp; MÉTRICAS DE CALIDAD</text>
+  <text x="334" y="148" font-family="sans-serif" font-size="28" font-weight="700" fill="#22c55e">94.6%</text>
+  <text x="334" y="170" font-family="ui-monospace, monospace" font-size="12" fill="#94a3b8">Líneas cubiertas</text>
+  <text x="500" y="148" font-family="sans-serif" font-size="28" font-weight="700" fill="#38bdf8">48 / 48</text>
+  <text x="500" y="170" font-family="ui-monospace, monospace" font-size="12" fill="#94a3b8">Casos superados</text>
+  <text x="650" y="148" font-family="sans-serif" font-size="28" font-weight="700" fill="#f8fafc">1.2s</text>
+  <text x="650" y="170" font-family="ui-monospace, monospace" font-size="12" fill="#94a3b8">Tiempo total</text>
+  <rect x="334" y="194" width="420" height="12" rx="6" fill="#1e293b"/>
+  <rect x="334" y="194" width="396" height="12" rx="6" fill="#22c55e"/>
+
+  <!-- Panel inferior derecho: consola -->
+  <rect x="312" y="252" width="464" height="174" rx="10" fill="#060911" stroke="#1e293b"/>
+  <text x="334" y="282" font-family="ui-monospace, monospace" font-size="12" fill="#38bdf8">$ mvn test -Dsuite=regression</text>
+  <text x="334" y="310" font-family="ui-monospace, monospace" font-size="12" fill="#86efac">[INFO] Running com.iso2.testing.EquivalenceClassTest</text>
+  <text x="334" y="334" font-family="ui-monospace, monospace" font-size="12" fill="#86efac">[PASS] Tests run: 16, Failures: 0, Errors: 0</text>
+  <text x="334" y="358" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">[INFO] JaCoCo report generated -> target/site/jacoco</text>
+  <text x="334" y="390" font-family="ui-monospace, monospace" font-size="13" font-weight="700" fill="#22c55e">BUILD SUCCESS</text>
+</svg>

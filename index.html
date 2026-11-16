@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rafael García (@Rafags04) | Desarrollador Full-Stack &amp; QA</title>
-  <meta name="description" content="Portfolio personal de Rafael García (@Rafags04) alojado en GitHub Pages: proyectos reales, tecnologías verificadas, actividad en GitHub y currículum imprimible.">
+  <meta name="description" content="Portfolio interactivo de Rafael García (@Rafags04) alojado en GitHub Pages: proyectos con capturas y visor de detalles, actividad en GitHub, terminal y CV imprimible.">
   <meta name="author" content="Rafael García Sánchez">
 
   <!-- Open Graph / Twitter Card -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Rafael García (@Rafags04) | Portfolio de Desarrollo">
-  <meta property="og:description" content="Proyectos con problema, solución y código fuente en GitHub, lenguajes medidos en vivo y CV imprimible.">
+  <meta property="og:title" content="Rafael García (@Rafags04) | Portfolio Interactivo">
+  <meta property="og:description" content="Proyectos con capturas, problema, solución y código fuente en GitHub, buscador en vivo y CV imprimible.">
   <meta property="og:url" content="https://rafags04.github.io/PortFolio/">
   <meta property="og:image" content="https://rafags04.github.io/PortFolio/favicon.svg">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Rafael García (@Rafags04) | Portfolio">
-  <meta name="twitter:description" content="Portfolio estático en GitHub Pages: proyectos, datos en vivo de GitHub y terminal interactiva.">
+  <meta name="twitter:description" content="Portfolio estático en GitHub Pages: proyectos interactivos, datos en vivo de GitHub y terminal.">
 
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="canonical" href="https://rafags04.github.io/PortFolio/">
@@ -46,6 +46,10 @@
         <a href="#terminal">Terminal</a>
         <a href="#contacto">Contacto</a>
       </nav>
+
+      <button type="button" id="btn-theme-toggle" class="theme-toggle-btn" aria-pressed="false" title="Cambiar entre tema oscuro y claro">
+        ☀️ Tema claro
+      </button>
     </div>
   </header>
 
@@ -86,6 +90,7 @@
         <div class="contact-pill">
           <span class="contact-pill-label">Email: </span>
           <a href="mailto:rafa.garcia.dev@gmail.com">rafa.garcia.dev@gmail.com</a>
+          <button type="button" id="btn-copy-email" class="btn btn-ghost btn-xs">Copiar email</button>
         </div>
         <div class="contact-pill">
           <span class="contact-pill-label">LinkedIn: </span>
@@ -95,7 +100,7 @@
     </section>
 
     <!-- ================================================================
-         PROYECTOS CON FILTRO INTERACTIVO (PROBLEMA -> SOLUCIÓN -> STACK)
+         PROYECTOS INTERACTIVOS CON FOTO, BUSCADOR EN VIVO Y VISOR MODAL
          ================================================================ -->
     <section id="proyectos" class="content-section" aria-labelledby="projects-heading">
       <div class="section-header">
@@ -104,8 +109,22 @@
           <h2 id="projects-heading">Proyectos</h2>
         </div>
         <p class="section-subtitle">
-          Cada proyecto documenta problema, solución, tecnologías usadas y enlaces directos al repositorio.
+          Haz clic en la captura de cualquier proyecto o en <strong>Ver captura y detalles</strong> para ampliarlo y explorar su arquitectura.
         </p>
+      </div>
+
+      <div class="projects-toolbar">
+        <div class="search-box">
+          <label for="project-search" class="visually-hidden">Buscar proyectos por nombre o tecnología</label>
+          <input
+            id="project-search"
+            class="search-input"
+            type="search"
+            autocomplete="off"
+            placeholder="Buscar por nombre o tecnología (ej. Java, Redis, Docker)…"
+          >
+        </div>
+        <span id="project-count" class="project-count" aria-live="polite">Mostrando 4 de 4 proyectos</span>
       </div>
 
       <div class="project-filters" role="group" aria-label="Filtrar proyectos por área">
@@ -165,7 +184,7 @@
     </section>
 
     <!-- ================================================================
-         TECNOLOGÍAS
+         TECNOLOGÍAS INTERACTIVAS (CLIC PARA FILTRAR PROYECTOS)
          ================================================================ -->
     <section id="habilidades" class="content-section" aria-labelledby="skills-heading">
       <div class="section-header">
@@ -173,6 +192,9 @@
           <p class="eyebrow">04 · Capacidades</p>
           <h2 id="skills-heading">Tecnologías</h2>
         </div>
+        <p class="section-subtitle">
+          Pulsa cualquier etiqueta tecnológica para filtrar al instante los proyectos donde se utiliza.
+        </p>
       </div>
       <div id="skills-list" class="skills-grid"></div>
     </section>
@@ -255,6 +277,47 @@
   </footer>
 
   <!-- ================================================================
+       VISOR MODAL DE PROYECTO (FOTO AMPLIADA, PESTAÑAS Y NAVEGACIÓN)
+       ================================================================ -->
+  <div id="project-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title" hidden>
+    <div class="modal-dialog modal-dialog-wide">
+      <header class="modal-header">
+        <div>
+          <p class="eyebrow" id="proj-modal-index">Proyecto 1 de 4</p>
+          <h2 id="proj-modal-title">Detalle del proyecto</h2>
+        </div>
+        <button type="button" id="btn-close-project-modal" class="btn btn-ghost btn-sm" aria-label="Cerrar detalle del proyecto">
+          Cerrar (Esc)
+        </button>
+      </header>
+
+      <div class="proj-modal-body">
+        <figure id="proj-modal-figure" class="proj-modal-figure">
+          <img id="proj-modal-img" src="" alt="" class="proj-modal-img">
+        </figure>
+
+        <div class="proj-modal-tabs" role="tablist" aria-label="Información del proyecto">
+          <button type="button" class="proj-tab-btn active" data-proj-tab="summary" role="tab" aria-selected="true">Problema y Solución</button>
+          <button type="button" class="proj-tab-btn" data-proj-tab="code" role="tab" aria-selected="false">Arquitectura y Código</button>
+          <button type="button" class="proj-tab-btn" data-proj-tab="stack" role="tab" aria-selected="false">Stack y Puntos Clave</button>
+        </div>
+
+        <div id="proj-tab-panel-summary" class="proj-tab-panel" role="tabpanel"></div>
+        <div id="proj-tab-panel-code" class="proj-tab-panel" role="tabpanel" hidden></div>
+        <div id="proj-tab-panel-stack" class="proj-tab-panel" role="tabpanel" hidden></div>
+      </div>
+
+      <footer class="modal-footer modal-footer-between">
+        <div class="proj-nav-group">
+          <button type="button" id="btn-prev-project" class="btn btn-secondary btn-sm">← Anterior</button>
+          <button type="button" id="btn-next-project" class="btn btn-secondary btn-sm">Siguiente →</button>
+        </div>
+        <div id="proj-modal-external-links" class="proj-nav-group"></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ================================================================
        DIÁLOGO ACCESIBLE DE CV (TRAMPA Y RETORNO DE FOCO + IMPRESIÓN)
        ================================================================ -->
   <div id="cv-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title" hidden>
@@ -281,5 +344,8 @@
       </footer>
     </div>
   </div>
+
+  <!-- Notificación Toast flotante -->
+  <div id="toast-notification" class="toast-notification" role="status" aria-live="polite" hidden></div>
 </body>
 </html>
