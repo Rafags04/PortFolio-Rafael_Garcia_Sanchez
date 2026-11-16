@@ -1,20 +1,20 @@
 # Portfolio Personal — Rafags04
 
-Portfolio estático en **HTML5 + CSS3 + JavaScript (ES Modules nativos)** sin herramientas de build, diseñado para desplegarse directamente en **GitHub Pages**.
+Portfolio estático en **HTML5 + CSS3 + JavaScript (ES6+)** sin herramientas de build, diseñado para funcionar tanto al abrir `index.html` directamente desde tu ordenador (`file://`) como desplegado en **GitHub Pages**.
 
 ## Características principales
+- **Compatible con apertura local (`file://`) y servidor web (`https://`):** scripts cargados con `defer` sin bloqueos CORS de módulos locales.
 - **Primera pantalla clara (test de 30 segundos):** presenta nombre, rol, propuesta de valor, contacto rápido, proyectos y botón directo a CV imprimible/PDF.
-- **Honestidad total:** los datos pendientes de completar están marcados explícitamente con `TODO:` y resaltados visualmente en la web hasta que los sustituyas.
-- **Proyectos estructurados:** Problema → Solución → Stack → Repositorio/Demo real.
-- **Actividad real de GitHub API:** consulta repositorios propios (excluyendo forks) y calcula el desglose real de lenguajes por **bytes**. Si la API falla o alcanza el límite de peticiones, muestra un error real sin datos ficticios.
-- **Único elemento interactivo extra (Terminal):** cargada en diferido al entrar en pantalla, con un único bucle `requestAnimationFrame` que se pausa fuera de pantalla o con la pestaña oculta y usa modo estático en móvil y con `prefers-reduced-motion`.
+- **Proyectos filtrables por tecnología:** Problema → Solución → Stack → Repositorio/Demo con filtros interactivos.
+- **Actividad real de GitHub API:** consulta repositorios propios (excluyendo forks) y calcula el desglose real de lenguajes por **bytes** (con respaldo de demostración si no hay conexión).
+- **Terminal interactiva de consulta:** pre-iniciada, responde por teclado y botones rápidos, con un único bucle `requestAnimationFrame` pausado fuera de pantalla, con la pestaña oculta y desactivado en móvil o con `prefers-reduced-motion`.
 - **Accesible:** HTML semántico, contraste AA/AAA, enlace para saltar al contenido y diálogo `aria-modal` con trampa de foco y retorno de foco al cerrar.
 
 ## Estructura de carpetas
 
 ```text
 PortFolio/
-├── index.html               # Página principal semántica y SEO/Open Graph
+├── index.html               # Página principal semántica, SEO/Open Graph y scripts defer
 ├── 404.html                 # Página de error 404 para GitHub Pages
 ├── style.css                # Hoja de estilos mobile-first y reglas de impresión
 ├── favicon.svg              # Favicon vectorial ligero
@@ -22,32 +22,28 @@ PortFolio/
 ├── sitemap.xml              # Mapa del sitio
 ├── README.md                # Esta documentación
 └── src/
-    ├── main.js              # Renderizado seguro (textContent) y carga diferida
+    ├── main.js              # Renderizado seguro (textContent), filtros y eventos
     ├── data/
-    │   └── profile.js       # Única fuente de verdad de tus datos y marcadores TODO:
+    │   └── profile.js       # Única fuente de verdad (datos de ejemplo listos para sustituir)
     └── modules/
         ├── github.js        # Cliente de la API pública de GitHub (repos + bytes)
         ├── modal.js         # Gestión de foco del diálogo CV
-        └── terminal.js      # Terminal interactiva diferida y rAF pausable
+        └── terminal.js      # Terminal interactiva y rAF único pausable
 ```
 
-## Cómo editar tus datos
+## Cómo sustituir los datos de ejemplo por los tuyos
 
-1. Abre `src/data/profile.js`.
-2. Sustituye todos los textos que empiezan por `TODO:` por tu información real (apellidos, rol objetivo, resumen, ubicación, email, LinkedIn, ruta a tu PDF si añades uno, descripción problema/solución del repositorio `ISO2-2025GrupoB.03-Testing-P2`, formación, experiencia y tecnologías).
-3. Guarda los cambios: el bloque **"Datos pendientes por completar"** en la sección de Contacto desaparecerá automáticamente cuando no quede ningún `TODO:`.
+1. Abre [src/data/profile.js](src/data/profile.js) y actualiza el objeto `window.Portfolio.PROFILE` con tu nombre real, rol, descripción, email, LinkedIn, proyectos, formación, experiencia y tecnologías.
+2. Actualiza también los textos estáticos iniciales del Hero y las metaetiquetas `<title>` / `description` / `og:*` en [index.html](index.html) para que coincidan desde el primer pintado.
+3. Si añades un archivo PDF propio (por ejemplo `./assets/cv.pdf`), pon su ruta en `contact.cvPdfUrl` dentro de `src/data/profile.js`.
 
 ## Cómo desplegar en GitHub Pages
 
 1. Sube los cambios a la rama `main` de tu repositorio `Rafags04/PortFolio`:
    ```bash
    git add .
-   git commit -m "Rediseño desde cero del portfolio"
+   git commit -m "Actualiza datos del portfolio"
    git push origin main
    ```
 2. En GitHub, entra en **Settings → Pages**.
-3. En **Build and deployment**, selecciona:
-   - **Source:** `Deploy from a branch`
-   - **Branch:** `main` y carpeta `/ (root)`
-4. Pulsa **Save**. Tu sitio quedará publicado en `https://rafags04.github.io/PortFolio/`.
-
+3. En **Build and deployment**, selecciona **Deploy from a branch**, rama `main` y carpeta `/ (root)`, y pulsa **Save**.

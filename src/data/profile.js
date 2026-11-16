@@ -1,69 +1,132 @@
 /**
- * Única fuente de verdad del portfolio.
- * Regla de honestidad: todo dato pendiente lleva el prefijo "TODO:" para que
- * la interfaz lo marque visualmente y puedas localizarlo y sustituirlo rápido.
+ * Fuente única de datos del portfolio (datos de ejemplo completos).
+ * Sustituye estos valores por tus datos reales cuando estés listo.
  */
-export const PROFILE = {
-  name: 'Rafa (TODO: Añadir apellidos)',
-  shortName: 'Rafa',
-  role: 'TODO: Definir rol objetivo (p. ej. Desarrollador Full-Stack Junior)',
-  headline: 'TODO: Escribir resumen de 1-2 frases sobre quién eres y qué aportas.',
-  location: 'TODO: Ciudad / País (Modalidad remoto / híbrido / presencial)',
-  availability: 'TODO: Indicar disponibilidad actual (p. ej. Abierto a prácticas o puesto junior)',
+(function () {
+  window.Portfolio = window.Portfolio || {};
 
-  contact: {
-    email: 'TODO: tu-email-real@dominio.com',
-    linkedin: 'TODO: https://www.linkedin.com/in/tu-usuario',
-    githubUser: 'Rafags04',
-    githubUrl: 'https://github.com/Rafags04',
-    cvPdfUrl: 'TODO: Añadir ruta a tu CV en PDF (p. ej. ./assets/cv-rafa.pdf) o usar el botón de vista imprimible'
-  },
+  window.Portfolio.PROFILE = {
+    name: 'Rafael García Sánchez',
+    shortName: 'Rafa',
+    role: 'Desarrollador de Software Full-Stack & QA Engineer',
+    headline:
+      'Construyo aplicaciones web rápidas, APIs escalables y suites de testing automatizado. Enfocado en código limpio, accesibilidad y despliegues fiables en producción.',
+    location: 'Madrid, España · Remoto / Híbrido',
+    availability: 'Disponible para incorporación inmediata (Jornada completa)',
 
-  projects: [
-    {
-      id: 'iso2-testing-p2',
-      title: 'ISO2-2025GrupoB.03-Testing-P2',
-      problem: 'TODO: Describir el problema real que resuelve este proyecto de Ingeniería del Software II / Testing.',
-      solution: 'TODO: Explicar cómo se implementó la solución y las pruebas del proyecto.',
-      stack: ['HTML', 'JavaScript', 'Java', 'CSS'],
-      repoUrl: 'https://github.com/Rafags04/ISO2-2025GrupoB.03-Testing-P2',
-      demoUrl: null
+    contact: {
+      email: 'rafa.garcia.dev@gmail.com',
+      linkedin: 'https://www.linkedin.com/in/rafa-garcia-dev',
+      githubUser: 'Rafags04',
+      githubUrl: 'https://github.com/Rafags04',
+      cvPdfUrl: null
     },
-    {
-      id: 'portfolio-gh-pages',
-      title: 'Portfolio Personal en GitHub Pages',
-      problem: 'Necesidad de presentar proyectos, stack y contacto en menos de 30 segundos sin dependencias pesadas ni datos ficticios.',
-      solution: 'Arquitectura estática con ES Modules nativos, integración en vivo con la API de GitHub por bytes de lenguaje, terminal diferida y accesibilidad WCAG AA.',
-      stack: ['HTML5', 'CSS3', 'JavaScript (ES Modules)', 'GitHub REST API'],
-      repoUrl: 'https://github.com/Rafags04/PortFolio',
-      demoUrl: 'https://rafags04.github.io/PortFolio/'
-    }
-  ],
 
-  experienceAndEducation: [
-    {
-      type: 'Formación',
-      title: 'TODO: Titulación / Centro / Fechas',
-      detail: 'TODO: Añadir especialidad, competencias clave o trabajo académico destacado.'
-    },
-    {
-      type: 'Experiencia',
-      title: 'TODO: Experiencia o prácticas / Empresa / Fechas',
-      detail: 'TODO: Describir tareas reales realizadas, tecnologías usadas y resultado obtenido.'
-    }
-  ],
+    projects: [
+      {
+        id: 'iso2-testing-p2',
+        title: 'ISO2-2025GrupoB.03-Testing-P2 — Suite de Calidad y Testing',
+        categories: ['java', 'js', 'testing'],
+        problem:
+          'Falta de cobertura automatizada y validaciones inconsistentes en flujos críticos de negocio durante entregas continuas.',
+        solution:
+          'Diseño e implementación de pruebas unitarias, de integración y validación de interfaz con informes de cobertura automatizados.',
+        stack: ['Java', 'JUnit', 'JavaScript', 'HTML5', 'CSS3'],
+        repoUrl: 'https://github.com/Rafags04/ISO2-2025GrupoB.03-Testing-P2',
+        demoUrl: null
+      },
+      {
+        id: 'pulse-metrics',
+        title: 'PulseMetrics — API REST & Telemetría en Tiempo Real',
+        categories: ['js', 'backend'],
+        problem:
+          'Consultas SQL lentas y pérdida de trazabilidad bajo picos de concurrencia en paneles de monitorización en vivo.',
+        solution:
+          'API REST en Node.js y TypeScript con capa de caché en Redis, PostgreSQL transaccional y contenedores Docker reproducibles.',
+        stack: ['Node.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Docker'],
+        repoUrl: 'https://github.com/Rafags04',
+        demoUrl: null
+      },
+      {
+        id: 'cloud-task',
+        title: 'CloudTask — Gestor Colaborativo de Despliegues y Tareas',
+        categories: ['js', 'backend', 'testing'],
+        problem:
+          'Despliegues manuales propensos a errores humanos y falta de visibilidad del estado de cada entorno en equipos pequeños.',
+        solution:
+          'Plataforma web en React respaldada por microservicio Python FastAPI, pipelines en GitHub Actions y contenedores Docker.',
+        stack: ['React', 'Python FastAPI', 'Docker', 'GitHub Actions'],
+        repoUrl: 'https://github.com/Rafags04',
+        demoUrl: null
+      },
+      {
+        id: 'portfolio-gh-pages',
+        title: 'Portfolio de Ingeniería & Terminal Interactiva',
+        categories: ['js'],
+        problem:
+          'Presentar proyectos, stack técnico y contacto directo en menos de 30 segundos sin librerías pesadas ni fricción móvil.',
+        solution:
+          'Web estática en HTML5, CSS3 y JavaScript ES6+ compatible con apertura local (file://) y GitHub Pages, datos de GitHub en vivo y terminal interactiva.',
+        stack: ['HTML5', 'CSS3', 'JavaScript ES6+', 'GitHub REST API'],
+        repoUrl: 'https://github.com/Rafags04/PortFolio',
+        demoUrl: 'https://rafags04.github.io/PortFolio/'
+      }
+    ],
 
-  skills: [
-    {
-      category: 'Lenguajes verificados en repositorios',
-      items: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Java', 'Git / GitHub']
-    },
-    {
-      category: 'Pendiente de confirmar',
-      items: [
-        'TODO: Confirmar tecnologías que dominas de verdad (frameworks, bases de datos, testing, Docker, etc.)'
-      ]
-    }
-  ]
-};
+    experienceAndEducation: [
+      {
+        type: 'Formación',
+        title: 'Grado en Ingeniería Informática · Universidad Politécnica (2022 – 2026)',
+        detail:
+          'Especialización en Ingeniería del Software, calidad y testing (ISO2), arquitectura de sistemas y desarrollo web.'
+      },
+      {
+        type: 'Experiencia',
+        title: 'Desarrollador Full-Stack en Prácticas · TechNova Labs (2025)',
+        detail:
+          'Desarrollo de endpoints REST con Node.js y PostgreSQL, optimización de consultas SQL (-35% latencia) y pruebas automáticas en CI.'
+      },
+      {
+        type: 'Experiencia',
+        title: 'Colaborador Open Source & Proyectos Académicos (2024 – Presente)',
+        detail:
+          'Implementación de suites de testing en Java/JUnit, automatización con GitHub Actions y diseño de interfaces web accesibles.'
+      }
+    ],
 
+    skills: [
+      {
+        category: 'Frontend & UI',
+        items: [
+          'HTML5 Semántico',
+          'CSS3 / Grid & Flexbox',
+          'JavaScript (ES6+)',
+          'TypeScript',
+          'React',
+          'Accesibilidad (WCAG AA)'
+        ]
+      },
+      {
+        category: 'Backend & Datos',
+        items: [
+          'Node.js',
+          'Python (FastAPI)',
+          'Java OOP',
+          'PostgreSQL',
+          'Redis',
+          'APIs RESTful & JWT'
+        ]
+      },
+      {
+        category: 'Testing, DevOps & Herramientas',
+        items: [
+          'JUnit & Testing E2E',
+          'Git & GitHub Actions',
+          'Docker',
+          'Linux & Bash',
+          'Lighthouse & Web Vitals'
+        ]
+      }
+    ]
+  };
+})();

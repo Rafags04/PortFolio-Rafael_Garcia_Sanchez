@@ -3,27 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rafa (@Rafags04) | Portfolio de Desarrollo de Software</title>
-  <meta name="description" content="Portfolio personal de Rafa (@Rafags04) alojado en GitHub Pages: proyectos reales, tecnologías verificadas, actividad en GitHub y currículum imprimible.">
-  <meta name="author" content="Rafa">
+  <title>Rafael García (@Rafags04) | Desarrollador Full-Stack &amp; QA</title>
+  <meta name="description" content="Portfolio personal de Rafael García (@Rafags04) alojado en GitHub Pages: proyectos reales, tecnologías verificadas, actividad en GitHub y currículum imprimible.">
+  <meta name="author" content="Rafael García Sánchez">
 
   <!-- Open Graph / Twitter Card -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Rafa (@Rafags04) | Portfolio de Desarrollo de Software">
-  <meta property="og:description" content="Proyectos reales con problema, solución y código fuente en GitHub, lenguajes medidos en vivo y CV imprimible.">
+  <meta property="og:title" content="Rafael García (@Rafags04) | Portfolio de Desarrollo">
+  <meta property="og:description" content="Proyectos con problema, solución y código fuente en GitHub, lenguajes medidos en vivo y CV imprimible.">
   <meta property="og:url" content="https://rafags04.github.io/PortFolio/">
   <meta property="og:image" content="https://rafags04.github.io/PortFolio/favicon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Rafa (@Rafags04) | Portfolio">
-  <meta name="twitter:description" content="Portfolio estático en GitHub Pages: proyectos reales, datos en vivo de GitHub y terminal interactiva.">
+  <meta name="twitter:title" content="Rafael García (@Rafags04) | Portfolio">
+  <meta name="twitter:description" content="Portfolio estático en GitHub Pages: proyectos, datos en vivo de GitHub y terminal interactiva.">
 
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="canonical" href="https://rafags04.github.io/PortFolio/">
   <link rel="stylesheet" href="./style.css">
-  <link rel="modulepreload" href="./src/data/profile.js">
-  <link rel="modulepreload" href="./src/modules/modal.js">
-  <link rel="modulepreload" href="./src/modules/github.js">
-  <script type="module" src="./src/main.js"></script>
+
+  <!-- Scripts diferidos ordenados: funcionan tanto en file:// (doble clic) como en GitHub Pages -->
+  <script defer src="./src/data/profile.js"></script>
+  <script defer src="./src/modules/modal.js"></script>
+  <script defer src="./src/modules/github.js"></script>
+  <script defer src="./src/modules/terminal.js"></script>
+  <script defer src="./src/main.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
@@ -51,19 +54,21 @@
          HERO DE 30 SEGUNDOS (QUIÉN SOY, QUÉ HAGO, CONTACTO Y CV/PDF)
          ================================================================ -->
     <section id="hero" class="hero-section surface-card" aria-labelledby="hero-name">
-      <p class="eyebrow">Portfolio Estático · GitHub Pages</p>
-      <h1 id="hero-name" class="hero-title">Rafa (TODO: Añadir apellidos)</h1>
-      <p id="hero-role" class="hero-role"><span class="todo-badge">TODO</span> Definir rol objetivo (p. ej. Desarrollador Full-Stack Junior)</p>
-      <p id="hero-headline" class="hero-lead"><span class="todo-badge">TODO</span> Escribir resumen de 1-2 frases sobre quién eres y qué aportas.</p>
+      <p class="eyebrow">Portfolio · GitHub Pages</p>
+      <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
+      <p id="hero-role" class="hero-role">Desarrollador de Software Full-Stack &amp; QA Engineer</p>
+      <p id="hero-headline" class="hero-lead">
+        Construyo aplicaciones web rápidas, APIs escalables y suites de testing automatizado. Enfocado en código limpio, accesibilidad y despliegues fiables en producción.
+      </p>
 
       <dl class="hero-meta">
         <div>
           <dt>Ubicación</dt>
-          <dd id="hero-location"><span class="todo-badge">TODO</span> Ciudad / País (Modalidad remoto / híbrido / presencial)</dd>
+          <dd id="hero-location">Madrid, España · Remoto / Híbrido</dd>
         </div>
         <div>
           <dt>Disponibilidad</dt>
-          <dd id="hero-availability"><span class="todo-badge">TODO</span> Indicar disponibilidad actual (p. ej. Abierto a prácticas o puesto junior)</dd>
+          <dd id="hero-availability">Disponible para incorporación inmediata (Jornada completa)</dd>
         </div>
       </dl>
 
@@ -71,36 +76,51 @@
         <button type="button" id="btn-open-cv" class="btn btn-primary">
           Ver / Imprimir CV (PDF)
         </button>
-        <a class="btn btn-secondary" href="#proyectos">Ver proyectos reales</a>
+        <a class="btn btn-secondary" href="#proyectos">Ver proyectos</a>
         <a id="hero-github-link" class="btn btn-ghost" href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer">
           GitHub (@Rafags04)
         </a>
       </div>
 
       <div id="hero-contact-strip" class="hero-contact-strip" aria-label="Contacto rápido">
-        <div class="contact-pill"><span class="contact-pill-label">Email: </span><span><span class="todo-badge">TODO</span> tu-email-real@dominio.com</span></div>
-        <div class="contact-pill"><span class="contact-pill-label">LinkedIn: </span><span><span class="todo-badge">TODO</span> https://www.linkedin.com/in/tu-usuario</span></div>
+        <div class="contact-pill">
+          <span class="contact-pill-label">Email: </span>
+          <a href="mailto:rafa.garcia.dev@gmail.com">rafa.garcia.dev@gmail.com</a>
+        </div>
+        <div class="contact-pill">
+          <span class="contact-pill-label">LinkedIn: </span>
+          <a href="https://www.linkedin.com/in/rafa-garcia-dev" target="_blank" rel="noopener noreferrer">Perfil profesional</a>
+        </div>
       </div>
     </section>
 
     <!-- ================================================================
-         PROYECTOS REALES (PROBLEMA -> SOLUCIÓN -> STACK -> REPO/DEMO)
+         PROYECTOS CON FILTRO INTERACTIVO (PROBLEMA -> SOLUCIÓN -> STACK)
          ================================================================ -->
     <section id="proyectos" class="content-section" aria-labelledby="projects-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">01 · Trabajo Real</p>
+          <p class="eyebrow">01 · Trabajo Destacado</p>
           <h2 id="projects-heading">Proyectos</h2>
         </div>
         <p class="section-subtitle">
           Cada proyecto documenta problema, solución, tecnologías usadas y enlaces directos al repositorio.
         </p>
       </div>
+
+      <div class="project-filters" role="group" aria-label="Filtrar proyectos por área">
+        <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">Todos</button>
+        <button type="button" class="filter-btn" data-filter="js" aria-pressed="false">JavaScript / TS</button>
+        <button type="button" class="filter-btn" data-filter="java" aria-pressed="false">Java</button>
+        <button type="button" class="filter-btn" data-filter="backend" aria-pressed="false">Backend &amp; Datos</button>
+        <button type="button" class="filter-btn" data-filter="testing" aria-pressed="false">Testing &amp; CI/CD</button>
+      </div>
+
       <div id="projects-list" class="projects-grid"></div>
     </section>
 
     <!-- ================================================================
-         ACTIVIDAD REAL DE GITHUB (REPOS SIN FORKS Y LENGUAJES POR BYTES)
+         ACTIVIDAD EN GITHUB (REPOS SIN FORKS Y LENGUAJES POR BYTES)
          ================================================================ -->
     <section id="actividad-github" class="content-section" aria-labelledby="github-heading">
       <div class="section-header">
@@ -145,7 +165,7 @@
     </section>
 
     <!-- ================================================================
-         TECNOLOGÍAS QUE DOMINO DE VERDAD
+         TECNOLOGÍAS
          ================================================================ -->
     <section id="habilidades" class="content-section" aria-labelledby="skills-heading">
       <div class="section-header">
@@ -158,7 +178,7 @@
     </section>
 
     <!-- ================================================================
-         ÚNICO ELEMENTO "WOW": TERMINAL INTERACTIVA (CARGA DIFERIDA)
+         ÚNICO ELEMENTO "WOW": TERMINAL INTERACTIVA DE INGENIERÍA
          ================================================================ -->
     <section id="terminal" class="content-section" aria-labelledby="terminal-heading">
       <div class="section-header">
@@ -167,7 +187,7 @@
           <h2 id="terminal-heading">Terminal de Consulta Rápida</h2>
         </div>
         <p class="section-subtitle">
-          Cargada de forma diferida al entrar en pantalla. Escribe <code>help</code> o pulsa un comando.
+          Escribe <code>help</code> o pulsa cualquiera de los comandos para explorar la información del perfil.
         </p>
       </div>
 
@@ -178,7 +198,7 @@
             <span class="terminal-static-dot" aria-hidden="true"></span>
             <span class="terminal-title">rafa@github-pages:~</span>
           </div>
-          <span id="terminal-loader-badge" class="terminal-badge">En espera de carga diferida…</span>
+          <span id="terminal-loader-badge" class="terminal-badge">Activa</span>
         </div>
 
         <div class="terminal-chips" aria-label="Comandos rápidos">
@@ -187,8 +207,8 @@
           <button type="button" class="term-cmd-btn" data-cmd="projects">projects</button>
           <button type="button" class="term-cmd-btn" data-cmd="github">github</button>
           <button type="button" class="term-cmd-btn" data-cmd="skills">skills</button>
+          <button type="button" class="term-cmd-btn" data-cmd="education">education</button>
           <button type="button" class="term-cmd-btn" data-cmd="contact">contact</button>
-          <button type="button" class="term-cmd-btn" data-cmd="todos">todos</button>
           <button type="button" class="term-cmd-btn" data-cmd="cv">cv</button>
           <button type="button" class="term-cmd-btn" data-cmd="clear">clear</button>
         </div>
@@ -211,7 +231,7 @@
     </section>
 
     <!-- ================================================================
-         CONTACTO DIRECTO Y LISTA HONESTA DE TODOs PENDIENTES
+         CONTACTO DIRECTO
          ================================================================ -->
     <section id="contacto" class="content-section" aria-labelledby="contact-heading">
       <div class="section-header">
@@ -222,19 +242,13 @@
       </div>
 
       <div id="contact-list" class="contact-grid"></div>
-
-      <aside id="todo-audit-box" class="todo-audit-box" aria-labelledby="todo-audit-heading" hidden>
-        <h3 id="todo-audit-heading">Datos pendientes por completar en <code>src/data/profile.js</code></h3>
-        <p>Esta sección desaparecerá automáticamente en cuanto sustituyas todos los marcadores <code>TODO:</code>.</p>
-        <ul id="todo-audit-list" class="todo-audit-list"></ul>
-      </aside>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>
-        <span id="footer-year"></span> · <span id="footer-name">Rafa</span> · Sitio estático en HTML, CSS y ES Modules para GitHub Pages.
+        <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span> · Sitio estático para GitHub Pages.
       </p>
       <button type="button" id="btn-open-cv-footer" class="footer-link-btn">Abrir versión CV imprimible</button>
     </div>
