@@ -283,6 +283,9 @@
         appendLine(`${en ? 'Phone' : 'Teléfono'}:   ${profile.contact.phone}`, 'accent');
         appendLine(`Email:     ${profile.contact.email}`);
         appendLine(`${en ? 'Location' : 'Ubicación'}: ${profile.contact.location}`);
+        if (profile.contact.linkedinUrl) {
+          appendLine(`LinkedIn:  ${profile.contact.linkedinUrl}`);
+        }
         appendLine(`GitHub:    ${profile.contact.githubUrl}`);
         return;
       }

@@ -340,37 +340,36 @@
       </div>
     </section>
 
-    <!-- ================================================================
-         06 · CONTACTO DIRECTO
-         ================================================================ -->
-    <section id="contacto" class="content-section" aria-labelledby="contact-heading">
-      <div class="section-header">
-        <div>
-          <p class="eyebrow" data-i18n="contactEyebrow">06 · Contacto Directo</p>
-          <h2 id="contact-heading" data-i18n="contactHeading">Contacto</h2>
-        </div>
-        <a
-          class="btn btn-primary btn-sm"
-          href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
-          download="CV-Rafael-Garcia-Sanchez.pdf"
-          data-i18n="contactDownloadPdf"
-        >
-          Descargar CV en PDF
-        </a>
-      </div>
-
-      <div id="contact-list" class="contact-grid"></div>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>
-        <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span> · <span data-i18n="footerText">Portfolio en GitHub Pages.</span>
-      </p>
-      <div class="footer-actions">
-        <a class="footer-link-btn" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer" data-i18n="footerOpenPdf">Abrir PDF original</a>
-        <button type="button" id="btn-open-cv-footer" class="footer-link-btn" data-i18n="footerQuickCv">Vista rápida CV</button>
+  <footer id="contacto" class="site-footer" aria-labelledby="contact-heading">
+    <div class="container footer-minimal">
+      <div class="footer-top">
+        <h2 id="contact-heading" class="visually-hidden" data-i18n="contactHeading">Contacto</h2>
+        <div id="contact-list" class="footer-contact-list"></div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span>
+        </p>
+        <div class="footer-links">
+          <a
+            id="footer-download-cv"
+            class="footer-text-link"
+            href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
+            download="CV-Rafael-Garcia-Sanchez.pdf"
+            data-i18n="contactDownloadPdf"
+          >
+            CV (PDF)
+          </a>
+          <span class="footer-sep" aria-hidden="true">·</span>
+          <button type="button" id="btn-open-cv-footer" class="footer-text-link" data-i18n="footerQuickCv">
+            Vista rápida CV
+          </button>
+          <span class="footer-sep" aria-hidden="true">·</span>
+          <a class="footer-text-link" href="#hero" data-i18n="footerBackTop">↑ Arriba</a>
+        </div>
       </div>
     </div>
   </footer>
