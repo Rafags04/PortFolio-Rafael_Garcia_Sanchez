@@ -240,8 +240,6 @@
       if (cmd === 'skills') {
         appendLine(en ? 'Technical skills (CV):' : 'Habilidades técnicas (CV):', 'accent');
         appendLine(`  ${profile.technicalSkills.join(' · ')}`);
-        appendLine(en ? 'Applied GitHub stack:' : 'Tecnologías aplicadas en repositorios:', 'accent');
-        appendLine(`  ${profile.appliedStack.join(' · ')}`);
         appendLine('Soft skills:', 'accent');
         appendLine(`  ${profile.softSkills.join(' · ')}`);
         return;

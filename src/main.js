@@ -80,15 +80,14 @@
 
   function renderHero() {
     const profile = P();
+    const s = S();
     const avatarEl = document.getElementById('hero-avatar');
     const nameEl = document.getElementById('hero-name');
     const roleEl = document.getElementById('hero-role');
     const aboutEl = document.getElementById('hero-about');
-    const badgesEl = document.getElementById('hero-badges-list');
-    const phoneLink = document.getElementById('hero-phone-link');
-    const emailLink = document.getElementById('hero-email-link');
     const ghLink = document.getElementById('hero-github-link');
     const downloadCvBtn = document.getElementById('btn-download-cv');
+    const openCvBtn = document.getElementById('btn-open-cv');
 
     if (avatarEl && profile.avatar) {
       avatarEl.src = profile.avatar;
@@ -98,44 +97,29 @@
     if (roleEl) roleEl.textContent = `${profile.role} · ${profile.institution}`;
     if (aboutEl) aboutEl.textContent = profile.about;
 
-    if (badgesEl && Array.isArray(profile.heroBadges)) {
-      badgesEl.textContent = '';
-      for (const b of profile.heroBadges) {
-        const li = document.createElement('li');
-        li.className = 'badge-pill';
-        li.textContent = b;
-        badgesEl.appendChild(li);
+    if (downloadCvBtn) {
+      if (profile.contact.cvPdfUrl) {
+        downloadCvBtn.href = profile.contact.cvPdfUrl;
       }
+      downloadCvBtn.textContent = '';
+      downloadCvBtn.append(
+        createContactIcon('download'),
+        document.createTextNode(s.heroDownloadCv)
+      );
     }
-
-    if (phoneLink) {
-      phoneLink.href = profile.contact.phoneHref;
-      phoneLink.textContent = profile.contact.phone;
-    }
-    if (emailLink) {
-      emailLink.href = `mailto:${profile.contact.email}`;
-      emailLink.textContent = profile.contact.email;
+    if (openCvBtn) {
+      openCvBtn.textContent = '';
+      openCvBtn.append(
+        createContactIcon('cv'),
+        document.createTextNode(s.heroOpenCv)
+      );
     }
     if (ghLink) {
       ghLink.href = profile.contact.githubUrl;
-      ghLink.textContent = `GitHub (@${profile.contact.githubUser})`;
-    }
-    if (downloadCvBtn && profile.contact.cvPdfUrl) {
-      downloadCvBtn.href = profile.contact.cvPdfUrl;
-    }
-  }
-
-  function setupQuickCopyButtons() {
-    const copyPhoneBtn = document.getElementById('btn-copy-phone');
-    const copyEmailBtn = document.getElementById('btn-copy-email');
-    if (copyPhoneBtn) {
-      copyPhoneBtn.addEventListener('click', () =>
-        copyToClipboard(P().contact.phone, S().contactPhoneLabel)
-      );
-    }
-    if (copyEmailBtn) {
-      copyEmailBtn.addEventListener('click', () =>
-        copyToClipboard(P().contact.email, 'Email')
+      ghLink.textContent = '';
+      ghLink.append(
+        createContactIcon('github'),
+        document.createTextNode(`GitHub (@${profile.contact.githubUser})`)
       );
     }
   }
@@ -583,7 +567,6 @@
 
   function renderCompetencies() {
     const profile = P();
-    const s = S();
 
     const techList = document.getElementById('tech-skills-list');
     if (techList) {
@@ -592,31 +575,6 @@
         const li = document.createElement('li');
         li.textContent = skill;
         techList.appendChild(li);
-      }
-    }
-
-    const appliedList = document.getElementById('applied-stack-list');
-    if (appliedList) {
-      appliedList.textContent = '';
-      for (const tech of profile.appliedStack) {
-        const li = document.createElement('li');
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'tag tag-interactive';
-        btn.textContent = tech;
-        btn.title = tpl(s.toastFilteredBy, { tech });
-        btn.addEventListener('click', () => {
-          state.projectFilter = 'all';
-          state.projectQuery = tech;
-          updateProjectFilterButtons('all');
-          const searchInput = document.getElementById('project-search');
-          if (searchInput) searchInput.value = tech;
-          renderProjects();
-          document.getElementById('proyectos-destacados')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          showToast(tpl(S().toastFilteredBy, { tech }));
-        });
-        li.appendChild(btn);
-        appliedList.appendChild(li);
       }
     }
 
@@ -670,7 +628,7 @@
     }
   }
 
-  function createFooterIcon(type) {
+  function createContactIcon(type) {
     const ns = 'http://www.w3.org/2000/svg';
     const isCopy = type === 'copy';
     const svg = document.createElementNS(ns, 'svg');
@@ -701,6 +659,21 @@
         ['rect', { width: '4', height: '12', x: '2', y: '9' }],
         ['circle', { cx: '4', cy: '4', r: '2' }]
       ],
+      github: [
+        ['path', { d: 'M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4' }],
+        ['path', { d: 'M9 18c-4.51 2-5-2-7-2' }]
+      ],
+      download: [
+        ['path', { d: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' }],
+        ['polyline', { points: '7 10 12 15 17 10' }],
+        ['line', { x1: '12', x2: '12', y1: '15', y2: '3' }]
+      ],
+      cv: [
+        ['path', { d: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z' }],
+        ['polyline', { points: '14 2 14 8 20 8' }],
+        ['line', { x1: '16', x2: '8', y1: '13', y2: '13' }],
+        ['line', { x1: '16', x2: '8', y1: '17', y2: '17' }]
+      ],
       copy: [
         ['rect', { width: '14', height: '14', x: '8', y: '8', rx: '2', ry: '2' }],
         ['path', { d: 'M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2' }]
@@ -717,12 +690,11 @@
     return svg;
   }
 
-  function renderContact() {
+  function populateContactList(containerEl) {
+    if (!containerEl) return;
     const profile = P();
     const s = S();
-    const contactList = document.getElementById('contact-list');
-    if (!contactList) return;
-    contactList.textContent = '';
+    containerEl.textContent = '';
 
     const entries = [
       {
@@ -765,7 +737,7 @@
       const iconBox = document.createElement('span');
       iconBox.className = 'footer-icon-box';
       iconBox.setAttribute('aria-hidden', 'true');
-      iconBox.appendChild(createFooterIcon(entry.icon));
+      iconBox.appendChild(createContactIcon(entry.icon));
 
       const heading = document.createElement('span');
       heading.className = 'visually-hidden footer-item-label';
@@ -796,14 +768,18 @@
         copyBtn.className = 'footer-copy-btn';
         copyBtn.setAttribute('aria-label', `${s.copyBtn}: ${entry.label}`);
         copyBtn.title = s.copyBtn;
-        copyBtn.appendChild(createFooterIcon('copy'));
+        copyBtn.appendChild(createContactIcon('copy'));
         copyBtn.addEventListener('click', () => copyToClipboard(entry.value, entry.copyLabel));
         valueBox.appendChild(copyBtn);
       }
 
       item.append(iconBox, heading, valueBox);
-      contactList.appendChild(item);
+      containerEl.appendChild(item);
     }
+  }
+
+  function renderContact() {
+    populateContactList(document.getElementById('contact-list'));
   }
 
   function renderCvSheet() {
@@ -905,15 +881,10 @@
   }
 
   function renderFooter() {
-    const profile = P();
     const yearEl = document.getElementById('footer-year');
     const nameEl = document.getElementById('footer-name');
-    const footerDlBtn = document.getElementById('footer-download-cv');
     if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-    if (nameEl) nameEl.textContent = profile.name;
-    if (footerDlBtn && profile.contact && profile.contact.cvPdfUrl) {
-      footerDlBtn.href = profile.contact.cvPdfUrl;
-    }
+    if (nameEl) nameEl.textContent = P().name;
   }
 
   function updateThemeButtonLabel() {
@@ -1063,7 +1034,6 @@
   }
 
   function initApp() {
-    setupQuickCopyButtons();
     setupProjectModal();
     setupProjectControls();
     setupCourseFilters();
@@ -1074,13 +1044,11 @@
 
     const cvModal = Portfolio.createAccessibleModal('cv-modal');
     const openBtn = document.getElementById('btn-open-cv');
-    const openFooterBtn = document.getElementById('btn-open-cv-footer');
     const closeTopBtn = document.getElementById('btn-close-cv-top');
     const closeBottomBtn = document.getElementById('btn-close-cv');
     const printBtn = document.getElementById('btn-print-cv');
 
     if (openBtn) openBtn.addEventListener('click', () => cvModal.open(openBtn));
-    if (openFooterBtn) openFooterBtn.addEventListener('click', () => cvModal.open(openFooterBtn));
     if (closeTopBtn) closeTopBtn.addEventListener('click', () => cvModal.close());
     if (closeBottomBtn) closeBottomBtn.addEventListener('click', () => cvModal.close());
     if (printBtn) printBtn.addEventListener('click', () => window.print());

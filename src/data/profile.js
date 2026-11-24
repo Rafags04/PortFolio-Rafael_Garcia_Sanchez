@@ -29,7 +29,6 @@
       contact: SHARED_CONTACT,
       heroBadges: [
         'UCLM · Ing. Informática',
-        'Ciudad Real, 13003',
         'Inglés Avanzado (B2)',
         'Disponibilidad total'
       ],
@@ -146,7 +145,6 @@
       contact: SHARED_CONTACT,
       heroBadges: [
         'UCLM · Computer Eng.',
-        'Ciudad Real, Spain (13003)',
         'English Upper-Intermediate (B2)',
         'Full availability'
       ],

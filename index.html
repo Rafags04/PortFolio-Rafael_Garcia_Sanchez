@@ -65,36 +65,16 @@
          ================================================================ -->
     <section id="hero" class="hero-section surface-card" aria-labelledby="hero-name">
       <div class="hero-grid">
-        <aside class="hero-identity" aria-label="Ficha de identidad">
-          <div class="hero-avatar-wrap">
-            <img
-              id="hero-avatar"
-              src="./assets/profile-rafa.png"
-              alt="Retrato de Rafael García Sánchez"
-              width="160"
-              height="160"
-              class="hero-avatar"
-            >
-          </div>
-
-          <ul id="hero-badges-list" class="hero-badges" aria-label="Resumen rápido">
-            <li class="badge-pill">UCLM · Ing. Informática</li>
-            <li class="badge-pill">Ciudad Real, 13003</li>
-            <li class="badge-pill">Inglés Avanzado (B2)</li>
-            <li class="badge-pill">Disponibilidad total</li>
-          </ul>
-
-          <div class="hero-quick-contact">
-            <div class="quick-contact-row">
-              <a id="hero-phone-link" href="tel:+34644410602">(+34) 644 41 06 02</a>
-              <button type="button" id="btn-copy-phone" class="btn btn-ghost btn-xs" data-i18n="copyBtn">Copiar</button>
-            </div>
-            <div class="quick-contact-row">
-              <a id="hero-email-link" href="mailto:rafags0407@gmail.com">rafags0407@gmail.com</a>
-              <button type="button" id="btn-copy-email" class="btn btn-ghost btn-xs" data-i18n="copyBtn">Copiar</button>
-            </div>
-          </div>
-        </aside>
+        <div class="hero-avatar-wrap">
+          <img
+            id="hero-avatar"
+            src="./assets/profile-rafa.png"
+            alt="Retrato de Rafael García Sánchez"
+            width="168"
+            height="168"
+            class="hero-avatar"
+          >
+        </div>
 
         <div class="hero-main">
           <p class="eyebrow" data-i18n="heroEyebrow">Currículum &amp; Portfolio · GitHub Pages</p>
@@ -114,16 +94,12 @@
               class="btn btn-primary"
               href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
               download="CV-Rafael-Garcia-Sanchez.pdf"
-              data-i18n="heroDownloadCv"
             >
               Descargar CV Original (PDF)
             </a>
-            <button type="button" id="btn-open-cv" class="btn btn-secondary" data-i18n="heroOpenCv">
+            <button type="button" id="btn-open-cv" class="btn btn-secondary">
               Vista Rápida / Imprimir CV
             </button>
-            <a class="btn btn-secondary" href="#proyectos-destacados" data-i18n="heroProjectsBtn">
-              Proyectos Destacados
-            </a>
             <a
               id="hero-github-link"
               class="btn btn-ghost"
@@ -254,17 +230,12 @@
           <p class="eyebrow" data-i18n="compEyebrow">04 · Perfil Completo</p>
           <h2 id="competencies-heading" data-i18n="compHeading">Habilidades, Idiomas y Más Información</h2>
         </div>
-        <p class="section-subtitle" data-i18n="compSubtitle">
-          Pulsa cualquier tecnología aplicada para filtrar los proyectos destacados donde se utiliza.
-        </p>
       </div>
 
       <div class="competencies-grid">
         <article class="surface-card" aria-labelledby="tech-skills-heading">
           <h3 id="tech-skills-heading" data-i18n="techSkillsHeading">Habilidades Técnicas (CV)</h3>
           <ul id="tech-skills-list" class="bullet-list"></ul>
-          <h4 class="mini-subheading" data-i18n="appliedStackHeading">Herramientas aplicadas en GitHub</h4>
-          <ul id="applied-stack-list" class="tag-list"></ul>
         </article>
 
         <article class="surface-card" aria-labelledby="soft-skills-heading">
@@ -353,23 +324,7 @@
         <p class="footer-copy">
           <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span>
         </p>
-        <div class="footer-links">
-          <a
-            id="footer-download-cv"
-            class="footer-text-link"
-            href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
-            download="CV-Rafael-Garcia-Sanchez.pdf"
-            data-i18n="contactDownloadPdf"
-          >
-            CV (PDF)
-          </a>
-          <span class="footer-sep" aria-hidden="true">·</span>
-          <button type="button" id="btn-open-cv-footer" class="footer-text-link" data-i18n="footerQuickCv">
-            Vista rápida CV
-          </button>
-          <span class="footer-sep" aria-hidden="true">·</span>
-          <a class="footer-text-link" href="#hero" data-i18n="footerBackTop">↑ Arriba</a>
-        </div>
+        <a class="footer-text-link" href="#hero" data-i18n="footerBackTop">↑ Arriba</a>
       </div>
     </div>
   </footer>
