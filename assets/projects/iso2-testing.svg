@@ -1,52 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Captura de interfaz de la suite de testing ISO2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Captura del proyecto ISO2-2025GrupoB.03-Testing-P2 en Java y JUnit 5">
   <defs>
-    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0b1120"/>
-      <stop offset="100%" stop-color="#111827"/>
+    <linearGradient id="navyBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071324"/>
+      <stop offset="100%" stop-color="#0d213d"/>
     </linearGradient>
   </defs>
-  <rect width="800" height="450" fill="url(#bg1)"/>
-  <!-- Barra superior -->
-  <rect x="24" y="20" width="752" height="44" rx="10" fill="#0f172a" stroke="#1e293b"/>
+  <rect width="800" height="450" fill="url(#navyBg)"/>
+
+  <!-- Barra superior IDE -->
+  <rect x="24" y="20" width="752" height="44" rx="10" fill="#0a192f" stroke="#1e3a5f"/>
   <circle cx="48" cy="42" r="6" fill="#ef4444"/>
   <circle cx="68" cy="42" r="6" fill="#f59e0b"/>
   <circle cx="88" cy="42" r="6" fill="#22c55e"/>
-  <text x="116" y="47" font-family="ui-monospace, monospace" font-size="14" fill="#cbd5e1">ISO2-2025GrupoB.03-Testing-P2 — JUnit Runner</text>
-  <rect x="650" y="30" width="110" height="24" rx="12" fill="#052e16" stroke="#16a34a"/>
-  <text x="705" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#86efac">ALL PASSED</text>
+  <text x="114" y="47" font-family="ui-monospace, monospace" font-size="13.5" fill="#e2e8f0">ISO2-2025GrupoB.03-Testing-P2 · Java &amp; JUnit 5 (Maven)</text>
+  <rect x="646" y="30" width="114" height="24" rx="12" fill="#052e16" stroke="#16a34a"/>
+  <text x="703" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="#86efac">JUNIT 5.10.0</text>
 
-  <!-- Panel izquierdo: árbol de tests -->
-  <rect x="24" y="80" width="270" height="346" rx="10" fill="#0f172a" stroke="#1e293b"/>
-  <text x="44" y="110" font-family="ui-monospace, monospace" font-size="13" font-weight="700" fill="#38bdf8">TEST SUITES</text>
-  <rect x="40" y="128" width="238" height="36" rx="6" fill="#1e293b"/>
-  <circle cx="58" cy="146" r="5" fill="#22c55e"/>
-  <text x="72" y="151" font-family="ui-monospace, monospace" font-size="12" fill="#f8fafc">AuthServiceTest.java</text>
-  <circle cx="58" cy="188" r="5" fill="#22c55e"/>
-  <text x="72" y="193" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">OrderFlowTest.java</text>
-  <circle cx="58" cy="228" r="5" fill="#22c55e"/>
-  <text x="72" y="233" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">BoundaryValuesTest.java</text>
-  <circle cx="58" cy="268" r="5" fill="#22c55e"/>
-  <text x="72" y="273" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">EquivalenceClassTest.java</text>
-  <circle cx="58" cy="308" r="5" fill="#22c55e"/>
-  <text x="72" y="313" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">UiIntegration.spec.js</text>
+  <!-- Explorador de archivos reales -->
+  <rect x="24" y="80" width="268" height="346" rx="10" fill="#0a192f" stroke="#1e3a5f"/>
+  <text x="42" y="110" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#38bdf8">SRC / MAIN &amp; TEST</text>
 
-  <!-- Panel derecho: métricas y cobertura -->
-  <rect x="312" y="80" width="464" height="156" rx="10" fill="#0f172a" stroke="#1e293b"/>
-  <text x="334" y="110" font-family="ui-monospace, monospace" font-size="13" font-weight="700" fill="#38bdf8">COBERTURA &amp; MÉTRICAS DE CALIDAD</text>
-  <text x="334" y="148" font-family="sans-serif" font-size="28" font-weight="700" fill="#22c55e">94.6%</text>
-  <text x="334" y="170" font-family="ui-monospace, monospace" font-size="12" fill="#94a3b8">Líneas cubiertas</text>
-  <text x="500" y="148" font-family="sans-serif" font-size="28" font-weight="700" fill="#38bdf8">48 / 48</text>
-  <text x="500" y="170" font-family="ui-monospace, monospace" font-size="12" fill="#94a3b8">Casos superados</text>
-  <text x="650" y="148" font-family="sans-serif" font-size="28" font-weight="700" fill="#f8fafc">1.2s</text>
-  <text x="650" y="170" font-family="ui-monospace, monospace" font-size="12" fill="#94a3b8">Tiempo total</text>
-  <rect x="334" y="194" width="420" height="12" rx="6" fill="#1e293b"/>
-  <rect x="334" y="194" width="396" height="12" rx="6" fill="#22c55e"/>
+  <rect x="38" y="126" width="240" height="34" rx="6" fill="#132c4e"/>
+  <text x="52" y="148" font-family="ui-monospace, monospace" font-size="12" fill="#f8fafc">CalculadoraTarifas.java</text>
+  <text x="52" y="184" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">Cliente.java</text>
+  <text x="52" y="214" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">Tarifa.java</text>
+  <text x="52" y="244" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">Main.java</text>
 
-  <!-- Panel inferior derecho: consola -->
-  <rect x="312" y="252" width="464" height="174" rx="10" fill="#060911" stroke="#1e293b"/>
-  <text x="334" y="282" font-family="ui-monospace, monospace" font-size="12" fill="#38bdf8">$ mvn test -Dsuite=regression</text>
-  <text x="334" y="310" font-family="ui-monospace, monospace" font-size="12" fill="#86efac">[INFO] Running com.iso2.testing.EquivalenceClassTest</text>
-  <text x="334" y="334" font-family="ui-monospace, monospace" font-size="12" fill="#86efac">[PASS] Tests run: 16, Failures: 0, Errors: 0</text>
-  <text x="334" y="358" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">[INFO] JaCoCo report generated -> target/site/jacoco</text>
-  <text x="334" y="390" font-family="ui-monospace, monospace" font-size="13" font-weight="700" fill="#22c55e">BUILD SUCCESS</text>
+  <line x1="42" y1="264" x2="270" y2="264" stroke="#1e3a5f"/>
+  <text x="42" y="288" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="#86efac">JUNIT TEST SUITE</text>
+  <text x="52" y="318" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">CalculadoraTarifaTest.java</text>
+  <text x="52" y="348" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">MainTest.java</text>
+  <text x="52" y="378" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">AppTest.java</text>
+
+  <!-- Lógica de tarifas reales -->
+  <rect x="310" y="80" width="466" height="162" rx="10" fill="#0a192f" stroke="#1e3a5f"/>
+  <text x="332" y="108" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#38bdf8">REGLAS DE TARIFAS EVALUADAS (iso2b3)</text>
+
+  <rect x="332" y="124" width="202" height="44" rx="6" fill="#0f2340" stroke="#254875"/>
+  <text x="346" y="143" font-family="sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Tarifa "Pajarillo"</text>
+  <text x="346" y="160" font-family="ui-monospace, monospace" font-size="11" fill="#7dd3fc">edad &lt; 18 · vuelos &gt;= 6 · 10%</text>
+
+  <rect x="550" y="124" width="204" height="44" rx="6" fill="#0f2340" stroke="#254875"/>
+  <text x="564" y="143" font-family="sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Tarifa "Gorrión"</text>
+  <text x="564" y="160" font-family="ui-monospace, monospace" font-size="11" fill="#7dd3fc">18–25 estudiante · turista · 15%</text>
+
+  <rect x="332" y="180" width="202" height="44" rx="6" fill="#0f2340" stroke="#254875"/>
+  <text x="346" y="199" font-family="sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Conoce Europa / Mundo</text>
+  <text x="346" y="216" font-family="ui-monospace, monospace" font-size="11" fill="#7dd3fc">tramos ingresos &gt;20k / &gt;35k</text>
+
+  <rect x="550" y="180" width="204" height="44" rx="6" fill="#0f2340" stroke="#254875"/>
+  <text x="564" y="199" font-family="sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Maven Surefire &amp; pom.xml</text>
+  <text x="564" y="216" font-family="ui-monospace, monospace" font-size="11" fill="#86efac">org.junit.jupiter 5.10.0</text>
+
+  <!-- Consola de test -->
+  <rect x="310" y="258" width="466" height="168" rx="10" fill="#060d18" stroke="#1e3a5f"/>
+  <text x="332" y="286" font-family="ui-monospace, monospace" font-size="12" fill="#38bdf8">$ mvn test // CalculadoraTarifaTest.java</text>
+  <text x="332" y="314" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">Cliente(-3, -1, true, ..., -5000, "turista", "europa")</text>
+  <text x="332" y="338" font-family="ui-monospace, monospace" font-size="12" fill="#86efac">assertEquals(null, calc.calcularTarifa(cli)); // PASS</text>
+  <text x="332" y="366" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">Cliente(17, 2, false, ..., 20000, "", "", false)</text>
+  <text x="332" y="394" font-family="ui-monospace, monospace" font-size="12" fill="#86efac">Pruebas unitarias y de valores límite verificadas</text>
 </svg>

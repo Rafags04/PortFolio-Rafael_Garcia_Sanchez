@@ -1,170 +1,224 @@
 /**
- * Fuente única de datos del portfolio (datos de ejemplo completos).
- * Sustituye estos valores por tus datos reales cuando estés listo.
- * En cada proyecto puedes poner "image: './assets/projects/tu-foto.png'"
- * o "image: null" si no deseas mostrar captura en ese proyecto.
+ * Fuente única de datos reales del portfolio de Rafael García Sánchez.
+ * Extraído íntegramente de su CV oficial y repositorios en GitHub (@Rafags04).
+ *
+ * Cómo añadir un nuevo proyecto destacado de GitHub:
+ * 1) Añade un objeto nuevo dentro de "featuredProjects".
+ * 2) Pon "repoName" exactamente como se llama el repositorio en GitHub para
+ *    sincronizar automáticamente su fecha de actualización y lenguaje principal.
+ * 3) Guarda una captura en ./assets/projects/ y pon su ruta en "image"
+ *    (o deja "image: null" si prefieres tarjeta sin foto).
  */
 (function () {
   window.Portfolio = window.Portfolio || {};
 
   window.Portfolio.PROFILE = {
     name: 'Rafael García Sánchez',
-    shortName: 'Rafa',
-    role: 'Desarrollador de Software Full-Stack & QA Engineer',
-    headline:
-      'Construyo aplicaciones web rápidas, APIs escalables y suites de testing automatizado. Enfocado en código limpio, accesibilidad y despliegues fiables en producción.',
-    location: 'Madrid, España · Remoto / Híbrido',
-    availability: 'Disponible para incorporación inmediata (Jornada completa)',
+    shortName: 'Rafael García',
+    role: 'Estudiante de Ingeniería Informática',
+    institution: 'Universidad de Castilla-La Mancha (UCLM)',
+    avatar: './assets/profile-rafa.png',
+    about:
+      'Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.',
 
     contact: {
-      email: 'rafa.garcia.dev@gmail.com',
-      linkedin: 'https://www.linkedin.com/in/rafa-garcia-dev',
+      phone: '(+34) 644 41 06 02',
+      phoneHref: 'tel:+34644410602',
+      email: 'rafags0407@gmail.com',
+      location: 'Ciudad Real, 13003',
       githubUser: 'Rafags04',
       githubUrl: 'https://github.com/Rafags04',
-      cvPdfUrl: null
+      cvPdfUrl: './assets/CV-Rafael-Garcia-Sanchez.pdf'
     },
 
-    projects: [
+    featuredProjects: [
       {
         id: 'iso2-testing-p2',
-        title: 'ISO2-2025GrupoB.03-Testing-P2 — Suite de Calidad y Testing',
-        categories: ['java', 'js', 'testing'],
+        repoName: 'ISO2-2025GrupoB.03-Testing-P2',
+        featured: true,
+        title: 'ISO2-2025GrupoB.03-Testing-P2 — Calculadora de Tarifas & Testing JUnit 5',
+        categories: ['java', 'testing'],
         image: './assets/projects/iso2-testing.svg',
-        imageAlt: 'Panel de ejecución de pruebas JUnit y métricas de cobertura del proyecto ISO2',
+        imageAlt:
+          'Captura técnica del proyecto ISO2-2025GrupoB.03-Testing-P2 con CalculadoraTarifas.java y pruebas JUnit 5',
         problem:
-          'Falta de cobertura automatizada y validaciones inconsistentes en flujos críticos de negocio durante entregas continuas.',
+          'Validar de forma rigurosa la lógica de negocio de asignación de tarifas aéreas según múltiples condiciones combinadas (edad, frecuencia de vuelos, estudios, ingresos, destino y acompañantes).',
         solution:
-          'Diseño e implementación de pruebas unitarias, de integración y validación de interfaz con informes de cobertura automatizados.',
-        stack: ['Java', 'JUnit', 'JavaScript', 'HTML5', 'CSS3'],
+          'Implementación modular en Java (CalculadoraTarifas, Cliente, Tarifa) junto con una batería sistemática de casos de prueba unitarios en JUnit 5 (Jupiter) gestionada con Maven e informes técnicos.',
+        stack: ['Java', 'JUnit 5', 'Maven', 'Eclipse', 'HTML', 'Git'],
         highlights: [
-          'Diseño de casos mediante clases de equivalencia y valores límite.',
-          'Ejecución automática en Maven/JUnit con métricas de cobertura de ramas.',
-          'Validación de formularios frontend y casos de borde sin regresiones.'
+          'Diseño de casos de prueba con clases de equivalencia y valores límite en CalculadoraTarifaTest.',
+          'Separación clara de dominio entre Cliente, Tarifa y CalculadoraTarifas.',
+          'Configuración reproducible con Maven (pom.xml) y plugin Surefire para JUnit Jupiter 5.10.0.'
         ],
         codeSnippet:
-          '@Test\nvoid rejectsBoundaryOutOfRange() {\n  assertThrows(IllegalArgumentException.class,\n    () -> validator.checkRange(-1, 100));\n}',
+          '@Test\npublic void testCP1_1() {\n  CalculadoraTarifas calc = new CalculadoraTarifas();\n  Cliente cli = new Cliente(-3, -1, true, true, true, true, true, -5000, "turista", "europa", true);\n  Tarifa tarifa = calc.calcularTarifa(cli);\n  assertEquals(null, tarifa);\n}',
         repoUrl: 'https://github.com/Rafags04/ISO2-2025GrupoB.03-Testing-P2',
         demoUrl: null
       },
       {
-        id: 'pulse-metrics',
-        title: 'PulseMetrics — API REST & Telemetría en Tiempo Real',
-        categories: ['js', 'backend'],
-        image: './assets/projects/pulse-metrics.svg',
-        imageAlt: 'Dashboard de latencia P95 y rendimiento de caché Redis en PulseMetrics',
-        problem:
-          'Consultas SQL lentas y pérdida de trazabilidad bajo picos de concurrencia en paneles de monitorización en vivo.',
-        solution:
-          'API REST en Node.js y TypeScript con capa de caché en Redis, PostgreSQL transaccional y contenedores Docker reproducibles.',
-        stack: ['Node.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Docker'],
-        highlights: [
-          'Reducción de latencia P95 mediante patrón cache-aside en Redis.',
-          'Pooling de conexiones ACID y migraciones versionadas en PostgreSQL.',
-          'Endpoints tipados con validación de entrada y control de tasa.'
-        ],
-        codeSnippet:
-          'const cached = await redis.get(cacheKey);\nif (cached) return res.json(JSON.parse(cached));\nconst rows = await db.query(METRICS_SQL);\nawait redis.setEx(cacheKey, 30, JSON.stringify(rows));',
-        repoUrl: 'https://github.com/Rafags04',
-        demoUrl: null
-      },
-      {
-        id: 'cloud-task',
-        title: 'CloudTask — Gestor Colaborativo de Despliegues y Tareas',
-        categories: ['js', 'backend', 'testing'],
-        image: './assets/projects/cloud-task.svg',
-        imageAlt: 'Tablero Kanban de despliegues y estado de contenedores Docker en CloudTask',
-        problem:
-          'Despliegues manuales propensos a errores humanos y falta de visibilidad del estado de cada entorno en equipos pequeños.',
-        solution:
-          'Plataforma web en React respaldada por microservicio Python FastAPI, pipelines en GitHub Actions y contenedores Docker.',
-        stack: ['React', 'Python FastAPI', 'Docker', 'GitHub Actions'],
-        highlights: [
-          'Tablero reactivo con estados de build, staging y producción.',
-          'Healthchecks automáticos y verificación con Pytest en cada PR.',
-          'Empaquetado ligero multi-stage listo para entornos cloud.'
-        ],
-        codeSnippet:
-          '@app.get("/health")\nasync def healthcheck():\n    return {"status": "ok", "workers": 3, "queue_lag_ms": 12}',
-        repoUrl: 'https://github.com/Rafags04',
-        demoUrl: null
-      },
-      {
         id: 'portfolio-gh-pages',
-        title: 'Portfolio de Ingeniería & Terminal Interactiva',
-        categories: ['js'],
-        image: './assets/projects/portfolio-terminal.svg',
-        imageAlt: 'Vista general del portfolio estático con gráfica de GitHub y terminal interactiva',
+        repoName: 'PortFolio',
+        featured: true,
+        title: 'PortFolio — Portfolio Personal Interactivo en GitHub Pages',
+        categories: ['web', 'javascript'],
+        image: './assets/projects/portfolio-web.svg',
+        imageAlt:
+          'Vista previa del portfolio personal de Rafael García Sánchez con sección de GitHub y terminal interactiva',
         problem:
-          'Presentar proyectos, stack técnico y contacto directo en menos de 30 segundos sin librerías pesadas ni fricción móvil.',
+          'Centralizar el currículum académico, las certificaciones complementarias y los proyectos de GitHub en una web rápida, accesible e interactiva.',
         solution:
-          'Web estática en HTML5, CSS3 y JavaScript ES6+ compatible con apertura local (file://) y GitHub Pages, datos de GitHub en vivo y terminal interactiva.',
-        stack: ['HTML5', 'CSS3', 'JavaScript ES6+', 'GitHub REST API'],
+          'Aplicación web estática sin dependencias externas con diseño adaptable oscuro/claro, visor interactivo de proyectos, conexión en directo con la API REST de GitHub y terminal de consulta.',
+        stack: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'GitHub REST API', 'Git'],
         highlights: [
-          'Cero dependencias externas y compatible con file:// y GitHub Pages.',
-          'Consumo en directo de bytes por lenguaje desde GitHub REST API.',
-          'Visor modal accesible (WCAG AA), buscador en tiempo real y cambio de tema.'
+          'Compatible tanto abriendo index.html en local (file://) como publicado en GitHub Pages.',
+          'Sincronización en tiempo real de repositorios propios y bytes por lenguaje desde GitHub API.',
+          'Diseño accesible WCAG AA+, modo claro/oscuro, buscador en vivo y CV imprimible en PDF.'
         ],
         codeSnippet:
-          'const ownRepos = rawRepos.filter((r) => !r.fork);\nconst langs = await Promise.all(ownRepos.map((r) => fetch(r.languages_url)));',
+          'const ownRepos = rawRepos.filter((repo) => !repo.fork);\nconst langMap = await Promise.all(\n  ownRepos.map((repo) => fetch(repo.languages_url).then((r) => r.json()))\n);',
         repoUrl: 'https://github.com/Rafags04/PortFolio',
         demoUrl: 'https://rafags04.github.io/PortFolio/'
       }
     ],
 
-    experienceAndEducation: [
+    academicEducation: [
       {
-        type: 'Formación',
-        title: 'Grado en Ingeniería Informática · Universidad Politécnica (2022 – 2026)',
-        detail:
-          'Especialización en Ingeniería del Software, calidad y testing (ISO2), arquitectura de sistemas y desarrollo web.'
+        title: 'Grado en Ingeniería Informática',
+        institution: 'Universidad de Castilla-La Mancha',
+        period: 'Septiembre 2022 - Actual',
+        highlight: true
       },
       {
-        type: 'Experiencia',
-        title: 'Desarrollador Full-Stack en Prácticas · TechNova Labs (2025)',
-        detail:
-          'Desarrollo de endpoints REST con Node.js y PostgreSQL, optimización de consultas SQL (-35% latencia) y pruebas automáticas en CI.'
-      },
-      {
-        type: 'Experiencia',
-        title: 'Colaborador Open Source & Proyectos Académicos (2024 – Presente)',
-        detail:
-          'Implementación de suites de testing en Java/JUnit, automatización con GitHub Actions y diseño de interfaces web accesibles.'
+        title: 'Bachillerato en la modalidad de Ciencias',
+        institution: 'Educación Secundaria Postobligatoria',
+        period: 'Septiembre 2020 - Mayo 2022',
+        highlight: false
       }
     ],
 
-    skills: [
+    complementaryCourses: [
       {
-        category: 'Frontend & UI',
-        items: [
-          'HTML5 Semántico',
-          'CSS3 / Grid & Flexbox',
-          'JavaScript (ES6+)',
-          'TypeScript',
-          'React',
-          'Accesibilidad (WCAG AA)'
-        ]
+        title: 'Capacitación sobre Calidad del software cuántico',
+        provider: 'AQC Lab',
+        date: 'Febrero 2026',
+        category: 'tecnologia',
+        featured: true
       },
       {
-        category: 'Backend & Datos',
-        items: [
-          'Node.js',
-          'Python (FastAPI)',
-          'Java OOP',
-          'PostgreSQL',
-          'Redis',
-          'APIs RESTful & JWT'
-        ]
+        title: 'Aprendizaje en la búsqueda y el uso de la información (Nivel avanzado)',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'informacion',
+        featured: false
       },
       {
-        category: 'Testing, DevOps & Herramientas',
-        items: [
-          'JUnit & Testing E2E',
-          'Git & GitHub Actions',
-          'Docker',
-          'Linux & Bash',
-          'Lighthouse & Web Vitals'
-        ]
+        title: 'Aprendizaje en la búsqueda y el uso de la información (Nivel inicial)',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'informacion',
+        featured: false
+      },
+      {
+        title: 'Liderazgo',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'liderazgo',
+        featured: false
+      },
+      {
+        title: 'Resolución de conflictos',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'liderazgo',
+        featured: false
+      },
+      {
+        title: 'Automotivación y productividad',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'liderazgo',
+        featured: false
+      },
+      {
+        title: 'Autocoaching',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'liderazgo',
+        featured: false
+      },
+      {
+        title: 'Emprendimiento',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'liderazgo',
+        featured: false
+      },
+      {
+        title: 'Habilidades interpersonales',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'transversales',
+        featured: false
+      },
+      {
+        title: 'Regulación emocional',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'transversales',
+        featured: false
+      },
+      {
+        title: 'Igualdad, Diversidad e Inclusión',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'transversales',
+        featured: false
+      },
+      {
+        title: 'Sostenibilidad Medioambiental',
+        provider: 'Aula de Competencias Transversales',
+        date: 'Febrero 2025',
+        category: 'transversales',
+        featured: false
       }
+    ],
+
+    technicalSkills: [
+      'Fundamentos de la programación',
+      'Lógica computacional',
+      'Uso de entornos de desarrollo',
+      'Manejo de bases de datos',
+      'Uso de herramientas ofimáticas y técnicas',
+      'Control de versiones con Git'
+    ],
+
+    appliedStack: [
+      'Java',
+      'JUnit 5',
+      'Maven',
+      'HTML5',
+      'CSS3',
+      'JavaScript'
+    ],
+
+    softSkills: [
+      'Trabajo en Equipo',
+      'Puntualidad',
+      'Responsabilidad',
+      'Compromiso',
+      'Organización',
+      'Resolución de problemas'
+    ],
+
+    languages: [
+      { name: 'Castellano', level: 'Nativo', percent: 100 },
+      { name: 'Inglés', level: 'Nivel Avanzado - (B2)', percent: 75 }
+    ],
+
+    additionalInfo: [
+      'Carné de conducir Tipo B',
+      'Disponibilidad total'
     ]
   };
 })();

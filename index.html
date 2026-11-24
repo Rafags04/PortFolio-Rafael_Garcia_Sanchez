@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rafael García (@Rafags04) | Desarrollador Full-Stack &amp; QA</title>
-  <meta name="description" content="Portfolio interactivo de Rafael García (@Rafags04) alojado en GitHub Pages: proyectos con capturas y visor de detalles, actividad en GitHub, terminal y CV imprimible.">
+  <title>Rafael García Sánchez | Estudiante de Ingeniería Informática &amp; Portfolio</title>
+  <meta name="description" content="Portfolio de Rafael García Sánchez (@Rafags04): Estudiante de Ingeniería Informática (UCLM), proyectos destacados de GitHub, formación académica, certificaciones, competencias y CV oficial en PDF.">
   <meta name="author" content="Rafael García Sánchez">
 
   <!-- Open Graph / Twitter Card -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Rafael García (@Rafags04) | Portfolio Interactivo">
-  <meta property="og:description" content="Proyectos con capturas, problema, solución y código fuente en GitHub, buscador en vivo y CV imprimible.">
+  <meta property="og:title" content="Rafael García Sánchez | Portfolio &amp; Proyectos de GitHub">
+  <meta property="og:description" content="Estudiante de Ingeniería Informática (UCLM). Proyectos destacados en GitHub, formación, habilidades y CV descargable.">
   <meta property="og:url" content="https://rafags04.github.io/PortFolio/">
-  <meta property="og:image" content="https://rafags04.github.io/PortFolio/favicon.svg">
+  <meta property="og:image" content="https://rafags04.github.io/PortFolio/assets/profile-rafa.png">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Rafael García (@Rafags04) | Portfolio">
-  <meta name="twitter:description" content="Portfolio estático en GitHub Pages: proyectos interactivos, datos en vivo de GitHub y terminal.">
+  <meta name="twitter:title" content="Rafael García Sánchez | Portfolio">
+  <meta name="twitter:description" content="Portfolio en GitHub Pages basado en mi currículum real y proyectos de GitHub.">
 
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="canonical" href="https://rafags04.github.io/PortFolio/">
   <link rel="stylesheet" href="./style.css">
 
-  <!-- Scripts diferidos ordenados: funcionan tanto en file:// (doble clic) como en GitHub Pages -->
+  <!-- Scripts diferidos ordenados: funcionan en apertura local (file://) y en GitHub Pages -->
   <script defer src="./src/data/profile.js"></script>
   <script defer src="./src/modules/modal.js"></script>
   <script defer src="./src/modules/github.js"></script>
@@ -34,121 +34,153 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#hero">
-        <span class="brand-mark" aria-hidden="true">&lt;R/&gt;</span>
-        <span>Rafa</span>
+        <span class="brand-mark" aria-hidden="true">&lt;RG/&gt;</span>
+        <span>Rafael García</span>
       </a>
 
       <nav class="site-nav" aria-label="Navegación principal">
-        <a href="#proyectos">Proyectos</a>
+        <a href="#hero">Sobre mí</a>
+        <a href="#proyectos-destacados">Proyectos</a>
         <a href="#actividad-github">GitHub</a>
-        <a href="#trayectoria">Trayectoria</a>
-        <a href="#habilidades">Stack</a>
+        <a href="#formacion">Formación</a>
+        <a href="#competencias">Competencias</a>
         <a href="#terminal">Terminal</a>
         <a href="#contacto">Contacto</a>
       </nav>
 
-      <button type="button" id="btn-theme-toggle" class="theme-toggle-btn" aria-pressed="false" title="Cambiar entre tema oscuro y claro">
-        ☀️ Tema claro
+      <button type="button" id="btn-theme-toggle" class="theme-toggle-btn" aria-pressed="false" title="Cambiar entre tema oscuro naval y tema claro">
+        ☀️ Modo Claro CV
       </button>
     </div>
   </header>
 
   <main id="main-content" class="container main-layout">
     <!-- ================================================================
-         HERO DE 30 SEGUNDOS (QUIÉN SOY, QUÉ HAGO, CONTACTO Y CV/PDF)
+         HERO PRINCIPAL (SOBRE MÍ, RETRATO REAL, CONTACTO Y CV PDF)
          ================================================================ -->
     <section id="hero" class="hero-section surface-card" aria-labelledby="hero-name">
-      <p class="eyebrow">Portfolio · GitHub Pages</p>
-      <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
-      <p id="hero-role" class="hero-role">Desarrollador de Software Full-Stack &amp; QA Engineer</p>
-      <p id="hero-headline" class="hero-lead">
-        Construyo aplicaciones web rápidas, APIs escalables y suites de testing automatizado. Enfocado en código limpio, accesibilidad y despliegues fiables en producción.
-      </p>
+      <div class="hero-grid">
+        <aside class="hero-identity" aria-label="Ficha de identidad">
+          <div class="hero-avatar-wrap">
+            <img
+              id="hero-avatar"
+              src="./assets/profile-rafa.png"
+              alt="Retrato de Rafael García Sánchez"
+              width="160"
+              height="160"
+              class="hero-avatar"
+            >
+          </div>
 
-      <dl class="hero-meta">
-        <div>
-          <dt>Ubicación</dt>
-          <dd id="hero-location">Madrid, España · Remoto / Híbrido</dd>
-        </div>
-        <div>
-          <dt>Disponibilidad</dt>
-          <dd id="hero-availability">Disponible para incorporación inmediata (Jornada completa)</dd>
-        </div>
-      </dl>
+          <ul class="hero-badges" aria-label="Resumen rápido">
+            <li class="badge-pill">UCLM · Ing. Informática</li>
+            <li class="badge-pill" id="hero-location-badge">Ciudad Real, 13003</li>
+            <li class="badge-pill">Inglés Avanzado (B2)</li>
+            <li class="badge-pill">Disponibilidad total</li>
+          </ul>
 
-      <div class="hero-actions">
-        <button type="button" id="btn-open-cv" class="btn btn-primary">
-          Ver / Imprimir CV (PDF)
-        </button>
-        <a class="btn btn-secondary" href="#proyectos">Ver proyectos</a>
-        <a id="hero-github-link" class="btn btn-ghost" href="https://github.com/Rafags04" target="_blank" rel="noopener noreferrer">
-          GitHub (@Rafags04)
-        </a>
-      </div>
+          <div class="hero-quick-contact">
+            <div class="quick-contact-row">
+              <a id="hero-phone-link" href="tel:+34644410602">(+34) 644 41 06 02</a>
+              <button type="button" id="btn-copy-phone" class="btn btn-ghost btn-xs">Copiar</button>
+            </div>
+            <div class="quick-contact-row">
+              <a id="hero-email-link" href="mailto:rafags0407@gmail.com">rafags0407@gmail.com</a>
+              <button type="button" id="btn-copy-email" class="btn btn-ghost btn-xs">Copiar</button>
+            </div>
+          </div>
+        </aside>
 
-      <div id="hero-contact-strip" class="hero-contact-strip" aria-label="Contacto rápido">
-        <div class="contact-pill">
-          <span class="contact-pill-label">Email: </span>
-          <a href="mailto:rafa.garcia.dev@gmail.com">rafa.garcia.dev@gmail.com</a>
-          <button type="button" id="btn-copy-email" class="btn btn-ghost btn-xs">Copiar email</button>
-        </div>
-        <div class="contact-pill">
-          <span class="contact-pill-label">LinkedIn: </span>
-          <a href="https://www.linkedin.com/in/rafa-garcia-dev" target="_blank" rel="noopener noreferrer">Perfil profesional</a>
+        <div class="hero-main">
+          <p class="eyebrow">Currículum &amp; Portfolio · GitHub Pages</p>
+          <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
+          <p id="hero-role" class="hero-role">Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha</p>
+
+          <div class="hero-about-box">
+            <h2 class="hero-about-label">Sobre mí</h2>
+            <p id="hero-about" class="hero-lead">
+              Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a
+              id="btn-download-cv"
+              class="btn btn-primary"
+              href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
+              download="CV-Rafael-Garcia-Sanchez.pdf"
+            >
+              Descargar CV Original (PDF)
+            </a>
+            <button type="button" id="btn-open-cv" class="btn btn-secondary">
+              Vista Rápida / Imprimir CV
+            </button>
+            <a class="btn btn-secondary" href="#proyectos-destacados">
+              Proyectos Destacados
+            </a>
+            <a
+              id="hero-github-link"
+              class="btn btn-ghost"
+              href="https://github.com/Rafags04"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub (@Rafags04)
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ================================================================
-         PROYECTOS INTERACTIVOS CON FOTO, BUSCADOR EN VIVO Y VISOR MODAL
+         01 · PROYECTOS DESTACADOS DE GITHUB
          ================================================================ -->
-    <section id="proyectos" class="content-section" aria-labelledby="projects-heading">
+    <section id="proyectos-destacados" class="content-section" aria-labelledby="projects-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">01 · Trabajo Destacado</p>
-          <h2 id="projects-heading">Proyectos</h2>
+          <p class="eyebrow">01 · Repositorios Seleccionados</p>
+          <h2 id="projects-heading">Proyectos Destacados de GitHub</h2>
         </div>
         <p class="section-subtitle">
-          Haz clic en la captura de cualquier proyecto o en <strong>Ver captura y detalles</strong> para ampliarlo y explorar su arquitectura.
+          Selección de proyectos públicos de <strong>@Rafags04</strong> con documentación técnica, fragmentos de código y captura ampliable.
         </p>
       </div>
 
       <div class="projects-toolbar">
         <div class="search-box">
-          <label for="project-search" class="visually-hidden">Buscar proyectos por nombre o tecnología</label>
+          <label for="project-search" class="visually-hidden">Buscar proyectos destacados por nombre o tecnología</label>
           <input
             id="project-search"
             class="search-input"
             type="search"
             autocomplete="off"
-            placeholder="Buscar por nombre o tecnología (ej. Java, Redis, Docker)…"
+            placeholder="Buscar en proyectos destacados (ej. Java, JUnit, HTML5)…"
           >
         </div>
-        <span id="project-count" class="project-count" aria-live="polite">Mostrando 4 de 4 proyectos</span>
+        <span id="project-count" class="project-count" aria-live="polite">Mostrando 2 de 2 proyectos destacados</span>
       </div>
 
-      <div class="project-filters" role="group" aria-label="Filtrar proyectos por área">
+      <div class="project-filters" role="group" aria-label="Filtrar proyectos destacados por tecnología">
         <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">Todos</button>
-        <button type="button" class="filter-btn" data-filter="js" aria-pressed="false">JavaScript / TS</button>
         <button type="button" class="filter-btn" data-filter="java" aria-pressed="false">Java</button>
-        <button type="button" class="filter-btn" data-filter="backend" aria-pressed="false">Backend &amp; Datos</button>
-        <button type="button" class="filter-btn" data-filter="testing" aria-pressed="false">Testing &amp; CI/CD</button>
+        <button type="button" class="filter-btn" data-filter="testing" aria-pressed="false">Testing / JUnit</button>
+        <button type="button" class="filter-btn" data-filter="web" aria-pressed="false">Web / JavaScript</button>
       </div>
 
       <div id="projects-list" class="projects-grid"></div>
     </section>
 
     <!-- ================================================================
-         ACTIVIDAD EN GITHUB (REPOS SIN FORKS Y LENGUAJES POR BYTES)
+         02 · ACTIVIDAD EN VIVO EN GITHUB (@Rafags04)
          ================================================================ -->
     <section id="actividad-github" class="content-section" aria-labelledby="github-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">02 · Datos en Vivo</p>
-          <h2 id="github-heading">Actividad en GitHub (@Rafags04)</h2>
+          <p class="eyebrow">02 · GitHub API en Vivo</p>
+          <h2 id="github-heading">Actividad y Lenguajes en GitHub (@Rafags04)</h2>
         </div>
         <button type="button" id="btn-retry-github" class="btn btn-secondary btn-sm">
-          Actualizar desde GitHub
+          Sincronizar con GitHub
         </button>
       </div>
 
@@ -164,43 +196,88 @@
         </article>
 
         <article class="surface-card" aria-labelledby="gh-repos-heading">
-          <h3 id="gh-repos-heading">Repositorios recientes (sin forks)</h3>
+          <h3 id="gh-repos-heading">Repositorios públicos recientes (sin forks)</h3>
           <ul id="github-repos-list" class="repo-list"></ul>
         </article>
       </div>
     </section>
 
     <!-- ================================================================
-         FORMACIÓN Y EXPERIENCIA
+         03 · FORMACIÓN ACADÉMICA Y COMPLEMENTARIA (CV)
          ================================================================ -->
-    <section id="trayectoria" class="content-section" aria-labelledby="timeline-heading">
+    <section id="formacion" class="content-section" aria-labelledby="education-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">03 · Recorrido</p>
-          <h2 id="timeline-heading">Formación y Experiencia</h2>
+          <p class="eyebrow">03 · Currículum Académico</p>
+          <h2 id="education-heading">Formación Académica y Complementaria</h2>
         </div>
       </div>
-      <ol id="timeline-list" class="timeline-list"></ol>
+
+      <h3 class="subsection-title">Formación Académica</h3>
+      <ol id="academic-list" class="academic-grid"></ol>
+
+      <div class="courses-header-row">
+        <div>
+          <h3 class="subsection-title">Formación Complementaria</h3>
+          <p class="section-subtitle">
+            Capacitaciones y competencias cursadas en AQC Lab y el Aula de Competencias Transversales.
+          </p>
+        </div>
+        <span id="courses-count" class="project-count" aria-live="polite">12 certificaciones</span>
+      </div>
+
+      <div id="courses-filters" class="project-filters" role="group" aria-label="Filtrar formación complementaria">
+        <button type="button" class="filter-btn active" data-course-filter="all" aria-pressed="true">Todas (12)</button>
+        <button type="button" class="filter-btn" data-course-filter="tecnologia" aria-pressed="false">Software Cuántico</button>
+        <button type="button" class="filter-btn" data-course-filter="informacion" aria-pressed="false">Búsqueda de Información</button>
+        <button type="button" class="filter-btn" data-course-filter="liderazgo" aria-pressed="false">Liderazgo &amp; Productividad</button>
+        <button type="button" class="filter-btn" data-course-filter="transversales" aria-pressed="false">Competencias Transversales</button>
+      </div>
+
+      <ol id="courses-list" class="courses-grid"></ol>
     </section>
 
     <!-- ================================================================
-         TECNOLOGÍAS INTERACTIVAS (CLIC PARA FILTRAR PROYECTOS)
+         04 · HABILIDADES TÉCNICAS, SOFT SKILLS, IDIOMAS Y MÁS INFO
          ================================================================ -->
-    <section id="habilidades" class="content-section" aria-labelledby="skills-heading">
+    <section id="competencias" class="content-section" aria-labelledby="competencies-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">04 · Capacidades</p>
-          <h2 id="skills-heading">Tecnologías</h2>
+          <p class="eyebrow">04 · Perfil Completo</p>
+          <h2 id="competencies-heading">Habilidades, Idiomas y Más Información</h2>
         </div>
         <p class="section-subtitle">
-          Pulsa cualquier etiqueta tecnológica para filtrar al instante los proyectos donde se utiliza.
+          Pulsa cualquier tecnología aplicada para filtrar los proyectos destacados donde se utiliza.
         </p>
       </div>
-      <div id="skills-list" class="skills-grid"></div>
+
+      <div class="competencies-grid">
+        <article class="surface-card" aria-labelledby="tech-skills-heading">
+          <h3 id="tech-skills-heading">Habilidades Técnicas (CV)</h3>
+          <ul id="tech-skills-list" class="bullet-list"></ul>
+          <h4 class="mini-subheading">Herramientas aplicadas en GitHub</h4>
+          <ul id="applied-stack-list" class="tag-list"></ul>
+        </article>
+
+        <article class="surface-card" aria-labelledby="soft-skills-heading">
+          <h3 id="soft-skills-heading">Soft Skills</h3>
+          <ul id="soft-skills-list" class="tag-list"></ul>
+        </article>
+
+        <article class="surface-card" aria-labelledby="languages-heading">
+          <h3 id="languages-heading">Idiomas</h3>
+          <div id="languages-list" class="languages-stack"></div>
+        </article>
+
+        <article class="surface-card" aria-labelledby="additional-info-heading">
+          <h3 id="additional-info-heading">Más Información</h3>
+          <ul id="additional-info-list" class="bullet-list"></ul>
+        </article>
+      </div>
     </section>
 
     <!-- ================================================================
-         ÚNICO ELEMENTO "WOW": TERMINAL INTERACTIVA DE INGENIERÍA
+         05 · TERMINAL INTERACTIVA DE CONSULTA
          ================================================================ -->
     <section id="terminal" class="content-section" aria-labelledby="terminal-heading">
       <div class="section-header">
@@ -209,7 +286,7 @@
           <h2 id="terminal-heading">Terminal de Consulta Rápida</h2>
         </div>
         <p class="section-subtitle">
-          Escribe <code>help</code> o pulsa cualquiera de los comandos para explorar la información del perfil.
+          Explora todo el currículum y los proyectos por comandos. Prueba <code>courses</code>, <code>projects</code> o <code>languages</code>.
         </p>
       </div>
 
@@ -218,7 +295,7 @@
           <div class="terminal-status-left">
             <canvas id="terminal-pulse-canvas" class="terminal-pulse-canvas" width="20" height="20" aria-hidden="true"></canvas>
             <span class="terminal-static-dot" aria-hidden="true"></span>
-            <span class="terminal-title">rafa@github-pages:~</span>
+            <span class="terminal-title">rafa@uclm:~$</span>
           </div>
           <span id="terminal-loader-badge" class="terminal-badge">Activa</span>
         </div>
@@ -227,9 +304,11 @@
           <button type="button" class="term-cmd-btn" data-cmd="help">help</button>
           <button type="button" class="term-cmd-btn" data-cmd="whoami">whoami</button>
           <button type="button" class="term-cmd-btn" data-cmd="projects">projects</button>
-          <button type="button" class="term-cmd-btn" data-cmd="github">github</button>
-          <button type="button" class="term-cmd-btn" data-cmd="skills">skills</button>
           <button type="button" class="term-cmd-btn" data-cmd="education">education</button>
+          <button type="button" class="term-cmd-btn" data-cmd="courses">courses</button>
+          <button type="button" class="term-cmd-btn" data-cmd="skills">skills</button>
+          <button type="button" class="term-cmd-btn" data-cmd="languages">languages</button>
+          <button type="button" class="term-cmd-btn" data-cmd="github">github</button>
           <button type="button" class="term-cmd-btn" data-cmd="contact">contact</button>
           <button type="button" class="term-cmd-btn" data-cmd="cv">cv</button>
           <button type="button" class="term-cmd-btn" data-cmd="clear">clear</button>
@@ -253,14 +332,21 @@
     </section>
 
     <!-- ================================================================
-         CONTACTO DIRECTO
+         06 · CONTACTO DIRECTO
          ================================================================ -->
     <section id="contacto" class="content-section" aria-labelledby="contact-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">06 · Hablemos</p>
+          <p class="eyebrow">06 · Contacto Directo</p>
           <h2 id="contact-heading">Contacto</h2>
         </div>
+        <a
+          class="btn btn-primary btn-sm"
+          href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
+          download="CV-Rafael-Garcia-Sanchez.pdf"
+        >
+          Descargar CV en PDF
+        </a>
       </div>
 
       <div id="contact-list" class="contact-grid"></div>
@@ -270,20 +356,23 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>
-        <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span> · Sitio estático para GitHub Pages.
+        <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span> · Portfolio en GitHub Pages.
       </p>
-      <button type="button" id="btn-open-cv-footer" class="footer-link-btn">Abrir versión CV imprimible</button>
+      <div class="footer-actions">
+        <a class="footer-link-btn" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer">Abrir PDF original</a>
+        <button type="button" id="btn-open-cv-footer" class="footer-link-btn">Vista rápida CV</button>
+      </div>
     </div>
   </footer>
 
   <!-- ================================================================
-       VISOR MODAL DE PROYECTO (FOTO AMPLIADA, PESTAÑAS Y NAVEGACIÓN)
+       VISOR MODAL DE PROYECTO (CAPTURA AMPLIADA, PESTAÑAS Y NAVEGACIÓN)
        ================================================================ -->
   <div id="project-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title" hidden>
     <div class="modal-dialog modal-dialog-wide">
       <header class="modal-header">
         <div>
-          <p class="eyebrow" id="proj-modal-index">Proyecto 1 de 4</p>
+          <p class="eyebrow" id="proj-modal-index">Proyecto 1 de 2</p>
           <h2 id="proj-modal-title">Detalle del proyecto</h2>
         </div>
         <button type="button" id="btn-close-project-modal" class="btn btn-ghost btn-sm" aria-label="Cerrar detalle del proyecto">
@@ -298,7 +387,7 @@
 
         <div class="proj-modal-tabs" role="tablist" aria-label="Información del proyecto">
           <button type="button" class="proj-tab-btn active" data-proj-tab="summary" role="tab" aria-selected="true">Problema y Solución</button>
-          <button type="button" class="proj-tab-btn" data-proj-tab="code" role="tab" aria-selected="false">Arquitectura y Código</button>
+          <button type="button" class="proj-tab-btn" data-proj-tab="code" role="tab" aria-selected="false">Fragmento de Código</button>
           <button type="button" class="proj-tab-btn" data-proj-tab="stack" role="tab" aria-selected="false">Stack y Puntos Clave</button>
         </div>
 
@@ -332,11 +421,11 @@
       <div id="cv-modal-content" class="cv-sheet"></div>
 
       <footer class="modal-footer no-print">
-        <a id="cv-pdf-link" class="btn btn-ghost" href="#" target="_blank" rel="noopener noreferrer" hidden>
-          Abrir archivo PDF
+        <a id="cv-pdf-link" class="btn btn-ghost" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer">
+          Abrir PDF original
         </a>
         <button type="button" id="btn-print-cv" class="btn btn-primary">
-          Imprimir / Guardar como PDF
+          Imprimir / Guardar PDF
         </button>
         <button type="button" id="btn-close-cv" class="btn btn-secondary">
           Cerrar

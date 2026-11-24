@@ -1,5 +1,5 @@
 /**
- * Punto de entrada interactivo del portfolio (compatible con file:// y GitHub Pages).
+ * Punto de entrada del portfolio real de Rafael García Sánchez.
  * Construye toda la interfaz de forma segura usando textContent (nunca innerHTML).
  */
 (function () {
@@ -8,10 +8,12 @@
   if (!PROFILE) return;
 
   const state = {
-    filter: 'all',
-    query: '',
-    currentProjects: PROFILE.projects.slice(),
-    modalProjectIndex: 0
+    projectFilter: 'all',
+    projectQuery: '',
+    courseFilter: 'all',
+    currentProjects: PROFILE.featuredProjects.slice(),
+    modalProjectIndex: 0,
+    githubReposMap: new Map()
   };
 
   let toastTimer = null;
@@ -26,40 +28,94 @@
     }, 3000);
   }
 
-  async function copyEmailToClipboard() {
-    const email = PROFILE.contact.email;
+  async function copyToClipboard(text, label) {
     try {
       if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-        await navigator.clipboard.writeText(email);
+        await navigator.clipboard.writeText(text);
       } else {
-        throw new Error('Clipboard API unavailable');
+        throw new Error('Clipboard unavailable');
       }
-      showToast(`Email copiado: ${email}`);
+      showToast(`${label} copiado: ${text}`);
     } catch {
       const temp = document.createElement('input');
-      temp.value = email;
+      temp.value = text;
       document.body.appendChild(temp);
       temp.select();
       try {
         document.execCommand('copy');
-        showToast(`Email copiado: ${email}`);
+        showToast(`${label} copiado: ${text}`);
       } catch {
-        showToast(`Correo: ${email}`);
+        showToast(`${label}: ${text}`);
       }
       document.body.removeChild(temp);
     }
   }
 
+  function formatShortDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '';
+    return new Intl.DateTimeFormat('es-ES', { year: 'numeric', month: 'short' }).format(d);
+  }
+
+  function renderHero() {
+    const avatarEl = document.getElementById('hero-avatar');
+    const nameEl = document.getElementById('hero-name');
+    const roleEl = document.getElementById('hero-role');
+    const aboutEl = document.getElementById('hero-about');
+    const locBadge = document.getElementById('hero-location-badge');
+    const phoneLink = document.getElementById('hero-phone-link');
+    const emailLink = document.getElementById('hero-email-link');
+    const ghLink = document.getElementById('hero-github-link');
+    const downloadCvBtn = document.getElementById('btn-download-cv');
+    const copyPhoneBtn = document.getElementById('btn-copy-phone');
+    const copyEmailBtn = document.getElementById('btn-copy-email');
+
+    if (avatarEl && PROFILE.avatar) avatarEl.src = PROFILE.avatar;
+    if (nameEl) nameEl.textContent = PROFILE.name;
+    if (roleEl) roleEl.textContent = `${PROFILE.role} · ${PROFILE.institution}`;
+    if (aboutEl) aboutEl.textContent = PROFILE.about;
+    if (locBadge) locBadge.textContent = PROFILE.contact.location;
+
+    if (phoneLink) {
+      phoneLink.href = PROFILE.contact.phoneHref;
+      phoneLink.textContent = PROFILE.contact.phone;
+    }
+    if (emailLink) {
+      emailLink.href = `mailto:${PROFILE.contact.email}`;
+      emailLink.textContent = PROFILE.contact.email;
+    }
+    if (ghLink) {
+      ghLink.href = PROFILE.contact.githubUrl;
+      ghLink.textContent = `GitHub (@${PROFILE.contact.githubUser})`;
+    }
+    if (downloadCvBtn && PROFILE.contact.cvPdfUrl) {
+      downloadCvBtn.href = PROFILE.contact.cvPdfUrl;
+    }
+
+    if (copyPhoneBtn) {
+      copyPhoneBtn.addEventListener('click', () =>
+        copyToClipboard(PROFILE.contact.phone, 'Teléfono')
+      );
+    }
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener('click', () =>
+        copyToClipboard(PROFILE.contact.email, 'Email')
+      );
+    }
+  }
+
   function getFilteredProjects() {
-    const q = state.query.trim().toLowerCase();
-    return PROFILE.projects.filter((project) => {
+    const q = state.projectQuery.trim().toLowerCase();
+    return PROFILE.featuredProjects.filter((project) => {
       const matchesCat =
-        state.filter === 'all' ||
-        (Array.isArray(project.categories) && project.categories.includes(state.filter));
+        state.projectFilter === 'all' ||
+        (Array.isArray(project.categories) && project.categories.includes(state.projectFilter));
       if (!matchesCat) return false;
       if (!q) return true;
       const haystack = [
         project.title,
+        project.repoName || '',
         project.problem,
         project.solution,
         ...(project.stack || [])
@@ -68,61 +124,6 @@
         .toLowerCase();
       return haystack.includes(q);
     });
-  }
-
-  function renderHero() {
-    const nameEl = document.getElementById('hero-name');
-    const roleEl = document.getElementById('hero-role');
-    const headlineEl = document.getElementById('hero-headline');
-    const locationEl = document.getElementById('hero-location');
-    const availabilityEl = document.getElementById('hero-availability');
-    const ghLinkEl = document.getElementById('hero-github-link');
-    const stripEl = document.getElementById('hero-contact-strip');
-
-    if (nameEl) nameEl.textContent = PROFILE.name;
-    if (roleEl) roleEl.textContent = PROFILE.role;
-    if (headlineEl) headlineEl.textContent = PROFILE.headline;
-    if (locationEl) locationEl.textContent = PROFILE.location;
-    if (availabilityEl) availabilityEl.textContent = PROFILE.availability;
-
-    if (ghLinkEl) {
-      ghLinkEl.href = PROFILE.contact.githubUrl;
-      ghLinkEl.textContent = `GitHub (@${PROFILE.contact.githubUser})`;
-    }
-
-    if (stripEl) {
-      stripEl.textContent = '';
-
-      const emailItem = document.createElement('div');
-      emailItem.className = 'contact-pill';
-      const emailLabel = document.createElement('span');
-      emailLabel.className = 'contact-pill-label';
-      emailLabel.textContent = 'Email: ';
-      const mailLink = document.createElement('a');
-      mailLink.href = `mailto:${PROFILE.contact.email}`;
-      mailLink.textContent = PROFILE.contact.email;
-      const copyBtn = document.createElement('button');
-      copyBtn.type = 'button';
-      copyBtn.id = 'btn-copy-email';
-      copyBtn.className = 'btn btn-ghost btn-xs';
-      copyBtn.textContent = 'Copiar email';
-      copyBtn.addEventListener('click', copyEmailToClipboard);
-      emailItem.append(emailLabel, mailLink, copyBtn);
-
-      const linkedinItem = document.createElement('div');
-      linkedinItem.className = 'contact-pill';
-      const liLabel = document.createElement('span');
-      liLabel.className = 'contact-pill-label';
-      liLabel.textContent = 'LinkedIn: ';
-      const liLink = document.createElement('a');
-      liLink.href = PROFILE.contact.linkedin;
-      liLink.target = '_blank';
-      liLink.rel = 'noopener noreferrer';
-      liLink.textContent = 'Perfil profesional';
-      linkedinItem.append(liLabel, liLink);
-
-      stripEl.append(emailItem, linkedinItem);
-    }
   }
 
   let projectModal = null;
@@ -147,7 +148,7 @@
   }
 
   function renderProjectModalContent(projectIndex) {
-    const list = state.currentProjects.length ? state.currentProjects : PROFILE.projects;
+    const list = state.currentProjects.length ? state.currentProjects : PROFILE.featuredProjects;
     const safeIdx = ((projectIndex % list.length) + list.length) % list.length;
     state.modalProjectIndex = safeIdx;
     const project = list[safeIdx];
@@ -161,7 +162,7 @@
     const stackPanel = document.getElementById('proj-tab-panel-stack');
     const linksGroup = document.getElementById('proj-modal-external-links');
 
-    if (indexEl) indexEl.textContent = `Proyecto ${safeIdx + 1} de ${list.length}`;
+    if (indexEl) indexEl.textContent = `Proyecto destacado ${safeIdx + 1} de ${list.length}`;
     if (titleEl) titleEl.textContent = project.title;
 
     if (figureEl && imgEl) {
@@ -195,7 +196,7 @@
       codePanel.textContent = '';
       const pre = document.createElement('pre');
       pre.className = 'proj-code-block';
-      pre.textContent = project.codeSnippet || '// Sin fragmento técnico configurado.';
+      pre.textContent = project.codeSnippet || '// Sin fragmento configurado.';
       codePanel.appendChild(pre);
     }
 
@@ -230,7 +231,7 @@
       repoBtn.href = project.repoUrl;
       repoBtn.target = '_blank';
       repoBtn.rel = 'noopener noreferrer';
-      repoBtn.textContent = 'Abrir en GitHub';
+      repoBtn.textContent = 'Abrir repositorio en GitHub';
       linksGroup.appendChild(repoBtn);
 
       if (project.demoUrl) {
@@ -248,7 +249,7 @@
   }
 
   function openProjectModal(projectId, triggerEl) {
-    const list = state.currentProjects.length ? state.currentProjects : PROFILE.projects;
+    const list = state.currentProjects.length ? state.currentProjects : PROFILE.featuredProjects;
     const idx = Math.max(0, list.findIndex((p) => p.id === projectId));
     renderProjectModalContent(idx);
     if (projectModal) projectModal.open(triggerEl);
@@ -264,25 +265,25 @@
     container.textContent = '';
 
     if (countEl) {
-      countEl.textContent = `Mostrando ${filtered.length} de ${PROFILE.projects.length} proyectos`;
+      countEl.textContent = `Mostrando ${filtered.length} de ${PROFILE.featuredProjects.length} proyectos destacados`;
     }
 
     if (filtered.length === 0) {
       const emptyCard = document.createElement('div');
       emptyCard.className = 'surface-card';
       const p = document.createElement('p');
-      p.textContent = 'Ningún proyecto coincide con tu búsqueda actual.';
+      p.textContent = 'Ningún proyecto destacado coincide con tu filtro actual.';
       const resetBtn = document.createElement('button');
       resetBtn.type = 'button';
       resetBtn.className = 'btn btn-secondary btn-sm';
       resetBtn.style.marginTop = '0.75rem';
-      resetBtn.textContent = 'Mostrar todos los proyectos';
+      resetBtn.textContent = 'Mostrar todos los destacados';
       resetBtn.addEventListener('click', () => {
-        state.filter = 'all';
-        state.query = '';
+        state.projectFilter = 'all';
+        state.projectQuery = '';
         const searchInput = document.getElementById('project-search');
         if (searchInput) searchInput.value = '';
-        updateFilterButtons('all');
+        updateProjectFilterButtons('all');
         renderProjects();
       });
       emptyCard.append(p, resetBtn);
@@ -294,7 +295,24 @@
       const card = document.createElement('article');
       card.className = 'surface-card project-card';
 
-      // Foto opcional del proyecto (solo se pinta si project.image tiene ruta)
+      const topRow = document.createElement('div');
+      topRow.className = 'project-card-top';
+
+      const featBadge = document.createElement('span');
+      featBadge.className = 'featured-badge';
+      featBadge.textContent = '★ Destacado de GitHub';
+      topRow.appendChild(featBadge);
+
+      const liveRepo = project.repoName ? state.githubReposMap.get(project.repoName) : null;
+      if (liveRepo) {
+        const syncTag = document.createElement('span');
+        syncTag.className = 'repo-sync-tag';
+        const dateStr = formatShortDate(liveRepo.updated_at);
+        syncTag.textContent = dateStr ? `GitHub · act. ${dateStr}` : 'Sincronizado con GitHub';
+        topRow.appendChild(syncTag);
+      }
+      card.appendChild(topRow);
+
       if (project.image) {
         const mediaBtn = document.createElement('button');
         mediaBtn.type = 'button';
@@ -339,7 +357,7 @@
       const stackList = document.createElement('ul');
       stackList.className = 'tag-list';
       stackList.setAttribute('aria-label', `Tecnologías de ${project.title}`);
-      for (const tech of project.stack) {
+      for (const tech of project.stack || []) {
         const li = document.createElement('li');
         li.className = 'tag';
         li.textContent = tech;
@@ -352,7 +370,7 @@
       const detailBtn = document.createElement('button');
       detailBtn.type = 'button';
       detailBtn.className = 'btn btn-primary btn-sm';
-      detailBtn.textContent = 'Ver detalles';
+      detailBtn.textContent = 'Ver captura y detalles';
       detailBtn.addEventListener('click', () => openProjectModal(project.id, detailBtn));
       links.appendChild(detailBtn);
 
@@ -361,7 +379,7 @@
       repoLink.href = project.repoUrl;
       repoLink.target = '_blank';
       repoLink.rel = 'noopener noreferrer';
-      repoLink.textContent = 'GitHub';
+      repoLink.textContent = 'Repositorio en GitHub';
       links.appendChild(repoLink);
 
       if (project.demoUrl) {
@@ -370,7 +388,7 @@
         demoLink.href = project.demoUrl;
         demoLink.target = '_blank';
         demoLink.rel = 'noopener noreferrer';
-        demoLink.textContent = 'Demo';
+        demoLink.textContent = 'Ver web';
         links.appendChild(demoLink);
       }
 
@@ -379,8 +397,8 @@
     }
   }
 
-  function updateFilterButtons(activeKey) {
-    const filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
+  function updateProjectFilterButtons(activeKey) {
+    const filterBtns = document.querySelectorAll('.project-filters .filter-btn[data-filter]');
     filterBtns.forEach((b) => {
       const isMatch = b.getAttribute('data-filter') === activeKey;
       b.classList.toggle('active', isMatch);
@@ -389,11 +407,11 @@
   }
 
   function setupProjectControls() {
-    const filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
+    const filterBtns = document.querySelectorAll('.project-filters .filter-btn[data-filter]');
     filterBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        state.filter = btn.getAttribute('data-filter') || 'all';
-        updateFilterButtons(state.filter);
+        state.projectFilter = btn.getAttribute('data-filter') || 'all';
+        updateProjectFilterButtons(state.projectFilter);
         renderProjects();
       });
     });
@@ -401,7 +419,7 @@
     const searchInput = document.getElementById('project-search');
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
-        state.query = e.target.value || '';
+        state.projectQuery = e.target.value || '';
         renderProjects();
       });
     }
@@ -440,97 +458,166 @@
     });
   }
 
-  function renderTimeline() {
-    const list = document.getElementById('timeline-list');
+  function renderAcademicEducation() {
+    const list = document.getElementById('academic-list');
     if (!list) return;
     list.textContent = '';
 
-    for (const item of PROFILE.experienceAndEducation) {
+    for (const item of PROFILE.academicEducation) {
       const li = document.createElement('li');
-      li.className = 'surface-card timeline-item';
+      li.className = `surface-card academic-card ${item.highlight ? 'is-primary' : ''}`;
 
-      const typeTag = document.createElement('span');
-      typeTag.className = 'timeline-type';
-      typeTag.textContent = item.type;
+      const period = document.createElement('span');
+      period.className = 'academic-period';
+      period.textContent = item.period;
 
-      const title = document.createElement('h3');
-      title.className = 'timeline-title';
+      const title = document.createElement('h4');
+      title.className = 'academic-title';
       title.textContent = item.title;
 
-      const detail = document.createElement('p');
-      detail.className = 'timeline-detail';
-      detail.textContent = item.detail;
+      const inst = document.createElement('p');
+      inst.className = 'academic-institution';
+      inst.textContent = item.institution;
 
-      li.append(typeTag, title, detail);
+      li.append(period, title, inst);
       list.appendChild(li);
     }
   }
 
-  function resolveSkillSearchTerm(skillText) {
-    const map = [
-      ['HTML5', 'HTML5'],
-      ['CSS3', 'CSS3'],
-      ['JavaScript', 'JavaScript'],
-      ['TypeScript', 'TypeScript'],
-      ['React', 'React'],
-      ['Node.js', 'Node.js'],
-      ['Python', 'Python'],
-      ['Java', 'Java'],
-      ['PostgreSQL', 'PostgreSQL'],
-      ['Redis', 'Redis'],
-      ['JUnit', 'JUnit'],
-      ['GitHub Actions', 'GitHub Actions'],
-      ['Docker', 'Docker']
-    ];
-    for (const [needle, term] of map) {
-      if (skillText.includes(needle)) return term;
+  function renderComplementaryCourses() {
+    const list = document.getElementById('courses-list');
+    const countEl = document.getElementById('courses-count');
+    if (!list) return;
+
+    const filtered =
+      state.courseFilter === 'all'
+        ? PROFILE.complementaryCourses
+        : PROFILE.complementaryCourses.filter((c) => c.category === state.courseFilter);
+
+    list.textContent = '';
+    if (countEl) {
+      countEl.textContent = `${filtered.length} de ${PROFILE.complementaryCourses.length} certificaciones`;
     }
-    return null;
+
+    for (const course of filtered) {
+      const li = document.createElement('li');
+      li.className = `surface-card course-card ${course.featured ? 'is-featured' : ''}`;
+
+      const meta = document.createElement('span');
+      meta.className = 'course-meta';
+      meta.textContent = course.date;
+
+      const title = document.createElement('h4');
+      title.className = 'course-title';
+      title.textContent = course.title;
+
+      const provider = document.createElement('p');
+      provider.className = 'course-provider';
+      provider.textContent = course.provider;
+
+      li.append(meta, title, provider);
+      list.appendChild(li);
+    }
   }
 
-  function renderSkills() {
-    const container = document.getElementById('skills-list');
-    if (!container) return;
-    container.textContent = '';
+  function setupCourseFilters() {
+    const filterBtns = document.querySelectorAll('#courses-filters .filter-btn[data-course-filter]');
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.courseFilter = btn.getAttribute('data-course-filter') || 'all';
+        filterBtns.forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+        renderComplementaryCourses();
+      });
+    });
+  }
 
-    for (const group of PROFILE.skills) {
-      const card = document.createElement('article');
-      card.className = 'surface-card skill-group-card';
+  function renderCompetencies() {
+    const techList = document.getElementById('tech-skills-list');
+    if (techList) {
+      techList.textContent = '';
+      for (const skill of PROFILE.technicalSkills) {
+        const li = document.createElement('li');
+        li.textContent = skill;
+        techList.appendChild(li);
+      }
+    }
 
-      const title = document.createElement('h3');
-      title.textContent = group.category;
-
-      const ul = document.createElement('ul');
-      ul.className = 'tag-list';
-
-      for (const item of group.items) {
+    const appliedList = document.getElementById('applied-stack-list');
+    if (appliedList) {
+      appliedList.textContent = '';
+      for (const tech of PROFILE.appliedStack) {
         const li = document.createElement('li');
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'tag tag-interactive';
-        btn.textContent = item;
-        btn.title = `Buscar proyectos relacionados con ${item}`;
+        btn.textContent = tech;
+        btn.title = `Filtrar proyectos destacados que usan ${tech}`;
         btn.addEventListener('click', () => {
-          const term = resolveSkillSearchTerm(item);
-          if (!term) {
-            showToast(`${item} forma parte transversal de todos los proyectos.`);
-            return;
-          }
-          state.filter = 'all';
-          state.query = term;
-          updateFilterButtons('all');
+          state.projectFilter = 'all';
+          state.projectQuery = tech;
+          updateProjectFilterButtons('all');
           const searchInput = document.getElementById('project-search');
-          if (searchInput) searchInput.value = term;
+          if (searchInput) searchInput.value = tech;
           renderProjects();
-          document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          showToast(`Filtrando proyectos por "${term}"`);
+          document.getElementById('proyectos-destacados')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          showToast(`Filtrando proyectos destacados por "${tech}"`);
         });
         li.appendChild(btn);
-        ul.appendChild(li);
+        appliedList.appendChild(li);
       }
+    }
 
-      card.append(title, ul);
-      container.appendChild(card);
+    const softList = document.getElementById('soft-skills-list');
+    if (softList) {
+      softList.textContent = '';
+      for (const soft of PROFILE.softSkills) {
+        const li = document.createElement('li');
+        li.className = 'tag';
+        li.textContent = soft;
+        softList.appendChild(li);
+      }
+    }
+
+    const langList = document.getElementById('languages-list');
+    if (langList) {
+      langList.textContent = '';
+      for (const lang of PROFILE.languages) {
+        const row = document.createElement('div');
+        row.className = 'language-row';
+
+        const head = document.createElement('div');
+        head.className = 'language-head';
+        const strong = document.createElement('strong');
+        strong.textContent = lang.name;
+        const level = document.createElement('span');
+        level.className = 'language-level';
+        level.textContent = lang.level;
+        head.append(strong, level);
+
+        const track = document.createElement('div');
+        track.className = 'language-bar-track';
+        const fill = document.createElement('div');
+        fill.className = 'language-bar-fill';
+        fill.style.width = `${lang.percent}%`;
+        track.appendChild(fill);
+
+        row.append(head, track);
+        langList.appendChild(row);
+      }
+    }
+
+    const addList = document.getElementById('additional-info-list');
+    if (addList) {
+      addList.textContent = '';
+      for (const info of PROFILE.additionalInfo) {
+        const li = document.createElement('li');
+        li.textContent = info;
+        addList.appendChild(li);
+      }
     }
   }
 
@@ -540,9 +627,31 @@
     contactList.textContent = '';
 
     const entries = [
-      { label: 'Correo electrónico', value: PROFILE.contact.email, href: `mailto:${PROFILE.contact.email}`, external: false, isEmail: true },
-      { label: 'LinkedIn', value: PROFILE.contact.linkedin, href: PROFILE.contact.linkedin, external: true, isEmail: false },
-      { label: 'GitHub', value: PROFILE.contact.githubUrl, href: PROFILE.contact.githubUrl, external: true, isEmail: false }
+      {
+        label: 'Teléfono',
+        value: PROFILE.contact.phone,
+        href: PROFILE.contact.phoneHref,
+        copyLabel: 'Teléfono'
+      },
+      {
+        label: 'Correo electrónico',
+        value: PROFILE.contact.email,
+        href: `mailto:${PROFILE.contact.email}`,
+        copyLabel: 'Email'
+      },
+      {
+        label: 'Ubicación',
+        value: PROFILE.contact.location,
+        href: null,
+        copyLabel: null
+      },
+      {
+        label: 'GitHub',
+        value: PROFILE.contact.githubUrl,
+        href: PROFILE.contact.githubUrl,
+        external: true,
+        copyLabel: null
+      }
     ];
 
     for (const entry of entries) {
@@ -556,21 +665,27 @@
       const valueBox = document.createElement('div');
       valueBox.className = 'contact-card-value';
 
-      const link = document.createElement('a');
-      link.href = entry.href;
-      if (entry.external) {
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
+      if (entry.href) {
+        const link = document.createElement('a');
+        link.href = entry.href;
+        if (entry.external) {
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+        }
+        link.textContent = entry.value;
+        valueBox.appendChild(link);
+      } else {
+        const span = document.createElement('span');
+        span.textContent = entry.value;
+        valueBox.appendChild(span);
       }
-      link.textContent = entry.value;
-      valueBox.appendChild(link);
 
-      if (entry.isEmail) {
+      if (entry.copyLabel) {
         const copyBtn = document.createElement('button');
         copyBtn.type = 'button';
         copyBtn.className = 'btn btn-ghost btn-xs';
         copyBtn.textContent = 'Copiar';
-        copyBtn.addEventListener('click', copyEmailToClipboard);
+        copyBtn.addEventListener('click', () => copyToClipboard(entry.value, entry.copyLabel));
         valueBox.appendChild(copyBtn);
       }
 
@@ -583,15 +698,9 @@
     const sheet = document.getElementById('cv-modal-content');
     const pdfLink = document.getElementById('cv-pdf-link');
 
-    if (pdfLink) {
-      if (!PROFILE.contact.cvPdfUrl) {
-        pdfLink.hidden = true;
-      } else {
-        pdfLink.hidden = false;
-        pdfLink.href = PROFILE.contact.cvPdfUrl;
-      }
+    if (pdfLink && PROFILE.contact.cvPdfUrl) {
+      pdfLink.href = PROFILE.contact.cvPdfUrl;
     }
-
     if (!sheet) return;
     sheet.textContent = '';
 
@@ -608,81 +717,70 @@
     const contactP = document.createElement('p');
     contactP.className = 'cv-contact-line';
     contactP.textContent =
-      `GitHub: ${PROFILE.contact.githubUrl} · Email: ${PROFILE.contact.email} · LinkedIn: ${PROFILE.contact.linkedin}`;
+      `${PROFILE.contact.phone} · ${PROFILE.contact.email} · ${PROFILE.contact.location} · ${PROFILE.contact.githubUrl}`;
 
     header.append(nameH3, roleP, contactP);
     sheet.appendChild(header);
 
-    const summarySec = document.createElement('section');
-    summarySec.className = 'cv-section';
-    const summaryH4 = document.createElement('h4');
-    summaryH4.textContent = 'Perfil Profesional';
-    const summaryP = document.createElement('p');
-    summaryP.textContent = PROFILE.headline;
-    summarySec.append(summaryH4, summaryP);
-    sheet.appendChild(summarySec);
+    const addSection = (titleText) => {
+      const sec = document.createElement('section');
+      sec.className = 'cv-section';
+      const h4 = document.createElement('h4');
+      h4.textContent = titleText;
+      sec.appendChild(h4);
+      sheet.appendChild(sec);
+      return sec;
+    };
 
-    const projSec = document.createElement('section');
-    projSec.className = 'cv-section';
-    const projH4 = document.createElement('h4');
-    projH4.textContent = 'Proyectos Destacados';
-    projSec.appendChild(projH4);
+    const aboutSec = addSection('Sobre mí');
+    const aboutP = document.createElement('p');
+    aboutP.textContent = PROFILE.about;
+    aboutSec.appendChild(aboutP);
 
-    for (const p of PROFILE.projects) {
+    const eduSec = addSection('Formación Académica');
+    for (const edu of PROFILE.academicEducation) {
       const item = document.createElement('div');
       item.className = 'cv-item';
-
-      const itemTitle = document.createElement('strong');
-      itemTitle.textContent = `${p.title} (${p.stack.join(', ')})`;
-
-      const itemProblem = document.createElement('p');
-      itemProblem.textContent = `Problema: ${p.problem}`;
-
-      const itemSolution = document.createElement('p');
-      itemSolution.textContent = `Solución: ${p.solution}`;
-
-      const itemRepo = document.createElement('p');
-      itemRepo.className = 'cv-repo-url';
-      itemRepo.textContent = p.repoUrl;
-
-      item.append(itemTitle, itemProblem, itemSolution, itemRepo);
-      projSec.appendChild(item);
-    }
-    sheet.appendChild(projSec);
-
-    const eduSec = document.createElement('section');
-    eduSec.className = 'cv-section';
-    const eduH4 = document.createElement('h4');
-    eduH4.textContent = 'Formación y Experiencia';
-    eduSec.appendChild(eduH4);
-
-    for (const e of PROFILE.experienceAndEducation) {
-      const item = document.createElement('div');
-      item.className = 'cv-item';
-
-      const itemTitle = document.createElement('strong');
-      itemTitle.textContent = `${e.type}: ${e.title}`;
-
-      const itemDetail = document.createElement('p');
-      itemDetail.textContent = e.detail;
-
-      item.append(itemTitle, itemDetail);
+      const strong = document.createElement('strong');
+      strong.textContent = edu.title;
+      const p = document.createElement('p');
+      p.textContent = `${edu.institution} | ${edu.period}`;
+      item.append(strong, p);
       eduSec.appendChild(item);
     }
-    sheet.appendChild(eduSec);
 
-    const skillSec = document.createElement('section');
-    skillSec.className = 'cv-section';
-    const skillH4 = document.createElement('h4');
-    skillH4.textContent = 'Tecnologías';
-    skillSec.appendChild(skillH4);
-
-    for (const s of PROFILE.skills) {
-      const p = document.createElement('p');
-      p.textContent = `${s.category}: ${s.items.join(', ')}`;
-      skillSec.appendChild(p);
+    const projSec = addSection('Proyectos Destacados de GitHub');
+    for (const p of PROFILE.featuredProjects) {
+      const item = document.createElement('div');
+      item.className = 'cv-item';
+      const strong = document.createElement('strong');
+      strong.textContent = `${p.title} (${p.stack.join(', ')})`;
+      const desc = document.createElement('p');
+      desc.textContent = p.solution;
+      const url = document.createElement('p');
+      url.className = 'cv-repo-url';
+      url.textContent = p.repoUrl;
+      item.append(strong, desc, url);
+      projSec.appendChild(item);
     }
-    sheet.appendChild(skillSec);
+
+    const coursesSec = addSection('Formación Complementaria');
+    for (const c of PROFILE.complementaryCourses) {
+      const p = document.createElement('p');
+      p.textContent = `• ${c.title} — ${c.provider} | ${c.date}`;
+      coursesSec.appendChild(p);
+    }
+
+    const compSec = addSection('Habilidades, Idiomas y Más Información');
+    const pTech = document.createElement('p');
+    pTech.textContent = `Habilidades Técnicas: ${PROFILE.technicalSkills.join(' · ')}`;
+    const pSoft = document.createElement('p');
+    pSoft.textContent = `Soft Skills: ${PROFILE.softSkills.join(' · ')}`;
+    const pLang = document.createElement('p');
+    pLang.textContent = `Idiomas: ${PROFILE.languages.map((l) => `${l.name} (${l.level})`).join(' · ')}`;
+    const pAdd = document.createElement('p');
+    pAdd.textContent = `Más información: ${PROFILE.additionalInfo.join(' · ')}`;
+    compSec.append(pTech, pSoft, pLang, pAdd);
   }
 
   function renderFooter() {
@@ -704,7 +802,7 @@
         document.documentElement.removeAttribute('data-theme');
       }
       btn.setAttribute('aria-pressed', String(isLight));
-      btn.textContent = isLight ? '🌙 Tema oscuro' : '☀️ Tema claro';
+      btn.textContent = isLight ? '🌙 Modo Oscuro Naval' : '☀️ Modo Claro CV';
     }
 
     try {
@@ -713,7 +811,7 @@
         applyTheme(saved);
       }
     } catch {
-      // Ignorar si almacenamiento local no disponible
+      // Ignorar
     }
 
     btn.addEventListener('click', () => {
@@ -724,7 +822,7 @@
       } catch {
         // Ignorar
       }
-      showToast(next === 'light' ? 'Tema claro activado' : 'Tema oscuro activado');
+      showToast(next === 'light' ? 'Modo Claro CV activado' : 'Modo Oscuro Naval activado');
     });
   }
 
@@ -771,8 +869,10 @@
     setupProjectModal();
     renderProjects();
     setupProjectControls();
-    renderTimeline();
-    renderSkills();
+    renderAcademicEducation();
+    renderComplementaryCourses();
+    setupCourseFilters();
+    renderCompetencies();
     renderContact();
     renderCvSheet();
     renderFooter();
@@ -799,6 +899,10 @@
         username: PROFILE.contact.githubUser,
         onStateChange: (nextState) => {
           githubState = nextState;
+          if (nextState.data && Array.isArray(nextState.data.repos)) {
+            state.githubReposMap = new Map(nextState.data.repos.map((r) => [r.name, r]));
+            renderProjects();
+          }
         }
       });
     }

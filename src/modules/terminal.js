@@ -112,7 +112,10 @@
 
     if (!outputEl || !formEl || !inputEl) return;
 
-    const COMMANDS = ['help', 'whoami', 'projects', 'github', 'skills', 'education', 'contact', 'cv', 'clear'];
+    const COMMANDS = [
+      'help', 'whoami', 'projects', 'education', 'courses',
+      'skills', 'languages', 'github', 'contact', 'cv', 'clear'
+    ];
     const history = [];
     let historyIndex = -1;
 
@@ -141,33 +144,69 @@
 
       if (cmd === 'help') {
         appendLine('Comandos disponibles:', 'accent');
-        appendLine('  whoami     -> Nombre, rol, ubicación y disponibilidad');
-        appendLine('  projects   -> Proyectos con problema, solución y repositorio');
+        appendLine('  whoami     -> Datos personales, perfil y disponibilidad');
+        appendLine('  projects   -> Proyectos destacados de GitHub');
+        appendLine('  education  -> Formación académica (UCLM y Bachillerato)');
+        appendLine('  courses    -> Formación complementaria (12 certificaciones)');
+        appendLine('  skills     -> Habilidades técnicas, stack aplicado y soft skills');
+        appendLine('  languages  -> Idiomas y nivel acreditado');
         appendLine('  github     -> Estado y bytes por lenguaje desde GitHub');
-        appendLine('  skills     -> Stack técnico por áreas');
-        appendLine('  education  -> Formación académica y experiencia');
-        appendLine('  contact    -> Email, LinkedIn y GitHub');
-        appendLine('  cv         -> Abrir diálogo accesible de CV imprimible');
+        appendLine('  contact    -> Teléfono, correo, ciudad y GitHub');
+        appendLine('  cv         -> Abrir vista rápida imprimible del CV');
         appendLine('  clear      -> Limpiar salida');
         return;
       }
 
       if (cmd === 'whoami') {
         appendLine(`Nombre:         ${profile.name}`, 'accent');
-        appendLine(`Rol:            ${profile.role}`);
-        appendLine(`Resumen:        ${profile.headline}`);
-        appendLine(`Ubicación:      ${profile.location}`);
-        appendLine(`Disponibilidad: ${profile.availability}`);
+        appendLine(`Perfil:         ${profile.role} (${profile.institution})`);
+        appendLine(`Ubicación:      ${profile.contact.location}`);
+        appendLine(`Sobre mí:       ${profile.about}`);
+        appendLine(`Info adicional: ${profile.additionalInfo.join(' · ')}`);
         return;
       }
 
       if (cmd === 'projects') {
-        profile.projects.forEach((p, index) => {
+        profile.featuredProjects.forEach((p, index) => {
           appendLine(`[${index + 1}] ${p.title}`, 'accent');
           appendLine(`    Problema: ${p.problem}`);
           appendLine(`    Solución: ${p.solution}`);
           appendLine(`    Stack:    ${p.stack.join(', ')}`);
           appendLine(`    Repo:     ${p.repoUrl}`);
+        });
+        return;
+      }
+
+      if (cmd === 'education') {
+        profile.academicEducation.forEach((item) => {
+          appendLine(`• ${item.title}`, 'accent');
+          appendLine(`  ${item.institution} | ${item.period}`);
+        });
+        return;
+      }
+
+      if (cmd === 'courses') {
+        appendLine(`Formación complementaria (${profile.complementaryCourses.length} cursos):`, 'accent');
+        profile.complementaryCourses.forEach((c, idx) => {
+          appendLine(`  ${String(idx + 1).padStart(2, '0')}. ${c.title} — ${c.provider} (${c.date})`);
+        });
+        return;
+      }
+
+      if (cmd === 'skills') {
+        appendLine('Habilidades técnicas (CV):', 'accent');
+        appendLine(`  ${profile.technicalSkills.join(' · ')}`);
+        appendLine('Tecnologías aplicadas en repositorios:', 'accent');
+        appendLine(`  ${profile.appliedStack.join(' · ')}`);
+        appendLine('Soft skills:', 'accent');
+        appendLine(`  ${profile.softSkills.join(' · ')}`);
+        return;
+      }
+
+      if (cmd === 'languages') {
+        appendLine('Idiomas:', 'accent');
+        profile.languages.forEach((lang) => {
+          appendLine(`  • ${lang.name}: ${lang.level}`);
         });
         return;
       }
@@ -178,7 +217,7 @@
           appendLine('Consultando GitHub API en curso…', 'info');
           return;
         }
-        const sourceTag = state.mode === 'demo' ? '(modo demo sin conexión)' : '(API en vivo)';
+        const sourceTag = state.mode === 'offline' ? '(instantánea offline)' : '(API en vivo)';
         appendLine(`Repositorios propios ${sourceTag}: ${state.data.repos.length}`, 'accent');
         state.data.languageEntries.forEach((entry) => {
           const pct = state.data.totalBytes > 0
@@ -189,31 +228,16 @@
         return;
       }
 
-      if (cmd === 'skills') {
-        profile.skills.forEach((group) => {
-          appendLine(`${group.category}:`, 'accent');
-          appendLine(`  ${group.items.join(' · ')}`);
-        });
-        return;
-      }
-
-      if (cmd === 'education') {
-        profile.experienceAndEducation.forEach((item) => {
-          appendLine(`[${item.type}] ${item.title}`, 'accent');
-          appendLine(`  ${item.detail}`);
-        });
-        return;
-      }
-
       if (cmd === 'contact') {
-        appendLine(`Email:    ${profile.contact.email}`);
-        appendLine(`LinkedIn: ${profile.contact.linkedin}`);
-        appendLine(`GitHub:   ${profile.contact.githubUrl}`);
+        appendLine(`Teléfono:  ${profile.contact.phone}`, 'accent');
+        appendLine(`Email:     ${profile.contact.email}`);
+        appendLine(`Ubicación: ${profile.contact.location}`);
+        appendLine(`GitHub:    ${profile.contact.githubUrl}`);
         return;
       }
 
       if (cmd === 'cv') {
-        appendLine('Abriendo diálogo accesible de CV…', 'accent');
+        appendLine('Abriendo vista rápida del CV…', 'accent');
         openCvModal(inputEl);
         return;
       }
@@ -259,9 +283,8 @@
       });
     });
 
-    // Arranque pre-iniciado con resumen rápido y guía
-    appendLine(`${profile.name} — ${profile.role}`, 'accent');
-    appendLine('Sistema listo. Pulsa un botón superior o escribe "help" para consultar secciones.', 'info');
+    appendLine(`${profile.name} — ${profile.role} (${profile.institution})`, 'accent');
+    appendLine('Pulsa un botón o escribe "help" para consultar formación, cursos, proyectos o contacto.', 'info');
 
     initPulseIndicator(pulseCanvas, badgeEl);
   };

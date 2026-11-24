@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Captura del portfolio personal de Rafael García Sánchez en GitHub Pages">
+  <defs>
+    <linearGradient id="portBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071324"/>
+      <stop offset="100%" stop-color="#0e2444"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#portBg)"/>
+
+  <!-- Cabecera -->
+  <rect x="24" y="20" width="752" height="42" rx="8" fill="#0a192f" stroke="#1e3a5f"/>
+  <text x="44" y="46" font-family="ui-monospace, monospace" font-size="14" font-weight="700" fill="#38bdf8">&lt;R/&gt; Rafael García</text>
+  <text x="415" y="46" font-family="sans-serif" font-size="12" fill="#cbd5e1">Proyectos · GitHub · Formación · Terminal · Tema</text>
+
+  <!-- Hero naval + ficha CV -->
+  <rect x="24" y="78" width="424" height="176" rx="10" fill="#0a192f" stroke="#1e3a5f"/>
+  <circle cx="80" cy="142" r="34" fill="#132c4e" stroke="#38bdf8" stroke-width="2.5"/>
+  <text x="80" y="149" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#f8fafc">RG</text>
+  <text x="130" y="114" font-family="ui-monospace, monospace" font-size="11" fill="#38bdf8">UCLM · CIUDAD REAL</text>
+  <text x="130" y="142" font-family="sans-serif" font-size="20" font-weight="700" fill="#f8fafc">Rafael García Sánchez</text>
+  <text x="130" y="166" font-family="sans-serif" font-size="12.5" fill="#cbd5e1">Estudiante de Ingeniería Informática</text>
+  <rect x="130" y="190" width="136" height="32" rx="6" fill="#38bdf8"/>
+  <text x="198" y="211" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#071324">Descargar CV PDF</text>
+  <rect x="278" y="190" width="142" height="32" rx="6" fill="#132c4e" stroke="#254875"/>
+  <text x="349" y="211" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f8fafc">Proyectos GitHub</text>
+
+  <!-- Panel formación + GitHub -->
+  <rect x="464" y="78" width="312" height="176" rx="10" fill="#0a192f" stroke="#1e3a5f"/>
+  <text x="484" y="108" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#38bdf8">GITHUB LIVE (@Rafags04)</text>
+  <rect x="484" y="124" width="135" height="12" rx="4" fill="#e34c26"/>
+  <rect x="621" y="124" width="85" height="12" rx="4" fill="#eab308"/>
+  <rect x="708" y="124" width="44" height="12" rx="4" fill="#f97316"/>
+  <text x="484" y="160" font-family="ui-monospace, monospace" font-size="11.5" fill="#cbd5e1">HTML · JavaScript · Java · CSS</text>
+  <line x1="484" y1="178" x2="754" y2="178" stroke="#1e3a5f"/>
+  <text x="484" y="204" font-family="sans-serif" font-size="12.5" font-weight="700" fill="#f8fafc">Formación Complementaria</text>
+  <text x="484" y="226" font-family="ui-monospace, monospace" font-size="11" fill="#86efac">12 cursos · Software Cuántico AQC Lab</text>
+
+  <!-- Terminal -->
+  <rect x="24" y="270" width="752" height="156" rx="10" fill="#060d18" stroke="#1e3a5f"/>
+  <rect x="24" y="270" width="752" height="28" rx="10" fill="#0a192f"/>
+  <text x="44" y="289" font-family="ui-monospace, monospace" font-size="12" fill="#38bdf8">● rafa@uclm-ciudad-real:~</text>
+  <text x="44" y="324" font-family="ui-monospace, monospace" font-size="12" fill="#f8fafc">$ whoami</text>
+  <text x="44" y="346" font-family="ui-monospace, monospace" font-size="12" fill="#38bdf8">Rafael García Sánchez — Estudiante de Ingeniería Informática (UCLM)</text>
+  <text x="44" y="372" font-family="ui-monospace, monospace" font-size="12" fill="#f8fafc">$ languages</text>
+  <text x="44" y="394" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">Castellano (Nativo) · Inglés (Nivel Avanzado B2)</text>
+</svg>

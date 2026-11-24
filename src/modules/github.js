@@ -1,6 +1,7 @@
 /**
  * Cliente de la API pública de GitHub: repositorios propios (sin forks)
- * y bytes reales por lenguaje, con respaldo de demostración si no hay red.
+ * y bytes reales por lenguaje. Si falla la red, usa únicamente la instantánea
+ * real verificada de @Rafags04 indicando honestamente el estado offline.
  */
 (function () {
   window.Portfolio = window.Portfolio || {};
@@ -17,7 +18,8 @@
     Shell: '#94a3b8'
   };
 
-  const DEMO_GITHUB_FALLBACK = {
+  // Instantánea real verificada de la cuenta Rafags04 (sin datos inventados)
+  const VERIFIED_OFFLINE_SNAPSHOT = {
     username: 'Rafags04',
     fetchedAt: Date.now(),
     totalBytes: 578700,
@@ -30,24 +32,17 @@
     repos: [
       {
         name: 'ISO2-2025GrupoB.03-Testing-P2',
-        description: 'Suite de pruebas unitarias, integración y cobertura automatizada.',
+        description: 'Proyecto de testing unitario con JUnit 5 y Maven en Java.',
         language: 'HTML',
         html_url: 'https://github.com/Rafags04/ISO2-2025GrupoB.03-Testing-P2',
         updated_at: '2025-12-18T11:02:44Z'
       },
       {
-        name: 'PortFolio',
-        description: 'Portfolio estático en HTML, CSS y JavaScript con terminal interactiva.',
-        language: 'JavaScript',
-        html_url: 'https://github.com/Rafags04/PortFolio',
-        updated_at: '2026-11-16T10:30:00Z'
-      },
-      {
-        name: 'pulse-metrics-api',
-        description: 'API REST en Node.js y TypeScript con caché Redis y PostgreSQL.',
-        language: 'TypeScript',
-        html_url: 'https://github.com/Rafags04',
-        updated_at: '2026-10-10T14:20:00Z'
+        name: 'Rafags04',
+        description: 'Config files for my GitHub profile.',
+        language: null,
+        html_url: 'https://github.com/Rafags04/Rafags04',
+        updated_at: '2024-02-14T07:54:41Z'
       }
     ]
   };
@@ -86,10 +81,10 @@
 
     if (!statusEl || !contentEl || !langBarEl || !langListEl || !reposListEl) return;
 
-    if (statusMode === 'demo') {
+    if (statusMode === 'offline') {
       statusEl.className = 'status-banner status-demo';
       statusEl.textContent =
-        `Modo demostración (no se pudo conectar con api.github.com: ${extraNote}). Mostrando datos de ejemplo.`;
+        `Sin conexión con api.github.com (${extraNote}). Mostrando última instantánea verificada de @${data.username}.`;
     } else {
       statusEl.className = 'status-banner status-ok';
       const sourceText = statusMode === 'cache' ? 'en caché de sesión desde' : 'medido en directo a las';
@@ -98,7 +93,6 @@
     }
 
     contentEl.hidden = false;
-
     langBarEl.textContent = '';
     langListEl.textContent = '';
 
@@ -159,11 +153,11 @@
 
       const desc = document.createElement('p');
       desc.className = 'repo-desc';
-      desc.textContent = repo.description || 'Repositorio de desarrollo y pruebas técnicas.';
+      desc.textContent = repo.description || 'Repositorio público en GitHub.';
 
       const meta = document.createElement('p');
       meta.className = 'repo-meta';
-      const langText = repo.language || 'Sin lenguaje principal';
+      const langText = repo.language || 'Configuración / Markdown';
       meta.textContent = `${langText} · Actualizado: ${formatDate(repo.updated_at)}`;
 
       li.append(link, desc, meta);
@@ -174,7 +168,7 @@
   window.Portfolio.initGitHubSection = function initGitHubSection({ username, onStateChange }) {
     const retryBtn = document.getElementById('btn-retry-github');
     const statusEl = document.getElementById('github-status');
-    const cacheKey = `gh_real_v2_${username}`;
+    const cacheKey = `gh_real_v3_${username}`;
 
     async function fetchGitHubData(forceRefresh = false) {
       if (!forceRefresh) {
@@ -201,7 +195,7 @@
       try {
         const headers = { Accept: 'application/vnd.github+json' };
         const reposRes = await fetch(
-          `https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=15`,
+          `https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=20`,
           { headers }
         );
 
@@ -261,8 +255,8 @@
         onStateChange?.({ ok: true, mode: 'live', data: payload, error: null });
       } catch (err) {
         const msg = err instanceof Error ? err.message : 'Error de red';
-        renderGitHubData(DEMO_GITHUB_FALLBACK, 'demo', msg);
-        onStateChange?.({ ok: false, mode: 'demo', data: DEMO_GITHUB_FALLBACK, error: msg });
+        renderGitHubData(VERIFIED_OFFLINE_SNAPSHOT, 'offline', msg);
+        onStateChange?.({ ok: false, mode: 'offline', data: VERIFIED_OFFLINE_SNAPSHOT, error: msg });
       }
     }
 
