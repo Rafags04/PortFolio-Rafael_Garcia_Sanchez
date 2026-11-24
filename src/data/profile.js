@@ -183,11 +183,22 @@
     es: {
       pageTitle: 'Rafael García Sánchez | RafaOS — Portfolio macOS',
       skipLink: 'Saltar al escritorio',
+      menuFinder: 'Finder',
       menuWindow: 'Ventana',
       menuTile: 'Ordenar en mosaico',
       menuShowAll: 'Mostrar todas las ventanas',
-      menuMinimizeAll: 'Minimizar todas',
+      menuMinimizeAll: 'Minimizar todas (Escritorio)',
       menuCvPdf: 'Descargar CV.pdf',
+      menuWallpaper: 'Fondo',
+      wpBigSur: 'macOS Big Sur (Montañas)',
+      wpSequoia: 'macOS Sequoia (Ondas)',
+      wpMonterey: 'macOS Monterey (Cañón)',
+      wpMojave: 'macOS Mojave (Dunas)',
+      widgetHint: 'Haz clic en cualquier app del Dock o del escritorio para abrirla · ⌘K Spotlight',
+      deskIconAbout: 'Sobre mí',
+      deskIconSim: 'Simulador PDA',
+      deskIconCv: 'CV_Rafael.pdf',
+      deskIconGh: 'GitHub Live',
       statusAvailable: 'Disponible · Ciudad Real',
       spotlightBtnAria: 'Buscar con Spotlight (⌘K)',
       langBtnText: 'EN',
@@ -291,17 +302,29 @@
       toastThemeLight: 'Aspecto macOS Claro activado',
       toastThemeDark: 'Aspecto macOS Oscuro activado',
       toastLangChanged: 'Idioma cambiado a Español',
-      toastTiled: 'Ventanas ordenadas en mosaico'
+      toastTiled: 'Ventanas ordenadas en mosaico',
+      toastWallpaper: 'Fondo cambiado a {name}'
     },
 
     en: {
       pageTitle: 'Rafael García Sánchez | RafaOS — macOS Portfolio',
       skipLink: 'Skip to desktop',
+      menuFinder: 'Finder',
       menuWindow: 'Window',
       menuTile: 'Tile Windows',
       menuShowAll: 'Show All Windows',
-      menuMinimizeAll: 'Minimize All',
+      menuMinimizeAll: 'Minimize All (Desktop)',
       menuCvPdf: 'Download CV.pdf',
+      menuWallpaper: 'Wallpaper',
+      wpBigSur: 'macOS Big Sur (Mountains)',
+      wpSequoia: 'macOS Sequoia (Ribbons)',
+      wpMonterey: 'macOS Monterey (Canyon)',
+      wpMojave: 'macOS Mojave (Dunes)',
+      widgetHint: 'Click any app in the Dock or on the desktop to open it · ⌘K Spotlight',
+      deskIconAbout: 'About Me',
+      deskIconSim: 'PDA Simulator',
+      deskIconCv: 'CV_Rafael.pdf',
+      deskIconGh: 'GitHub Live',
       statusAvailable: 'Available · Ciudad Real',
       spotlightBtnAria: 'Spotlight Search (⌘K)',
       langBtnText: 'ES',
@@ -405,7 +428,8 @@
       toastThemeLight: 'macOS Light appearance enabled',
       toastThemeDark: 'macOS Dark appearance enabled',
       toastLangChanged: 'Language switched to English',
-      toastTiled: 'Windows tiled neatly'
+      toastTiled: 'Windows tiled neatly',
+      toastWallpaper: 'Wallpaper set to {name}'
     }
   };
 

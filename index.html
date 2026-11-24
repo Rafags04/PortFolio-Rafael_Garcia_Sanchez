@@ -10,7 +10,7 @@
   <!-- Open Graph / Twitter Card -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Rafael García Sánchez | RafaOS Portfolio">
-  <meta property="og:description" content="Portfolio interactivo estilo macOS con ventanas reales, Dock, Spotlight, Simulador PDA DGT en vivo, API de GitHub y CV en PDF.">
+  <meta property="og:description" content="Portfolio interactivo estilo macOS con escritorio limpio, ventanas arrastrables, fondos de macOS, Dock, Spotlight y Simulador PDA DGT.">
   <meta property="og:url" content="https://rafags04.github.io/PortFolio/">
   <meta property="og:image" content="https://rafags04.github.io/PortFolio/assets/profile-rafa.png">
   <meta name="twitter:card" content="summary">
@@ -31,7 +31,7 @@
   <a class="skip-link" href="#desktop-stage" data-i18n="skipLink">Saltar al escritorio</a>
 
   <!-- ================================================================
-       BARRA DE MENÚ SUPERIOR ESTILO macOS SEQUOIA
+       BARRA DE MENÚ SUPERIOR ESTILO macOS
        ================================================================ -->
   <header class="mac-menubar">
     <div class="menubar-left">
@@ -40,7 +40,7 @@
           <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
         </svg>
       </span>
-      <strong id="menubar-active-app" class="menubar-app-name">Sobre mí</strong>
+      <strong id="menubar-active-app" class="menubar-app-name">Finder</strong>
 
       <div class="menubar-menu-wrap">
         <button type="button" id="btn-window-menu" class="menubar-item" aria-expanded="false" aria-haspopup="true" data-i18n="menuWindow">
@@ -49,9 +49,21 @@
         <div id="window-dropdown" class="mac-dropdown" role="menu" hidden>
           <button type="button" id="menu-act-tile" class="mac-dropdown-item" role="menuitem" data-i18n="menuTile">Ordenar en mosaico</button>
           <button type="button" id="menu-act-show-all" class="mac-dropdown-item" role="menuitem" data-i18n="menuShowAll">Mostrar todas las ventanas</button>
-          <button type="button" id="menu-act-min-all" class="mac-dropdown-item" role="menuitem" data-i18n="menuMinimizeAll">Minimizar todas</button>
+          <button type="button" id="menu-act-min-all" class="mac-dropdown-item" role="menuitem" data-i18n="menuMinimizeAll">Minimizar todas (Escritorio)</button>
           <div class="mac-dropdown-sep" role="separator"></div>
           <a id="menu-act-cv" class="mac-dropdown-item" role="menuitem" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" download="CV-Rafael-Garcia-Sanchez.pdf" data-i18n="menuCvPdf">Descargar CV.pdf</a>
+        </div>
+      </div>
+
+      <div class="menubar-menu-wrap">
+        <button type="button" id="btn-wallpaper-menu" class="menubar-item" aria-expanded="false" aria-haspopup="true" data-i18n="menuWallpaper">
+          Fondo
+        </button>
+        <div id="wallpaper-dropdown" class="mac-dropdown" role="menu" hidden>
+          <button type="button" class="mac-dropdown-item is-active" role="menuitem" data-wallpaper="big-sur" data-i18n="wpBigSur">macOS Big Sur (Montañas)</button>
+          <button type="button" class="mac-dropdown-item" role="menuitem" data-wallpaper="sequoia" data-i18n="wpSequoia">macOS Sequoia (Ondas)</button>
+          <button type="button" class="mac-dropdown-item" role="menuitem" data-wallpaper="monterey" data-i18n="wpMonterey">macOS Monterey (Cañón)</button>
+          <button type="button" class="mac-dropdown-item" role="menuitem" data-wallpaper="mojave" data-i18n="wpMojave">macOS Mojave (Dunas)</button>
         </div>
       </div>
     </div>
@@ -82,11 +94,70 @@
   </header>
 
   <!-- ================================================================
-       ESCRITORIO macOS CON 5 VENTANAS INTERACTIVAS (Mosaico Sequoia)
+       ESCRITORIO macOS LIMPIO AL ARRANQUE + VENTANAS FLOTANTES LIBRES
        ================================================================ -->
   <main id="desktop-stage" class="mac-desktop">
-    <!-- VENTANA 1: SOBRE MÍ (ABOUT THIS DEV) -->
-    <section id="win-about" class="mac-window is-focused" data-window="about" aria-labelledby="hero-name">
+    <!-- Capa base del escritorio: Widget Sonoma + Accesos directos del escritorio -->
+    <div id="desktop-home" class="desktop-home">
+      <section id="desktop-welcome-widget" class="desktop-widget" aria-label="Resumen de escritorio">
+        <div class="widget-head">
+          <img
+            id="widget-avatar"
+            src="./assets/profile-rafa.png"
+            alt="Retrato de Rafael García Sánchez"
+            width="56"
+            height="56"
+            class="widget-avatar"
+          >
+          <div class="widget-text">
+            <h2 id="widget-name" class="widget-name">Rafael García Sánchez</h2>
+            <p id="widget-role" class="widget-role">Estudiante de Ingeniería Informática · UCLM</p>
+          </div>
+        </div>
+        <p class="widget-hint" data-i18n="widgetHint">Haz clic en cualquier app del Dock o del escritorio para abrirla · ⌘K Spotlight</p>
+      </section>
+
+      <div id="desktop-icons" class="desktop-icons" role="group" aria-label="Accesos directos del escritorio">
+        <button type="button" class="desk-icon-btn" data-desk-open="about">
+          <span class="desk-squircle dock-ico-finder" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/>
+            </svg>
+          </span>
+          <span class="desk-label" data-i18n="deskIconAbout">Sobre mí</span>
+        </button>
+
+        <button type="button" class="desk-icon-btn" data-desk-open="projects">
+          <span class="desk-squircle dock-ico-sim" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="2" width="12" height="20" rx="3"/><path d="M9 18h6"/><path d="m9.5 10.5 2 2 3.5-4"/>
+            </svg>
+          </span>
+          <span class="desk-label" data-i18n="deskIconSim">Simulador PDA</span>
+        </button>
+
+        <button type="button" id="desk-btn-cv" class="desk-icon-btn">
+          <span class="desk-squircle dock-ico-cv" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/>
+            </svg>
+          </span>
+          <span class="desk-label" data-i18n="deskIconCv">CV_Rafael.pdf</span>
+        </button>
+
+        <button type="button" class="desk-icon-btn" data-desk-open="github">
+          <span class="desk-squircle dock-ico-gh" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </span>
+          <span class="desk-label" data-i18n="deskIconGh">GitHub Live</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- VENTANA 1: SOBRE MÍ (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-about" class="mac-window" data-window="about" aria-labelledby="hero-name" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
           <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
@@ -104,8 +175,8 @@
               id="hero-avatar"
               src="./assets/profile-rafa.png"
               alt="Retrato de Rafael García Sánchez"
-              width="104"
-              height="104"
+              width="92"
+              height="92"
               class="hero-avatar"
             >
           </div>
@@ -142,10 +213,11 @@
           </a>
         </div>
       </div>
+      <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
 
-    <!-- VENTANA 2: SIMULADOR PDA (APP + PROBADOR EN VIVO DGT + CÓDIGO) -->
-    <section id="win-projects" class="mac-window" data-window="projects" aria-labelledby="win-projects-title">
+    <!-- VENTANA 2: SIMULADOR PDA (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-projects" class="mac-window" data-window="projects" aria-labelledby="win-projects-title" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
           <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
@@ -197,10 +269,11 @@
 
         <div id="proj-inline-code-panel" class="proj-inline-code-panel" role="tabpanel" hidden></div>
       </div>
+      <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
 
-    <!-- VENTANA 3: FORMACIÓN Y COMPETENCIAS (AJUSTES DEL SISTEMA) -->
-    <section id="win-education" class="mac-window" data-window="education" aria-labelledby="win-edu-title">
+    <!-- VENTANA 3: FORMACIÓN Y COMPETENCIAS (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-education" class="mac-window" data-window="education" aria-labelledby="win-edu-title" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
           <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
@@ -238,10 +311,11 @@
           </div>
         </div>
       </div>
+      <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
 
-    <!-- VENTANA 4: MONITOR DE ACTIVIDAD GITHUB (@Rafags04) -->
-    <section id="win-github" class="mac-window" data-window="github" aria-labelledby="win-github-title">
+    <!-- VENTANA 4: MONITOR GITHUB (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-github" class="mac-window" data-window="github" aria-labelledby="win-github-title" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
           <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
@@ -270,10 +344,11 @@
           </div>
         </div>
       </div>
+      <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
 
-    <!-- VENTANA 5: CONTACTOS (CONTACTS.APP) -->
-    <section id="win-contact" class="mac-window" data-window="contact" aria-labelledby="win-contact-title">
+    <!-- VENTANA 5: CONTACTOS (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-contact" class="mac-window" data-window="contact" aria-labelledby="win-contact-title" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
           <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
@@ -290,6 +365,7 @@
           <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span>
         </p>
       </div>
+      <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
   </main>
 
@@ -297,7 +373,7 @@
        DOCK FLOTANTE INFERIOR ESTILO macOS
        ================================================================ -->
   <nav id="mac-dock" class="mac-dock" aria-label="Dock">
-    <button type="button" class="dock-item is-open" data-dock-target="about" aria-label="Sobre mí">
+    <button type="button" class="dock-item" data-dock-target="about" aria-label="Sobre mí">
       <span class="dock-tooltip" data-i18n="dockAbout">Sobre mí</span>
       <span class="dock-icon dock-ico-finder" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -307,7 +383,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item is-open" data-dock-target="projects" aria-label="Simulador PDA">
+    <button type="button" class="dock-item" data-dock-target="projects" aria-label="Simulador PDA">
       <span class="dock-tooltip" data-i18n="dockProjects">Simulador PDA</span>
       <span class="dock-icon dock-ico-sim" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -317,7 +393,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item is-open" data-dock-target="education" aria-label="Formación">
+    <button type="button" class="dock-item" data-dock-target="education" aria-label="Formación">
       <span class="dock-tooltip" data-i18n="dockEdu">Formación</span>
       <span class="dock-icon dock-ico-edu" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -327,7 +403,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item is-open" data-dock-target="github" aria-label="Monitor GitHub">
+    <button type="button" class="dock-item" data-dock-target="github" aria-label="Monitor GitHub">
       <span class="dock-tooltip" data-i18n="dockGithub">Monitor GitHub</span>
       <span class="dock-icon dock-ico-gh" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -337,7 +413,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item is-open" data-dock-target="contact" aria-label="Contactos">
+    <button type="button" class="dock-item" data-dock-target="contact" aria-label="Contactos">
       <span class="dock-tooltip" data-i18n="dockContact">Contactos</span>
       <span class="dock-icon dock-ico-contact" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">

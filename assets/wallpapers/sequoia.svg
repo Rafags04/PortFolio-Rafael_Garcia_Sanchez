@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sqBase" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071226"/>
+      <stop offset="50%" stop-color="#111d42"/>
+      <stop offset="100%" stop-color="#060c1a"/>
+    </linearGradient>
+    <radialGradient id="sqGlow1" cx="0.22" cy="0.28" r="0.52">
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.48"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sqGlow2" cx="0.82" cy="0.24" r="0.48">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.46"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sqRib1" x1="0" y1="0.2" x2="1" y2="0.8">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.72"/>
+      <stop offset="45%" stop-color="#3b82f6" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="sqRib2" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#fb7185" stop-opacity="0.62"/>
+      <stop offset="48%" stop-color="#f59e0b" stop-opacity="0.68"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.28"/>
+    </linearGradient>
+    <linearGradient id="sqRib3" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.52"/>
+      <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1200" fill="url(#sqBase)"/>
+  <rect width="1920" height="1200" fill="url(#sqGlow1)"/>
+  <rect width="1920" height="1200" fill="url(#sqGlow2)"/>
+
+  <path d="M-120 920 C 320 520, 820 980, 1280 490 C 1580 170, 1820 340, 2060 140 L 2060 540 C 1740 720, 1440 520, 1080 860 C 660 1240, 240 840, -120 1120 Z" fill="url(#sqRib1)"/>
+  <path d="M-100 540 C 380 220, 740 760, 1220 360 C 1540 90, 1800 440, 2040 280 L 2040 780 C 1660 900, 1340 480, 920 790 C 520 1080, 200 660, -100 940 Z" fill="url(#sqRib2)"/>
+  <path d="M-80 1080 C 380 780, 780 1140, 1260 800 C 1560 590, 1820 820, 2040 620 L 2040 1260 L -80 1260 Z" fill="url(#sqRib3)"/>
+</svg>

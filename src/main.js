@@ -1,19 +1,27 @@
 /**
- * RafaOS — Lógica interactiva estilo macOS (gestor de ventanas, Dock, Spotlight,
- * menú Ventana, evaluador DGT en vivo y modales accesibles) usando textContent / createElementNS.
+ * RafaOS — Arranque limpio estilo macOS, ventanas flotantes movibles/redimensionables,
+ * selector de fondos nativos de Mac, Dock con lupa, Spotlight ⌘K y evaluador DGT en vivo.
  */
 (function () {
   const Portfolio = window.Portfolio || {};
   if (typeof Portfolio.getProfile !== 'function' || typeof Portfolio.getStrings !== 'function') return;
+
+  const WALLPAPERS = {
+    'big-sur': 'wpBigSur',
+    sequoia: 'wpSequoia',
+    monterey: 'wpMonterey',
+    mojave: 'wpMojave'
+  };
 
   const state = {
     currentProjects: Portfolio.getProfile().featuredProjects.slice(),
     modalProjectIndex: 0,
     githubReposMap: new Map(),
     dgtFaults: { L: 0, D: 0, E: 0 },
-    activeWinId: 'about',
+    activeWinId: '',
     topZ: 20,
-    dragOffsets: new Map(),
+    geometries: new Map(),
+    currentWallpaper: 'big-sur',
     spotlightSelectedIndex: 0
   };
 
@@ -143,8 +151,12 @@
   }
 
   /* ------------------------------------------------------------------------
-     GESTOR DE VENTANAS macOS (foco, semáforos, arrastrar y mosaico)
+     GESTOR DE VENTANAS LIBRES FLOTANTES (arrastrar, redimensionar, mosaico)
      ------------------------------------------------------------------------ */
+  function isDesktopMode() {
+    return window.innerWidth >= 768;
+  }
+
   function getAppLabelForWin(winId) {
     const s = S();
     const map = {
@@ -154,7 +166,7 @@
       github: s.appGithubName,
       contact: s.appContactName
     };
-    return map[winId] || 'RafaOS';
+    return map[winId] || s.menuFinder || 'Finder';
   }
 
   function updateMenubarActiveApp() {
@@ -162,7 +174,11 @@
     if (el) el.textContent = getAppLabelForWin(state.activeWinId);
   }
 
-  function updateDockIndicators() {
+  function updateDesktopAndDockState() {
+    const desktopEl = document.getElementById('desktop-stage');
+    const anyOpen = Array.from(document.querySelectorAll('.mac-window')).some((w) => !w.hidden);
+    if (desktopEl) desktopEl.classList.toggle('has-open-window', anyOpen);
+
     document.querySelectorAll('#mac-dock .dock-item[data-dock-target]').forEach((btn) => {
       const targetId = btn.getAttribute('data-dock-target');
       const winEl = document.querySelector(`.mac-window[data-window="${targetId}"]`);
@@ -170,17 +186,40 @@
     });
   }
 
-  function applyDragOffset(winEl) {
-    if (!winEl || winEl.classList.contains('is-maximized')) {
-      if (winEl) winEl.style.transform = '';
+  function getDefaultGeometry(winId) {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const defaults = {
+      about: { width: 540, height: 390, x: Math.round(vw * 0.08), y: 74 },
+      projects: { width: 820, height: 490, x: Math.max(24, vw - 860), y: 86 },
+      education: { width: 620, height: 520, x: Math.round(vw * 0.14), y: 112 },
+      github: { width: 520, height: 470, x: Math.max(24, vw - 565), y: 130 },
+      contact: { width: 410, height: 350, x: Math.round((vw - 410) / 2), y: 158 }
+    };
+    const base = defaults[winId] || { width: 520, height: 400, x: 80, y: 90 };
+    const width = Math.min(base.width, vw - 24);
+    const height = Math.min(base.height, vh - 134);
+    const x = Math.max(12, Math.min(base.x, vw - width - 12));
+    const y = Math.max(38, Math.min(base.y, vh - height - 92));
+    return { x, y, width, height };
+  }
+
+  function applyWindowGeometry(winEl, geom) {
+    if (!winEl) return;
+    if (!isDesktopMode() || winEl.classList.contains('is-maximized')) {
+      winEl.style.left = '';
+      winEl.style.top = '';
+      winEl.style.width = '';
+      winEl.style.height = '';
       return;
     }
-    const id = winEl.getAttribute('data-window');
-    const offset = state.dragOffsets.get(id);
-    if (offset && (offset.x !== 0 || offset.y !== 0)) {
-      winEl.style.transform = `translate3d(${offset.x}px, ${offset.y}px, 0)`;
+    winEl.style.left = `${geom.x}px`;
+    winEl.style.top = `${geom.y}px`;
+    winEl.style.width = `${geom.width}px`;
+    if (geom.height) {
+      winEl.style.height = `${geom.height}px`;
     } else {
-      winEl.style.transform = '';
+      winEl.style.height = '';
     }
   }
 
@@ -199,16 +238,15 @@
     if (!winEl) return;
     winEl.classList.remove('is-maximized', 'is-focused');
     winEl.hidden = true;
-    applyDragOffset(winEl);
-    updateDockIndicators();
+    updateDesktopAndDockState();
 
-    const nextVisible = Array.from(document.querySelectorAll('.mac-window')).find((w) => !w.hidden);
-    if (nextVisible) {
-      focusWindow(nextVisible.getAttribute('data-window'));
+    const visibleWins = Array.from(document.querySelectorAll('.mac-window')).filter((w) => !w.hidden);
+    if (visibleWins.length > 0) {
+      visibleWins.sort((a, b) => Number(b.style.zIndex || 0) - Number(a.style.zIndex || 0));
+      focusWindow(visibleWins[0].getAttribute('data-window'));
     } else {
       state.activeWinId = '';
-      const activeEl = document.getElementById('menubar-active-app');
-      if (activeEl) activeEl.textContent = 'RafaOS';
+      updateMenubarActiveApp();
     }
   }
 
@@ -216,20 +254,90 @@
     if (!winEl) return;
     const winId = winEl.getAttribute('data-window');
     focusWindow(winId);
-    winEl.classList.toggle('is-maximized');
-    applyDragOffset(winEl);
+    const willMax = !winEl.classList.contains('is-maximized');
+    winEl.classList.toggle('is-maximized', willMax);
+    if (willMax) {
+      winEl.style.left = '';
+      winEl.style.top = '';
+      winEl.style.width = '';
+      winEl.style.height = '';
+    } else {
+      const geom = state.geometries.get(winId) || getDefaultGeometry(winId);
+      state.geometries.set(winId, geom);
+      applyWindowGeometry(winEl, geom);
+    }
+  }
+
+  function openOrFocusWindow(winId) {
+    const winEl = document.querySelector(`.mac-window[data-window="${winId}"]`);
+    if (!winEl) return;
+    const wasHidden = winEl.hidden;
+    winEl.hidden = false;
+
+    if (isDesktopMode()) {
+      let geom = state.geometries.get(winId);
+      if (!geom) {
+        geom = getDefaultGeometry(winId);
+        state.geometries.set(winId, geom);
+      }
+      applyWindowGeometry(winEl, geom);
+    } else {
+      applyWindowGeometry(winEl, {});
+      if (wasHidden) {
+        winEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    updateDesktopAndDockState();
+    focusWindow(winId);
   }
 
   function tileAllWindows(announce = true) {
-    document.querySelectorAll('.mac-window').forEach((winEl) => {
-      const winId = winEl.getAttribute('data-window');
-      winEl.hidden = false;
-      winEl.classList.remove('is-maximized');
-      state.dragOffsets.set(winId, { x: 0, y: 0 });
-      winEl.style.transform = '';
-      winEl.style.zIndex = '';
-    });
-    updateDockIndicators();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const padX = 16;
+    const gap = 12;
+    const topStart = 40;
+    const bottomReserve = 86;
+
+    if (isDesktopMode()) {
+      const availW = vw - padX * 2;
+      const availH = vh - topStart - bottomReserve;
+      const topH = Math.max(240, Math.round((availH - gap) * 0.49));
+      const botH = Math.max(220, availH - topH - gap);
+
+      const aboutW = Math.round((availW - gap) * 0.42);
+      const projW = availW - aboutW - gap;
+
+      const eduW = Math.round((availW - gap * 2) * 0.4);
+      const ghW = Math.round((availW - gap * 2) * 0.34);
+      const contW = availW - eduW - ghW - gap * 2;
+
+      const tiled = {
+        about: { x: padX, y: topStart, width: aboutW, height: topH },
+        projects: { x: padX + aboutW + gap, y: topStart, width: projW, height: topH },
+        education: { x: padX, y: topStart + topH + gap, width: eduW, height: botH },
+        github: { x: padX + eduW + gap, y: topStart + topH + gap, width: ghW, height: botH },
+        contact: { x: padX + eduW + ghW + gap * 2, y: topStart + topH + gap, width: contW, height: botH }
+      };
+
+      Object.entries(tiled).forEach(([id, geom]) => {
+        const winEl = document.querySelector(`.mac-window[data-window="${id}"]`);
+        if (!winEl) return;
+        winEl.hidden = false;
+        winEl.classList.remove('is-maximized');
+        state.geometries.set(id, geom);
+        applyWindowGeometry(winEl, geom);
+      });
+    } else {
+      document.querySelectorAll('.mac-window').forEach((winEl) => {
+        winEl.hidden = false;
+        winEl.classList.remove('is-maximized');
+        applyWindowGeometry(winEl, {});
+      });
+    }
+
+    updateDesktopAndDockState();
     focusWindow('about');
     if (announce) showToast(S().toastTiled);
   }
@@ -238,31 +346,17 @@
     document.querySelectorAll('.mac-window').forEach((winEl) => {
       winEl.classList.remove('is-maximized', 'is-focused');
       winEl.hidden = true;
-      applyDragOffset(winEl);
     });
-    updateDockIndicators();
+    updateDesktopAndDockState();
     state.activeWinId = '';
-    const activeEl = document.getElementById('menubar-active-app');
-    if (activeEl) activeEl.textContent = 'RafaOS';
-  }
-
-  function openOrFocusWindow(winId) {
-    const winEl = document.querySelector(`.mac-window[data-window="${winId}"]`);
-    if (!winEl) return;
-    winEl.hidden = false;
-    updateDockIndicators();
-    focusWindow(winId);
-    if (window.innerWidth < 1024) {
-      winEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    updateMenubarActiveApp();
   }
 
   function setupWindowManager() {
-    const windows = document.querySelectorAll('.mac-window[data-window]');
-
-    windows.forEach((winEl) => {
+    document.querySelectorAll('.mac-window[data-window]').forEach((winEl) => {
       const winId = winEl.getAttribute('data-window');
       const titlebar = winEl.querySelector('.mac-titlebar');
+      const resizeHandle = winEl.querySelector('.mac-resize-handle');
 
       winEl.addEventListener('pointerdown', () => focusWindow(winId));
 
@@ -287,34 +381,48 @@
         let dragState = null;
 
         titlebar.addEventListener('pointerdown', (e) => {
-          if (window.innerWidth < 900) return;
-          if (winEl.classList.contains('is-maximized')) return;
+          if (!isDesktopMode() || winEl.classList.contains('is-maximized')) return;
           if (e.button !== 0 || e.target.closest('button, a, .mac-segmented')) return;
 
           focusWindow(winId);
-          const prev = state.dragOffsets.get(winId) || { x: 0, y: 0 };
           const rect = winEl.getBoundingClientRect();
+          const curGeom = state.geometries.get(winId) || {
+            x: Math.round(rect.left),
+            y: Math.round(rect.top),
+            width: Math.round(rect.width),
+            height: Math.round(rect.height)
+          };
+          state.geometries.set(winId, curGeom);
+
           dragState = {
             pointerId: e.pointerId,
             startX: e.clientX,
             startY: e.clientY,
-            baseX: prev.x,
-            baseY: prev.y,
-            minDeltaY: 32 - rect.top
+            origX: curGeom.x,
+            origY: curGeom.y,
+            width: curGeom.width
           };
           titlebar.setPointerCapture?.(e.pointerId);
         });
 
         titlebar.addEventListener('pointermove', (e) => {
           if (!dragState || e.pointerId !== dragState.pointerId) return;
-          const rawDy = e.clientY - dragState.startY;
-          const clampedDy = Math.max(rawDy, dragState.minDeltaY);
-          const next = {
-            x: dragState.baseX + (e.clientX - dragState.startX),
-            y: dragState.baseY + clampedDy
-          };
-          state.dragOffsets.set(winId, next);
-          applyDragOffset(winEl);
+          const vw = window.innerWidth;
+          const vh = window.innerHeight;
+          const nextX = Math.max(
+            -dragState.width + 140,
+            Math.min(dragState.origX + (e.clientX - dragState.startX), vw - 140)
+          );
+          const nextY = Math.max(
+            34,
+            Math.min(dragState.origY + (e.clientY - dragState.startY), vh - 96)
+          );
+          const cur = state.geometries.get(winId) || {};
+          cur.x = Math.round(nextX);
+          cur.y = Math.round(nextY);
+          state.geometries.set(winId, cur);
+          winEl.style.left = `${cur.x}px`;
+          winEl.style.top = `${cur.y}px`;
         });
 
         const endDrag = (e) => {
@@ -325,6 +433,67 @@
         titlebar.addEventListener('pointerup', endDrag);
         titlebar.addEventListener('pointercancel', endDrag);
       }
+
+      if (resizeHandle) {
+        let resizeState = null;
+
+        resizeHandle.addEventListener('pointerdown', (e) => {
+          if (!isDesktopMode() || winEl.classList.contains('is-maximized')) return;
+          if (e.button !== 0) return;
+          e.stopPropagation();
+          focusWindow(winId);
+          const rect = winEl.getBoundingClientRect();
+          const curGeom = state.geometries.get(winId) || {
+            x: Math.round(rect.left),
+            y: Math.round(rect.top),
+            width: Math.round(rect.width),
+            height: Math.round(rect.height)
+          };
+          state.geometries.set(winId, curGeom);
+
+          resizeState = {
+            pointerId: e.pointerId,
+            startX: e.clientX,
+            startY: e.clientY,
+            origW: rect.width,
+            origH: rect.height,
+            winX: curGeom.x,
+            winY: curGeom.y
+          };
+          resizeHandle.setPointerCapture?.(e.pointerId);
+        });
+
+        resizeHandle.addEventListener('pointermove', (e) => {
+          if (!resizeState || e.pointerId !== resizeState.pointerId) return;
+          const maxW = Math.max(320, window.innerWidth - Math.max(12, resizeState.winX) - 12);
+          const maxH = Math.max(220, window.innerHeight - resizeState.winY - 84);
+          const nextW = Math.round(Math.max(320, Math.min(resizeState.origW + (e.clientX - resizeState.startX), maxW)));
+          const nextH = Math.round(Math.max(220, Math.min(resizeState.origH + (e.clientY - resizeState.startY), maxH)));
+          const cur = state.geometries.get(winId) || {};
+          cur.width = nextW;
+          cur.height = nextH;
+          state.geometries.set(winId, cur);
+          winEl.style.width = `${nextW}px`;
+          winEl.style.height = `${nextH}px`;
+        });
+
+        const endResize = (e) => {
+          if (!resizeState || e.pointerId !== resizeState.pointerId) return;
+          resizeHandle.releasePointerCapture?.(e.pointerId);
+          resizeState = null;
+        };
+        resizeHandle.addEventListener('pointerup', endResize);
+        resizeHandle.addEventListener('pointercancel', endResize);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.mac-window[data-window]').forEach((winEl) => {
+        if (winEl.hidden) return;
+        const winId = winEl.getAttribute('data-window');
+        const geom = state.geometries.get(winId);
+        if (geom) applyWindowGeometry(winEl, geom);
+      });
     });
 
     document.addEventListener('keydown', (e) => {
@@ -333,18 +502,67 @@
       if (anyModalOpen) return;
       const maxWin = document.querySelector('.mac-window.is-maximized');
       if (maxWin) {
+        const winId = maxWin.getAttribute('data-window');
         maxWin.classList.remove('is-maximized');
-        applyDragOffset(maxWin);
+        const geom = state.geometries.get(winId) || getDefaultGeometry(winId);
+        state.geometries.set(winId, geom);
+        applyWindowGeometry(maxWin, geom);
       }
     });
 
-    updateDockIndicators();
+    updateDesktopAndDockState();
   }
 
   /* ------------------------------------------------------------------------
-     DOCK FLOTANTE + EFECTO LUPA + MENÚ VENTANA + RELOJ EN VIVO
+     ICONOS DEL ESCRITORIO, DOCK, MENÚ VENTANA Y FONDOS DE MAC
      ------------------------------------------------------------------------ */
-  function setupDockAndMenubar() {
+  function setWallpaper(wallpaperId, announce = false) {
+    const validId = Object.prototype.hasOwnProperty.call(WALLPAPERS, wallpaperId) ? wallpaperId : 'big-sur';
+    state.currentWallpaper = validId;
+    document.documentElement.style.setProperty('--wallpaper-url', `url('./assets/wallpapers/${validId}.svg')`);
+
+    document.querySelectorAll('#wallpaper-dropdown [data-wallpaper]').forEach((btn) => {
+      btn.classList.toggle('is-active', btn.getAttribute('data-wallpaper') === validId);
+    });
+
+    try {
+      localStorage.setItem('portfolio_wallpaper', validId);
+    } catch {
+      // Ignorar
+    }
+
+    if (announce) {
+      const name = S()[WALLPAPERS[validId]] || validId;
+      showToast(tpl(S().toastWallpaper, { name }));
+    }
+  }
+
+  function setupDockDesktopAndMenus(cvModal) {
+    const desktopEl = document.getElementById('desktop-stage');
+    const deskBtns = Array.from(document.querySelectorAll('#desktop-icons .desk-icon-btn'));
+
+    deskBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deskBtns.forEach((b) => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        const target = btn.getAttribute('data-desk-open');
+        if (target) {
+          openOrFocusWindow(target);
+        } else if (btn.id === 'desk-btn-cv') {
+          cvModal.open(btn);
+        }
+      });
+    });
+
+    if (desktopEl) {
+      desktopEl.addEventListener('click', (e) => {
+        if (!e.target.closest('.desk-icon-btn')) {
+          deskBtns.forEach((b) => b.classList.remove('is-selected'));
+        }
+      });
+    }
+
     const dock = document.getElementById('mac-dock');
     if (dock) {
       dock.querySelectorAll('.dock-item[data-dock-target]').forEach((btn) => {
@@ -361,7 +579,7 @@
         dock.addEventListener(
           'pointermove',
           (event) => {
-            if (window.innerWidth < 768) return;
+            if (!isDesktopMode()) return;
             items.forEach((item) => {
               const r = item.getBoundingClientRect();
               const center = r.left + r.width / 2;
@@ -378,43 +596,69 @@
       }
     }
 
-    const windowMenuBtn = document.getElementById('btn-window-menu');
-    const dropdown = document.getElementById('window-dropdown');
-    const closeDropdown = () => {
-      if (dropdown) dropdown.hidden = true;
-      if (windowMenuBtn) windowMenuBtn.setAttribute('aria-expanded', 'false');
+    // Menús desplegables Ventana y Fondo
+    const menuPairs = [
+      { btn: document.getElementById('btn-window-menu'), drop: document.getElementById('window-dropdown') },
+      { btn: document.getElementById('btn-wallpaper-menu'), drop: document.getElementById('wallpaper-dropdown') }
+    ];
+
+    const closeAllMenus = () => {
+      menuPairs.forEach(({ btn, drop }) => {
+        if (drop) drop.hidden = true;
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
     };
 
-    if (windowMenuBtn && dropdown) {
-      windowMenuBtn.addEventListener('click', (e) => {
+    menuPairs.forEach(({ btn, drop }) => {
+      if (!btn || !drop) return;
+      btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const willOpen = dropdown.hidden;
-        dropdown.hidden = !willOpen;
-        windowMenuBtn.setAttribute('aria-expanded', String(willOpen));
+        const willOpen = drop.hidden;
+        closeAllMenus();
+        drop.hidden = !willOpen;
+        btn.setAttribute('aria-expanded', String(willOpen));
       });
-      document.addEventListener('click', (e) => {
-        if (!dropdown.hidden && !e.target.closest('.menubar-menu-wrap')) {
-          closeDropdown();
-        }
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !dropdown.hidden) closeDropdown();
-      });
-    }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.menubar-menu-wrap')) {
+        closeAllMenus();
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAllMenus();
+    });
 
     document.getElementById('menu-act-tile')?.addEventListener('click', () => {
-      closeDropdown();
+      closeAllMenus();
       tileAllWindows(true);
     });
     document.getElementById('menu-act-show-all')?.addEventListener('click', () => {
-      closeDropdown();
+      closeAllMenus();
       tileAllWindows(false);
     });
     document.getElementById('menu-act-min-all')?.addEventListener('click', () => {
-      closeDropdown();
+      closeAllMenus();
       minimizeAllWindows();
     });
-    document.getElementById('menu-act-cv')?.addEventListener('click', closeDropdown);
+    document.getElementById('menu-act-cv')?.addEventListener('click', closeAllMenus);
+
+    document.querySelectorAll('#wallpaper-dropdown [data-wallpaper]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-wallpaper');
+        closeAllMenus();
+        if (id) setWallpaper(id, true);
+      });
+    });
+
+    let initialWp = 'big-sur';
+    try {
+      const savedWp = localStorage.getItem('portfolio_wallpaper');
+      if (savedWp && WALLPAPERS[savedWp]) initialWp = savedWp;
+    } catch {
+      // Ignorar
+    }
+    setWallpaper(initialWp, false);
   }
 
   function updateMenubarClock() {
@@ -433,7 +677,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     RENDER DE CONTENIDO (HERO, PROYECTOS + DGT LIVE, FORMACIÓN, CONTACTO, CV)
+     RENDER DE CONTENIDO (WIDGET + HERO, PROYECTOS + DGT, FORMACIÓN, CONTACTO, CV)
      ------------------------------------------------------------------------ */
   function renderHero() {
     const profile = P();
@@ -447,12 +691,23 @@
     const openCvBtn = document.getElementById('btn-open-cv');
     const menuCvLink = document.getElementById('menu-act-cv');
 
+    const wAvatar = document.getElementById('widget-avatar');
+    const wName = document.getElementById('widget-name');
+    const wRole = document.getElementById('widget-role');
+
+    const altText = L() === 'en' ? `Portrait of ${profile.name}` : `Retrato de ${profile.name}`;
     if (avatarEl && profile.avatar) {
       avatarEl.src = profile.avatar;
-      avatarEl.alt = L() === 'en' ? `Portrait of ${profile.name}` : `Retrato de ${profile.name}`;
+      avatarEl.alt = altText;
+    }
+    if (wAvatar && profile.avatar) {
+      wAvatar.src = profile.avatar;
+      wAvatar.alt = altText;
     }
     if (nameEl) nameEl.textContent = profile.name;
+    if (wName) wName.textContent = profile.name;
     if (roleEl) roleEl.textContent = `${profile.role} · ${profile.institution}`;
+    if (wRole) wRole.textContent = `${profile.role} · UCLM`;
     if (aboutEl) aboutEl.textContent = profile.about;
 
     if (downloadCvBtn) {
@@ -1156,7 +1411,7 @@
   let spotlightModal = null;
   let currentSpotlightActions = [];
 
-  function getSpotlightActions() {
+  function getSpotlightActions(cvModal) {
     const s = S();
     const profile = P();
     return [
@@ -1171,14 +1426,13 @@
       {
         id: 'cv-preview',
         label: s.spActCvPreview,
-        run: () => {
-          document.getElementById('btn-open-cv')?.click();
-        }
+        run: () => cvModal.open(document.getElementById('btn-spotlight'))
       },
       {
         id: 'cv-pdf',
         label: s.spActCvDownload,
         run: () => {
+          openOrFocusWindow('about');
           document.getElementById('btn-download-cv')?.click();
         }
       },
@@ -1220,11 +1474,11 @@
     ];
   }
 
-  function renderSpotlightResults(queryText = '') {
+  function renderSpotlightResults(cvModal, queryText = '') {
     const listEl = document.getElementById('spotlight-results');
     if (!listEl) return;
     const q = queryText.trim().toLowerCase();
-    const all = getSpotlightActions();
+    const all = getSpotlightActions(cvModal);
     const filtered = q ? all.filter((item) => item.label.toLowerCase().includes(q)) : all;
     currentSpotlightActions = filtered;
     state.spotlightSelectedIndex = 0;
@@ -1259,7 +1513,7 @@
 
     function openSpotlight(opener) {
       if (inputEl) inputEl.value = '';
-      renderSpotlightResults('');
+      renderSpotlightResults(cvModal, '');
       spotlightModal.open(opener);
     }
 
@@ -1269,7 +1523,7 @@
 
     if (inputEl) {
       inputEl.addEventListener('input', (e) => {
-        renderSpotlightResults(e.target.value || '');
+        renderSpotlightResults(cvModal, e.target.value || '');
       });
 
       inputEl.addEventListener('keydown', (e) => {
@@ -1319,7 +1573,7 @@
     btn.textContent = isLight ? '🌙' : '☀️';
   }
 
-  function applyTranslations(announceToast = false) {
+  function applyTranslations(announceToast = false, cvModal = null) {
     const s = S();
     const lang = L();
 
@@ -1382,9 +1636,9 @@
     renderCvSheet();
     renderFooter();
 
-    if (spotlightModal?.isOpen()) {
+    if (spotlightModal?.isOpen() && cvModal) {
       const inputEl = document.getElementById('spotlight-input');
-      renderSpotlightResults(inputEl ? inputEl.value : '');
+      renderSpotlightResults(cvModal, inputEl ? inputEl.value : '');
     }
     if (projectModal?.isOpen()) {
       renderProjectModalContent(state.modalProjectIndex);
@@ -1398,13 +1652,13 @@
     }
   }
 
-  function setupLanguageToggle() {
+  function setupLanguageToggle(cvModal) {
     const langBtn = document.getElementById('btn-lang-toggle');
     if (!langBtn) return;
     langBtn.addEventListener('click', () => {
       const next = L() === 'es' ? 'en' : 'es';
       Portfolio.setLang(next);
-      applyTranslations(true);
+      applyTranslations(true, cvModal);
     });
   }
 
@@ -1443,14 +1697,15 @@
   }
 
   function initApp() {
+    const cvModal = Portfolio.createAccessibleModal('cv-modal');
+
     setupWindowManager();
-    setupDockAndMenubar();
+    setupDockDesktopAndMenus(cvModal);
     setupProjectModal();
     setupProjectWindowInteractions();
     setupThemeToggle();
-    setupLanguageToggle();
+    setupLanguageToggle(cvModal);
 
-    const cvModal = Portfolio.createAccessibleModal('cv-modal');
     const openCvBtn = document.getElementById('btn-open-cv');
     const dockCvBtn = document.getElementById('dock-cv-btn');
     const closeTopBtn = document.getElementById('btn-close-cv-top');
@@ -1479,7 +1734,7 @@
       });
     }
 
-    applyTranslations(false);
+    applyTranslations(false, cvModal);
     setInterval(updateMenubarClock, 30000);
   }
 

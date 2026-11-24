@@ -3,12 +3,10 @@
 Portfolio interactivo estilo **macOS Sequoia / Sonoma** construido con **HTML5 + CSS3 + JavaScript (ES6+)** sin dependencias externas a partir del currículum oficial de **Rafael García Sánchez** y sus repositorios públicos en GitHub. Funciona tanto al abrir [index.html](index.html) directamente en local (`file://`) como publicado en **GitHub Pages**.
 
 ## Características principales
-- **Experiencia de escritorio macOS real:** barra de menú superior fija con app activa dinámica, menú desplegable **Ventana** (`Ordenar en mosaico`, `Mostrar todas`, `Minimizar todas`), reloj en vivo y centro de notificaciones.
-- **5 ventanas interactivas arrastrables y redimensionables:** *Sobre mí*, *SimuladorPDA_PermisoB.app*, *Formación y Competencias*, *Monitor GitHub* y *Contactos*, con semáforos funcionales (`×` cerrar, `–` minimizar al Dock, `+` ampliar/restaurar y doble clic en la barra de título).
-- **Dock flotante inferior:** con efecto lupa al pasar el ratón, indicadores luminosos de ventanas abiertas y acceso directo a Vista Previa del CV y LinkedIn.
-- **Buscador Spotlight (`⌘K` / `Ctrl+K`):** ejecuta acciones rápidas, abre demos, copia contacto o cambia idioma y tema desde teclado.
+- **Arranque limpio de escritorio macOS:** todas las aplicaciones inician minimizadas como al encender el Mac, mostrando un widget estilo macOS Sonoma, accesos directos en el escritorio y el Dock flotante inferior.
+- **Barra de menú superior fija:** muestra la app activa (`Finder`, `Sobre mí`, etc.), menús **Ventana** (`Ordenar en mosaico`, `Mostrar todas`, `Minimizar todas`, `Descargar CV.pdf`) y **Fondo** para elegir entre **4 fondos nativos de Mac** (`Big Sur`, `Sequoia`, `Monterey` y `Mojave`), además de **Spotlight (`⌘K`)**, selector `EN / ES`, aspecto **Oscuro / Claro** y reloj en vivo.
+- **5 ventanas flotantes libres:** se abren desde el Dock o escritorio y se pueden **arrastrar libremente por cualquier zona**, **redimensionar** desde la esquina inferior derecha, minimizar al Dock (`–`), cerrar (`×`) o ampliar (`+` / doble clic en barra).
 - **Probador en vivo del Simulador PDA DGT:** pestaña interactiva dentro de *SimuladorPDA_PermisoB.app* para registrar faltas (`Leves`, `Deficientes`, `Eliminatorias`) y calcular `APTO` / `NO APTO` según el reglamento real.
-- **Bilingüe ES / EN y Tema Dual (Oscuro / Claro macOS):** persistencia en `localStorage`.
 
 ## Estructura de carpetas
 
@@ -16,7 +14,7 @@ Portfolio interactivo estilo **macOS Sequoia / Sonoma** construido con **HTML5 +
 PortFolio/
 ├── index.html                           # Escritorio macOS semántico, SEO/Open Graph y scripts defer
 ├── 404.html                             # Página de error 404 para GitHub Pages
-├── style.css                            # Wallpaper Sequoia, Vibrancy cristal, semáforos y Dock
+├── style.css                            # Escritorio libre, Vibrancy cristal, semáforos y Dock
 ├── favicon.svg                          # Favicon vectorial
 ├── robots.txt                           # Directivas de rastreo
 ├── sitemap.xml                          # Mapa del sitio
@@ -24,8 +22,13 @@ PortFolio/
 ├── assets/
 │   ├── CV-Rafael-Garcia-Sanchez.pdf     # CV oficial descargable
 │   ├── profile-rafa.png                 # Retrato de perfil (356×357)
-│   └── projects/
-│       └── simulador-pda.png            # Captura en vivo del simulador PDA DGT
+│   ├── projects/
+│   │   └── simulador-pda.png            # Captura en vivo del simulador PDA DGT
+│   └── wallpapers/                      # 4 fondos integrados de serie estilo macOS
+│       ├── big-sur.svg
+│       ├── sequoia.svg
+│       ├── monterey.svg
+│       └── mojave.svg
 └── src/
     ├── main.js                          # Gestor de ventanas, Dock, Spotlight, DGT live y CV modal
     ├── data/
