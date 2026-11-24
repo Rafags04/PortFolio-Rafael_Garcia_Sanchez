@@ -201,6 +201,13 @@ code {
   color: var(--text);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-toggle-btn,
 .theme-toggle-btn {
   display: inline-flex;
   align-items: center;
@@ -215,9 +222,15 @@ code {
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
 }
 
+.lang-toggle-btn {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lang-toggle-btn:hover,
 .theme-toggle-btn:hover {
   border-color: var(--accent);
   transform: translateY(-1px);

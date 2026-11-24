@@ -6,6 +6,7 @@ Portfolio estático construido desde cero con **HTML5 + CSS3 + JavaScript (ES6+)
 - **Datos reales del CV:** incluye retrato de perfil ([assets/profile-rafa.png](assets/profile-rafa.png)), descarga directa del PDF oficial ([assets/CV-Rafael-Garcia-Sanchez.pdf](assets/CV-Rafael-Garcia-Sanchez.pdf)), formación académica en la UCLM, las 12 certificaciones de formación complementaria filtrables, habilidades técnicas, soft skills, idiomas y datos de contacto copiables.
 - **Sección de Proyectos Destacados de GitHub:** muestra tus repositorios seleccionados con capturas ampliables, buscador en vivo, filtros por tecnología, sincronización con GitHub y visor modal con código real (`Problema → Solución → Stack`).
 - **Actividad real de GitHub API (`@Rafags04`):** consulta repositorios propios (sin forks) y calcula bytes exactos por lenguaje.
+- **Bilingüe Español / Inglés (`ES / EN`):** botón de traducción instantánea en la cabecera con persistencia en `localStorage` que traduce toda la web, la terminal y el CV imprimible.
 - **Tema dual (Modo Oscuro Naval / Modo Claro CV):** conmutador en la cabecera con persistencia en `localStorage`.
 - **Terminal interactiva:** consulta rápida de todo el perfil (`whoami`, `projects`, `education`, `courses`, `skills`, `languages`, `github`, `contact`, `cv`).
 

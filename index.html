@@ -29,7 +29,7 @@
   <script defer src="./src/main.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+  <a class="skip-link" href="#main-content" data-i18n="skipLink">Saltar al contenido principal</a>
 
   <header class="site-header">
     <div class="container header-inner">
@@ -39,18 +39,23 @@
       </a>
 
       <nav class="site-nav" aria-label="Navegación principal">
-        <a href="#hero">Sobre mí</a>
-        <a href="#proyectos-destacados">Proyectos</a>
-        <a href="#actividad-github">GitHub</a>
-        <a href="#formacion">Formación</a>
-        <a href="#competencias">Competencias</a>
-        <a href="#terminal">Terminal</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#hero" data-i18n="navAbout">Sobre mí</a>
+        <a href="#proyectos-destacados" data-i18n="navProjects">Proyectos</a>
+        <a href="#actividad-github" data-i18n="navGithub">GitHub</a>
+        <a href="#formacion" data-i18n="navEducation">Formación</a>
+        <a href="#competencias" data-i18n="navSkills">Competencias</a>
+        <a href="#terminal" data-i18n="navTerminal">Terminal</a>
+        <a href="#contacto" data-i18n="navContact">Contacto</a>
       </nav>
 
-      <button type="button" id="btn-theme-toggle" class="theme-toggle-btn" aria-pressed="false" title="Cambiar entre tema oscuro naval y tema claro">
-        ☀️ Modo Claro CV
-      </button>
+      <div class="header-actions">
+        <button type="button" id="btn-lang-toggle" class="lang-toggle-btn" aria-label="Switch language to English">
+          🌐 EN
+        </button>
+        <button type="button" id="btn-theme-toggle" class="theme-toggle-btn" aria-pressed="false" title="Cambiar entre tema oscuro naval y tema claro">
+          ☀️ Modo Claro CV
+        </button>
+      </div>
     </div>
   </header>
 
@@ -72,9 +77,9 @@
             >
           </div>
 
-          <ul class="hero-badges" aria-label="Resumen rápido">
+          <ul id="hero-badges-list" class="hero-badges" aria-label="Resumen rápido">
             <li class="badge-pill">UCLM · Ing. Informática</li>
-            <li class="badge-pill" id="hero-location-badge">Ciudad Real, 13003</li>
+            <li class="badge-pill">Ciudad Real, 13003</li>
             <li class="badge-pill">Inglés Avanzado (B2)</li>
             <li class="badge-pill">Disponibilidad total</li>
           </ul>
@@ -82,22 +87,22 @@
           <div class="hero-quick-contact">
             <div class="quick-contact-row">
               <a id="hero-phone-link" href="tel:+34644410602">(+34) 644 41 06 02</a>
-              <button type="button" id="btn-copy-phone" class="btn btn-ghost btn-xs">Copiar</button>
+              <button type="button" id="btn-copy-phone" class="btn btn-ghost btn-xs" data-i18n="copyBtn">Copiar</button>
             </div>
             <div class="quick-contact-row">
               <a id="hero-email-link" href="mailto:rafags0407@gmail.com">rafags0407@gmail.com</a>
-              <button type="button" id="btn-copy-email" class="btn btn-ghost btn-xs">Copiar</button>
+              <button type="button" id="btn-copy-email" class="btn btn-ghost btn-xs" data-i18n="copyBtn">Copiar</button>
             </div>
           </div>
         </aside>
 
         <div class="hero-main">
-          <p class="eyebrow">Currículum &amp; Portfolio · GitHub Pages</p>
+          <p class="eyebrow" data-i18n="heroEyebrow">Currículum &amp; Portfolio · GitHub Pages</p>
           <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
-          <p id="hero-role" class="hero-role">Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha</p>
+          <p id="hero-role" class="hero-role">Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha (UCLM)</p>
 
           <div class="hero-about-box">
-            <h2 class="hero-about-label">Sobre mí</h2>
+            <h2 class="hero-about-label" data-i18n="heroAboutLabel">Sobre mí</h2>
             <p id="hero-about" class="hero-lead">
               Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
             </p>
@@ -109,13 +114,14 @@
               class="btn btn-primary"
               href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
               download="CV-Rafael-Garcia-Sanchez.pdf"
+              data-i18n="heroDownloadCv"
             >
               Descargar CV Original (PDF)
             </a>
-            <button type="button" id="btn-open-cv" class="btn btn-secondary">
+            <button type="button" id="btn-open-cv" class="btn btn-secondary" data-i18n="heroOpenCv">
               Vista Rápida / Imprimir CV
             </button>
-            <a class="btn btn-secondary" href="#proyectos-destacados">
+            <a class="btn btn-secondary" href="#proyectos-destacados" data-i18n="heroProjectsBtn">
               Proyectos Destacados
             </a>
             <a
@@ -138,11 +144,11 @@
     <section id="proyectos-destacados" class="content-section" aria-labelledby="projects-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">01 · Repositorios Seleccionados</p>
-          <h2 id="projects-heading">Proyectos Destacados de GitHub</h2>
+          <p class="eyebrow" data-i18n="projectsEyebrow">01 · Repositorios Seleccionados</p>
+          <h2 id="projects-heading" data-i18n="projectsHeading">Proyectos Destacados de GitHub</h2>
         </div>
-        <p class="section-subtitle">
-          Selección de proyectos públicos de <strong>@Rafags04</strong> con documentación técnica, fragmentos de código y captura ampliable.
+        <p class="section-subtitle" data-i18n="projectsSubtitle">
+          Selección de proyectos públicos de @Rafags04 con documentación técnica, fragmentos de código y captura ampliable.
         </p>
       </div>
 
@@ -154,6 +160,7 @@
             class="search-input"
             type="search"
             autocomplete="off"
+            data-i18n-placeholder="projectSearchPlaceholder"
             placeholder="Buscar en proyectos destacados (ej. PWA, Docker, Flask, IndexedDB)…"
           >
         </div>
@@ -161,11 +168,11 @@
       </div>
 
       <div class="project-filters" role="group" aria-label="Filtrar proyectos destacados por tecnología">
-        <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">Todos</button>
-        <button type="button" class="filter-btn" data-filter="pwa" aria-pressed="false">PWA &amp; Móvil</button>
-        <button type="button" class="filter-btn" data-filter="javascript" aria-pressed="false">JavaScript</button>
-        <button type="button" class="filter-btn" data-filter="python-docker" aria-pressed="false">Python &amp; Docker</button>
-        <button type="button" class="filter-btn" data-filter="web" aria-pressed="false">Web</button>
+        <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true" data-i18n="filterAll">Todos</button>
+        <button type="button" class="filter-btn" data-filter="pwa" aria-pressed="false" data-i18n="filterPwa">PWA &amp; Móvil</button>
+        <button type="button" class="filter-btn" data-filter="javascript" aria-pressed="false" data-i18n="filterJs">JavaScript</button>
+        <button type="button" class="filter-btn" data-filter="python-docker" aria-pressed="false" data-i18n="filterPythonDocker">Python &amp; Docker</button>
+        <button type="button" class="filter-btn" data-filter="web" aria-pressed="false" data-i18n="filterWeb">Web</button>
       </div>
 
       <div id="projects-list" class="projects-grid"></div>
@@ -177,10 +184,10 @@
     <section id="actividad-github" class="content-section" aria-labelledby="github-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">02 · GitHub API en Vivo</p>
-          <h2 id="github-heading">Actividad y Lenguajes en GitHub (@Rafags04)</h2>
+          <p class="eyebrow" data-i18n="githubEyebrow">02 · GitHub API en Vivo</p>
+          <h2 id="github-heading" data-i18n="githubHeading">Actividad y Lenguajes en GitHub (@Rafags04)</h2>
         </div>
-        <button type="button" id="btn-retry-github" class="btn btn-secondary btn-sm">
+        <button type="button" id="btn-retry-github" class="btn btn-secondary btn-sm" data-i18n="githubSyncBtn">
           Sincronizar con GitHub
         </button>
       </div>
@@ -191,13 +198,13 @@
 
       <div id="github-content" class="github-grid" hidden>
         <article class="surface-card" aria-labelledby="gh-lang-heading">
-          <h3 id="gh-lang-heading">Lenguajes por bytes (repositorios propios)</h3>
+          <h3 id="gh-lang-heading" data-i18n="githubLangHeading">Lenguajes por bytes (repositorios propios)</h3>
           <div id="github-lang-bar" class="lang-bar" role="img" aria-label="Distribución de lenguajes por bytes"></div>
           <ul id="github-lang-list" class="lang-list"></ul>
         </article>
 
         <article class="surface-card" aria-labelledby="gh-repos-heading">
-          <h3 id="gh-repos-heading">Repositorios públicos recientes (sin forks)</h3>
+          <h3 id="gh-repos-heading" data-i18n="githubReposHeading">Repositorios públicos recientes (sin forks)</h3>
           <ul id="github-repos-list" class="repo-list"></ul>
         </article>
       </div>
@@ -209,18 +216,18 @@
     <section id="formacion" class="content-section" aria-labelledby="education-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">03 · Currículum Académico</p>
-          <h2 id="education-heading">Formación Académica y Complementaria</h2>
+          <p class="eyebrow" data-i18n="eduEyebrow">03 · Currículum Académico</p>
+          <h2 id="education-heading" data-i18n="eduHeading">Formación Académica y Complementaria</h2>
         </div>
       </div>
 
-      <h3 class="subsection-title">Formación Académica</h3>
+      <h3 class="subsection-title" data-i18n="eduAcademicTitle">Formación Académica</h3>
       <ol id="academic-list" class="academic-grid"></ol>
 
       <div class="courses-header-row">
         <div>
-          <h3 class="subsection-title">Formación Complementaria</h3>
-          <p class="section-subtitle">
+          <h3 class="subsection-title" data-i18n="eduCoursesTitle">Formación Complementaria</h3>
+          <p class="section-subtitle" data-i18n="eduCoursesSubtitle">
             Capacitaciones y competencias cursadas en AQC Lab y el Aula de Competencias Transversales.
           </p>
         </div>
@@ -228,11 +235,11 @@
       </div>
 
       <div id="courses-filters" class="project-filters" role="group" aria-label="Filtrar formación complementaria">
-        <button type="button" class="filter-btn active" data-course-filter="all" aria-pressed="true">Todas (12)</button>
-        <button type="button" class="filter-btn" data-course-filter="tecnologia" aria-pressed="false">Software Cuántico</button>
-        <button type="button" class="filter-btn" data-course-filter="informacion" aria-pressed="false">Búsqueda de Información</button>
-        <button type="button" class="filter-btn" data-course-filter="liderazgo" aria-pressed="false">Liderazgo &amp; Productividad</button>
-        <button type="button" class="filter-btn" data-course-filter="transversales" aria-pressed="false">Competencias Transversales</button>
+        <button type="button" class="filter-btn active" data-course-filter="all" aria-pressed="true" data-i18n="coursesAll">Todas (12)</button>
+        <button type="button" class="filter-btn" data-course-filter="tecnologia" aria-pressed="false" data-i18n="coursesTech">Software Cuántico</button>
+        <button type="button" class="filter-btn" data-course-filter="informacion" aria-pressed="false" data-i18n="coursesInfo">Búsqueda de Información</button>
+        <button type="button" class="filter-btn" data-course-filter="liderazgo" aria-pressed="false" data-i18n="coursesLead">Liderazgo &amp; Productividad</button>
+        <button type="button" class="filter-btn" data-course-filter="transversales" aria-pressed="false" data-i18n="coursesTrans">Competencias Transversales</button>
       </div>
 
       <ol id="courses-list" class="courses-grid"></ol>
@@ -244,34 +251,34 @@
     <section id="competencias" class="content-section" aria-labelledby="competencies-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">04 · Perfil Completo</p>
-          <h2 id="competencies-heading">Habilidades, Idiomas y Más Información</h2>
+          <p class="eyebrow" data-i18n="compEyebrow">04 · Perfil Completo</p>
+          <h2 id="competencies-heading" data-i18n="compHeading">Habilidades, Idiomas y Más Información</h2>
         </div>
-        <p class="section-subtitle">
+        <p class="section-subtitle" data-i18n="compSubtitle">
           Pulsa cualquier tecnología aplicada para filtrar los proyectos destacados donde se utiliza.
         </p>
       </div>
 
       <div class="competencies-grid">
         <article class="surface-card" aria-labelledby="tech-skills-heading">
-          <h3 id="tech-skills-heading">Habilidades Técnicas (CV)</h3>
+          <h3 id="tech-skills-heading" data-i18n="techSkillsHeading">Habilidades Técnicas (CV)</h3>
           <ul id="tech-skills-list" class="bullet-list"></ul>
-          <h4 class="mini-subheading">Herramientas aplicadas en GitHub</h4>
+          <h4 class="mini-subheading" data-i18n="appliedStackHeading">Herramientas aplicadas en GitHub</h4>
           <ul id="applied-stack-list" class="tag-list"></ul>
         </article>
 
         <article class="surface-card" aria-labelledby="soft-skills-heading">
-          <h3 id="soft-skills-heading">Soft Skills</h3>
+          <h3 id="soft-skills-heading" data-i18n="softSkillsHeading">Soft Skills</h3>
           <ul id="soft-skills-list" class="tag-list"></ul>
         </article>
 
         <article class="surface-card" aria-labelledby="languages-heading">
-          <h3 id="languages-heading">Idiomas</h3>
+          <h3 id="languages-heading" data-i18n="languagesHeading">Idiomas</h3>
           <div id="languages-list" class="languages-stack"></div>
         </article>
 
         <article class="surface-card" aria-labelledby="additional-info-heading">
-          <h3 id="additional-info-heading">Más Información</h3>
+          <h3 id="additional-info-heading" data-i18n="additionalInfoHeading">Más Información</h3>
           <ul id="additional-info-list" class="bullet-list"></ul>
         </article>
       </div>
@@ -283,11 +290,11 @@
     <section id="terminal" class="content-section" aria-labelledby="terminal-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">05 · Modo Interactivo</p>
-          <h2 id="terminal-heading">Terminal de Consulta Rápida</h2>
+          <p class="eyebrow" data-i18n="termEyebrow">05 · Modo Interactivo</p>
+          <h2 id="terminal-heading" data-i18n="termHeading">Terminal de Consulta Rápida</h2>
         </div>
-        <p class="section-subtitle">
-          Explora todo el currículum y los proyectos por comandos. Prueba <code>courses</code>, <code>projects</code> o <code>languages</code>.
+        <p class="section-subtitle" data-i18n="termSubtitle">
+          Explora todo el currículum y los proyectos por comandos. Prueba courses, projects o languages.
         </p>
       </div>
 
@@ -325,9 +332,10 @@
             type="text"
             autocomplete="off"
             spellcheck="false"
+            data-i18n-placeholder="termInputPlaceholder"
             placeholder="Escribe un comando (ej. help) y pulsa Enter…"
           >
-          <button type="submit" class="btn btn-secondary btn-sm">Ejecutar</button>
+          <button type="submit" class="btn btn-secondary btn-sm" data-i18n="termExecBtn">Ejecutar</button>
         </form>
       </div>
     </section>
@@ -338,13 +346,14 @@
     <section id="contacto" class="content-section" aria-labelledby="contact-heading">
       <div class="section-header">
         <div>
-          <p class="eyebrow">06 · Contacto Directo</p>
-          <h2 id="contact-heading">Contacto</h2>
+          <p class="eyebrow" data-i18n="contactEyebrow">06 · Contacto Directo</p>
+          <h2 id="contact-heading" data-i18n="contactHeading">Contacto</h2>
         </div>
         <a
           class="btn btn-primary btn-sm"
           href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
           download="CV-Rafael-Garcia-Sanchez.pdf"
+          data-i18n="contactDownloadPdf"
         >
           Descargar CV en PDF
         </a>
@@ -357,11 +366,11 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>
-        <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span> · Portfolio en GitHub Pages.
+        <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span> · <span data-i18n="footerText">Portfolio en GitHub Pages.</span>
       </p>
       <div class="footer-actions">
-        <a class="footer-link-btn" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer">Abrir PDF original</a>
-        <button type="button" id="btn-open-cv-footer" class="footer-link-btn">Vista rápida CV</button>
+        <a class="footer-link-btn" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer" data-i18n="footerOpenPdf">Abrir PDF original</a>
+        <button type="button" id="btn-open-cv-footer" class="footer-link-btn" data-i18n="footerQuickCv">Vista rápida CV</button>
       </div>
     </div>
   </footer>
@@ -373,10 +382,10 @@
     <div class="modal-dialog modal-dialog-wide">
       <header class="modal-header">
         <div>
-          <p class="eyebrow" id="proj-modal-index">Proyecto 1 de 2</p>
+          <p class="eyebrow" id="proj-modal-index">Proyecto destacado 1 de 2</p>
           <h2 id="proj-modal-title">Detalle del proyecto</h2>
         </div>
-        <button type="button" id="btn-close-project-modal" class="btn btn-ghost btn-sm" aria-label="Cerrar detalle del proyecto">
+        <button type="button" id="btn-close-project-modal" class="btn btn-ghost btn-sm" data-i18n="projModalClose">
           Cerrar (Esc)
         </button>
       </header>
@@ -387,9 +396,9 @@
         </figure>
 
         <div class="proj-modal-tabs" role="tablist" aria-label="Información del proyecto">
-          <button type="button" class="proj-tab-btn active" data-proj-tab="summary" role="tab" aria-selected="true">Problema y Solución</button>
-          <button type="button" class="proj-tab-btn" data-proj-tab="code" role="tab" aria-selected="false">Fragmento de Código</button>
-          <button type="button" class="proj-tab-btn" data-proj-tab="stack" role="tab" aria-selected="false">Stack y Puntos Clave</button>
+          <button type="button" class="proj-tab-btn active" data-proj-tab="summary" role="tab" aria-selected="true" data-i18n="projModalTabSummary">Problema y Solución</button>
+          <button type="button" class="proj-tab-btn" data-proj-tab="code" role="tab" aria-selected="false" data-i18n="projModalTabCode">Fragmento de Código</button>
+          <button type="button" class="proj-tab-btn" data-proj-tab="stack" role="tab" aria-selected="false" data-i18n="projModalTabStack">Stack y Puntos Clave</button>
         </div>
 
         <div id="proj-tab-panel-summary" class="proj-tab-panel" role="tabpanel"></div>
@@ -399,8 +408,8 @@
 
       <footer class="modal-footer modal-footer-between">
         <div class="proj-nav-group">
-          <button type="button" id="btn-prev-project" class="btn btn-secondary btn-sm">← Anterior</button>
-          <button type="button" id="btn-next-project" class="btn btn-secondary btn-sm">Siguiente →</button>
+          <button type="button" id="btn-prev-project" class="btn btn-secondary btn-sm" data-i18n="projModalPrev">← Anterior</button>
+          <button type="button" id="btn-next-project" class="btn btn-secondary btn-sm" data-i18n="projModalNext">Siguiente →</button>
         </div>
         <div id="proj-modal-external-links" class="proj-nav-group"></div>
       </footer>
@@ -413,8 +422,8 @@
   <div id="cv-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title" hidden>
     <div class="modal-dialog">
       <header class="modal-header no-print">
-        <h2 id="cv-modal-title">Currículum Vitae</h2>
-        <button type="button" id="btn-close-cv-top" class="btn btn-ghost btn-sm" aria-label="Cerrar currículum">
+        <h2 id="cv-modal-title" data-i18n="cvModalTitle">Currículum Vitae</h2>
+        <button type="button" id="btn-close-cv-top" class="btn btn-ghost btn-sm" data-i18n="cvModalCloseTop">
           Cerrar (Esc)
         </button>
       </header>
@@ -422,13 +431,13 @@
       <div id="cv-modal-content" class="cv-sheet"></div>
 
       <footer class="modal-footer no-print">
-        <a id="cv-pdf-link" class="btn btn-ghost" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer">
+        <a id="cv-pdf-link" class="btn btn-ghost" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer" data-i18n="cvModalOpenPdf">
           Abrir PDF original
         </a>
-        <button type="button" id="btn-print-cv" class="btn btn-primary">
+        <button type="button" id="btn-print-cv" class="btn btn-primary" data-i18n="cvModalPrint">
           Imprimir / Guardar PDF
         </button>
-        <button type="button" id="btn-close-cv" class="btn btn-secondary">
+        <button type="button" id="btn-close-cv" class="btn btn-secondary" data-i18n="cvModalClose">
           Cerrar
         </button>
       </footer>

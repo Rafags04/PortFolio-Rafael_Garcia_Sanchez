@@ -1,7 +1,6 @@
 /**
- * Cliente de la API pública de GitHub: repositorios propios (sin forks)
- * y bytes reales por lenguaje. Si falla la red, usa únicamente la instantánea
- * real verificada de @Rafags04 indicando honestamente el estado offline.
+ * Cliente bilingüe de la API pública de GitHub: repositorios propios (sin forks)
+ * y bytes reales por lenguaje. Soporta cambio instantáneo de idioma ES/EN.
  */
 (function () {
   window.Portfolio = window.Portfolio || {};
@@ -20,7 +19,6 @@
     Shell: '#94a3b8'
   };
 
-  // Instantánea real verificada de la cuenta Rafags04 (sin datos inventados)
   const VERIFIED_OFFLINE_SNAPSHOT = {
     username: 'Rafags04',
     fetchedAt: Date.now(),
@@ -60,25 +58,31 @@
     ]
   };
 
+  let lastRendered = null;
+
+  function activeLang() {
+    return typeof window.Portfolio.getLang === 'function' ? window.Portfolio.getLang() : 'es';
+  }
+
   function formatBytes(bytes) {
     if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     if (bytes >= 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${bytes} B`;
   }
 
-  function formatDate(isoString) {
-    if (!isoString) return 'Fecha desconocida';
+  function formatDate(isoString, lang) {
+    if (!isoString) return lang === 'en' ? 'Unknown date' : 'Fecha desconocida';
     const date = new Date(isoString);
     if (Number.isNaN(date.getTime())) return isoString;
-    return new Intl.DateTimeFormat('es-ES', {
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'es-ES', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
     }).format(date);
   }
 
-  function formatTime(timestamp) {
-    return new Intl.DateTimeFormat('es-ES', {
+  function formatTime(timestamp, lang) {
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'es-ES', {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit'
@@ -86,6 +90,9 @@
   }
 
   function renderGitHubData(data, statusMode, extraNote) {
+    lastRendered = { data, statusMode, extraNote };
+
+    const lang = activeLang();
     const statusEl = document.getElementById('github-status');
     const contentEl = document.getElementById('github-content');
     const langBarEl = document.getElementById('github-lang-bar');
@@ -97,12 +104,21 @@
     if (statusMode === 'offline') {
       statusEl.className = 'status-banner status-demo';
       statusEl.textContent =
-        `Sin conexión con api.github.com (${extraNote}). Mostrando última instantánea verificada de @${data.username}.`;
+        lang === 'en'
+          ? `Unable to reach api.github.com (${extraNote}). Showing latest verified snapshot for @${data.username}.`
+          : `Sin conexión con api.github.com (${extraNote}). Mostrando última instantánea verificada de @${data.username}.`;
     } else {
       statusEl.className = 'status-banner status-ok';
-      const sourceText = statusMode === 'cache' ? 'en caché de sesión desde' : 'medido en directo a las';
-      statusEl.textContent =
-        `${data.repos.length} repositorios públicos propios (sin forks) · ${data.languageEntries.length} lenguajes medidos por bytes (${sourceText} ${formatTime(data.fetchedAt)}).`;
+      const timeStr = formatTime(data.fetchedAt, lang);
+      if (lang === 'en') {
+        const src = statusMode === 'cache' ? 'cached in session since' : 'measured live at';
+        statusEl.textContent =
+          `${data.repos.length} own public repositories (no forks) · ${data.languageEntries.length} languages measured by bytes (${src} ${timeStr}).`;
+      } else {
+        const src = statusMode === 'cache' ? 'en caché de sesión desde' : 'medido en directo a las';
+        statusEl.textContent =
+          `${data.repos.length} repositorios públicos propios (sin forks) · ${data.languageEntries.length} lenguajes medidos por bytes (${src} ${timeStr}).`;
+      }
     }
 
     contentEl.hidden = false;
@@ -111,7 +127,10 @@
 
     if (data.totalBytes === 0) {
       const emptyMsg = document.createElement('li');
-      emptyMsg.textContent = 'No se detectaron bytes de código en los repositorios públicos analizados.';
+      emptyMsg.textContent =
+        lang === 'en'
+          ? 'No code bytes detected across the analyzed public repositories.'
+          : 'No se detectaron bytes de código en los repositorios públicos analizados.';
       langListEl.appendChild(emptyMsg);
     } else {
       for (const item of data.languageEntries) {
@@ -148,7 +167,10 @@
     reposListEl.textContent = '';
     if (data.repos.length === 0) {
       const emptyRepo = document.createElement('li');
-      emptyRepo.textContent = 'Este perfil no tiene repositorios públicos propios todavía.';
+      emptyRepo.textContent =
+        lang === 'en'
+          ? 'This profile does not have own public repositories yet.'
+          : 'Este perfil no tiene repositorios públicos propios todavía.';
       reposListEl.appendChild(emptyRepo);
       return;
     }
@@ -166,17 +188,33 @@
 
       const desc = document.createElement('p');
       desc.className = 'repo-desc';
-      desc.textContent = repo.description || 'Repositorio público en GitHub.';
+      desc.textContent =
+        repo.description ||
+        (lang === 'en' ? 'Public repository on GitHub.' : 'Repositorio público en GitHub.');
 
       const meta = document.createElement('p');
       meta.className = 'repo-meta';
-      const langText = repo.language || 'Configuración / Markdown';
-      meta.textContent = `${langText} · Actualizado: ${formatDate(repo.updated_at)}`;
+      const langText =
+        repo.language || (lang === 'en' ? 'Config / Markdown' : 'Configuración / Markdown');
+      const updLabel = lang === 'en' ? 'Updated' : 'Actualizado';
+      meta.textContent = `${langText} · ${updLabel}: ${formatDate(repo.updated_at, lang)}`;
 
       li.append(link, desc, meta);
       reposListEl.appendChild(li);
     }
   }
+
+  window.Portfolio.refreshGitHubLanguage = function refreshGitHubLanguage() {
+    if (lastRendered) {
+      renderGitHubData(lastRendered.data, lastRendered.statusMode, lastRendered.extraNote);
+    } else {
+      const statusEl = document.getElementById('github-status');
+      if (statusEl) {
+        statusEl.textContent =
+          activeLang() === 'en' ? 'Querying public GitHub API…' : 'Consultando API pública de GitHub…';
+      }
+    }
+  };
 
   window.Portfolio.initGitHubSection = function initGitHubSection({ username, onStateChange }) {
     const retryBtn = document.getElementById('btn-retry-github');
@@ -184,6 +222,7 @@
     const cacheKey = `gh_real_v3_${username}`;
 
     async function fetchGitHubData(forceRefresh = false) {
+      const lang = activeLang();
       if (!forceRefresh) {
         try {
           const cachedRaw = sessionStorage.getItem(cacheKey);
@@ -196,13 +235,14 @@
             }
           }
         } catch {
-          // Ignorar si sessionStorage no está disponible en file://
+          // Ignorar
         }
       }
 
       if (statusEl) {
         statusEl.className = 'status-banner';
-        statusEl.textContent = 'Consultando API pública de GitHub…';
+        statusEl.textContent =
+          lang === 'en' ? 'Querying public GitHub API…' : 'Consultando API pública de GitHub…';
       }
 
       try {
@@ -233,8 +273,8 @@
         );
 
         for (const langMap of langResponses) {
-          for (const [lang, bytes] of Object.entries(langMap)) {
-            languageTotals[lang] = (languageTotals[lang] || 0) + Number(bytes || 0);
+          for (const [langKey, bytes] of Object.entries(langMap)) {
+            languageTotals[langKey] = (languageTotals[langKey] || 0) + Number(bytes || 0);
           }
         }
 
@@ -261,13 +301,13 @@
         try {
           sessionStorage.setItem(cacheKey, JSON.stringify(payload));
         } catch {
-          // Ignorar cuotas de almacenamiento
+          // Ignorar
         }
 
         renderGitHubData(payload, 'live');
         onStateChange?.({ ok: true, mode: 'live', data: payload, error: null });
       } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Error de red';
+        const msg = err instanceof Error ? err.message : 'Network error';
         renderGitHubData(VERIFIED_OFFLINE_SNAPSHOT, 'offline', msg);
         onStateChange?.({ ok: false, mode: 'offline', data: VERIFIED_OFFLINE_SNAPSHOT, error: msg });
       }

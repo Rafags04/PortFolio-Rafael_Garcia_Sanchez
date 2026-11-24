@@ -1,20 +1,36 @@
 /**
- * Punto de entrada del portfolio real de Rafael García Sánchez.
+ * Punto de entrada bilingüe del portfolio real de Rafael García Sánchez.
  * Construye toda la interfaz de forma segura usando textContent (nunca innerHTML).
  */
 (function () {
   const Portfolio = window.Portfolio || {};
-  const PROFILE = Portfolio.PROFILE;
-  if (!PROFILE) return;
+  if (typeof Portfolio.getProfile !== 'function' || typeof Portfolio.getStrings !== 'function') return;
 
   const state = {
     projectFilter: 'all',
     projectQuery: '',
     courseFilter: 'all',
-    currentProjects: PROFILE.featuredProjects.slice(),
+    currentProjects: Portfolio.getProfile().featuredProjects.slice(),
     modalProjectIndex: 0,
     githubReposMap: new Map()
   };
+
+  function P() {
+    return Portfolio.getProfile();
+  }
+  function S() {
+    return Portfolio.getStrings();
+  }
+  function L() {
+    return Portfolio.getLang();
+  }
+
+  function tpl(str, vars) {
+    return Object.entries(vars).reduce(
+      (acc, [k, v]) => acc.replace(`{${k}}`, String(v)),
+      str
+    );
+  }
 
   let toastTimer = null;
   function showToast(message) {
@@ -29,13 +45,14 @@
   }
 
   async function copyToClipboard(text, label) {
+    const msg = tpl(S().toastCopied, { label, val: text });
     try {
       if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
         await navigator.clipboard.writeText(text);
       } else {
         throw new Error('Clipboard unavailable');
       }
-      showToast(`${label} copiado: ${text}`);
+      showToast(msg);
     } catch {
       const temp = document.createElement('input');
       temp.value = text;
@@ -43,7 +60,7 @@
       temp.select();
       try {
         document.execCommand('copy');
-        showToast(`${label} copiado: ${text}`);
+        showToast(msg);
       } catch {
         showToast(`${label}: ${text}`);
       }
@@ -55,59 +72,78 @@
     if (!iso) return '';
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '';
-    return new Intl.DateTimeFormat('es-ES', { year: 'numeric', month: 'short' }).format(d);
+    return new Intl.DateTimeFormat(L() === 'en' ? 'en-GB' : 'es-ES', {
+      year: 'numeric',
+      month: 'short'
+    }).format(d);
   }
 
   function renderHero() {
+    const profile = P();
     const avatarEl = document.getElementById('hero-avatar');
     const nameEl = document.getElementById('hero-name');
     const roleEl = document.getElementById('hero-role');
     const aboutEl = document.getElementById('hero-about');
-    const locBadge = document.getElementById('hero-location-badge');
+    const badgesEl = document.getElementById('hero-badges-list');
     const phoneLink = document.getElementById('hero-phone-link');
     const emailLink = document.getElementById('hero-email-link');
     const ghLink = document.getElementById('hero-github-link');
     const downloadCvBtn = document.getElementById('btn-download-cv');
-    const copyPhoneBtn = document.getElementById('btn-copy-phone');
-    const copyEmailBtn = document.getElementById('btn-copy-email');
 
-    if (avatarEl && PROFILE.avatar) avatarEl.src = PROFILE.avatar;
-    if (nameEl) nameEl.textContent = PROFILE.name;
-    if (roleEl) roleEl.textContent = `${PROFILE.role} · ${PROFILE.institution}`;
-    if (aboutEl) aboutEl.textContent = PROFILE.about;
-    if (locBadge) locBadge.textContent = PROFILE.contact.location;
+    if (avatarEl && profile.avatar) {
+      avatarEl.src = profile.avatar;
+      avatarEl.alt = L() === 'en' ? `Portrait of ${profile.name}` : `Retrato de ${profile.name}`;
+    }
+    if (nameEl) nameEl.textContent = profile.name;
+    if (roleEl) roleEl.textContent = `${profile.role} · ${profile.institution}`;
+    if (aboutEl) aboutEl.textContent = profile.about;
+
+    if (badgesEl && Array.isArray(profile.heroBadges)) {
+      badgesEl.textContent = '';
+      for (const b of profile.heroBadges) {
+        const li = document.createElement('li');
+        li.className = 'badge-pill';
+        li.textContent = b;
+        badgesEl.appendChild(li);
+      }
+    }
 
     if (phoneLink) {
-      phoneLink.href = PROFILE.contact.phoneHref;
-      phoneLink.textContent = PROFILE.contact.phone;
+      phoneLink.href = profile.contact.phoneHref;
+      phoneLink.textContent = profile.contact.phone;
     }
     if (emailLink) {
-      emailLink.href = `mailto:${PROFILE.contact.email}`;
-      emailLink.textContent = PROFILE.contact.email;
+      emailLink.href = `mailto:${profile.contact.email}`;
+      emailLink.textContent = profile.contact.email;
     }
     if (ghLink) {
-      ghLink.href = PROFILE.contact.githubUrl;
-      ghLink.textContent = `GitHub (@${PROFILE.contact.githubUser})`;
+      ghLink.href = profile.contact.githubUrl;
+      ghLink.textContent = `GitHub (@${profile.contact.githubUser})`;
     }
-    if (downloadCvBtn && PROFILE.contact.cvPdfUrl) {
-      downloadCvBtn.href = PROFILE.contact.cvPdfUrl;
+    if (downloadCvBtn && profile.contact.cvPdfUrl) {
+      downloadCvBtn.href = profile.contact.cvPdfUrl;
     }
+  }
 
+  function setupQuickCopyButtons() {
+    const copyPhoneBtn = document.getElementById('btn-copy-phone');
+    const copyEmailBtn = document.getElementById('btn-copy-email');
     if (copyPhoneBtn) {
       copyPhoneBtn.addEventListener('click', () =>
-        copyToClipboard(PROFILE.contact.phone, 'Teléfono')
+        copyToClipboard(P().contact.phone, S().contactPhoneLabel)
       );
     }
     if (copyEmailBtn) {
       copyEmailBtn.addEventListener('click', () =>
-        copyToClipboard(PROFILE.contact.email, 'Email')
+        copyToClipboard(P().contact.email, 'Email')
       );
     }
   }
 
   function getFilteredProjects() {
+    const profile = P();
     const q = state.projectQuery.trim().toLowerCase();
-    return PROFILE.featuredProjects.filter((project) => {
+    return profile.featuredProjects.filter((project) => {
       const matchesCat =
         state.projectFilter === 'all' ||
         (Array.isArray(project.categories) && project.categories.includes(state.projectFilter));
@@ -148,7 +184,8 @@
   }
 
   function renderProjectModalContent(projectIndex) {
-    const list = state.currentProjects.length ? state.currentProjects : PROFILE.featuredProjects;
+    const s = S();
+    const list = state.currentProjects.length ? state.currentProjects : P().featuredProjects;
     const safeIdx = ((projectIndex % list.length) + list.length) % list.length;
     state.modalProjectIndex = safeIdx;
     const project = list[safeIdx];
@@ -162,14 +199,14 @@
     const stackPanel = document.getElementById('proj-tab-panel-stack');
     const linksGroup = document.getElementById('proj-modal-external-links');
 
-    if (indexEl) indexEl.textContent = `Proyecto destacado ${safeIdx + 1} de ${list.length}`;
+    if (indexEl) indexEl.textContent = tpl(s.projModalIndex, { idx: safeIdx + 1, total: list.length });
     if (titleEl) titleEl.textContent = project.title;
 
     if (figureEl && imgEl) {
       if (project.image) {
         figureEl.hidden = false;
         imgEl.src = project.image;
-        imgEl.alt = project.imageAlt || `Captura de ${project.title}`;
+        imgEl.alt = project.imageAlt || project.title;
       } else {
         figureEl.hidden = true;
         imgEl.removeAttribute('src');
@@ -181,12 +218,12 @@
       summaryPanel.textContent = '';
       const pProb = document.createElement('p');
       const strongProb = document.createElement('strong');
-      strongProb.textContent = 'Problema: ';
+      strongProb.textContent = `${s.problemLabel}: `;
       pProb.append(strongProb, document.createTextNode(project.problem));
 
       const pSol = document.createElement('p');
       const strongSol = document.createElement('strong');
-      strongSol.textContent = 'Solución: ';
+      strongSol.textContent = `${s.solutionLabel}: `;
       pSol.append(strongSol, document.createTextNode(project.solution));
 
       summaryPanel.append(pProb, pSol);
@@ -196,7 +233,7 @@
       codePanel.textContent = '';
       const pre = document.createElement('pre');
       pre.className = 'proj-code-block';
-      pre.textContent = project.codeSnippet || '// Sin fragmento configurado.';
+      pre.textContent = project.codeSnippet || '// No snippet available.';
       codePanel.appendChild(pre);
     }
 
@@ -231,7 +268,7 @@
       repoBtn.href = project.repoUrl;
       repoBtn.target = '_blank';
       repoBtn.rel = 'noopener noreferrer';
-      repoBtn.textContent = 'Abrir repositorio en GitHub';
+      repoBtn.textContent = s.projModalOpenRepo;
       linksGroup.appendChild(repoBtn);
 
       if (project.demoUrl) {
@@ -240,7 +277,7 @@
         demoBtn.href = project.demoUrl;
         demoBtn.target = '_blank';
         demoBtn.rel = 'noopener noreferrer';
-        demoBtn.textContent = 'Ver demo';
+        demoBtn.textContent = s.projModalViewDemo;
         linksGroup.appendChild(demoBtn);
       }
     }
@@ -249,13 +286,15 @@
   }
 
   function openProjectModal(projectId, triggerEl) {
-    const list = state.currentProjects.length ? state.currentProjects : PROFILE.featuredProjects;
+    const list = state.currentProjects.length ? state.currentProjects : P().featuredProjects;
     const idx = Math.max(0, list.findIndex((p) => p.id === projectId));
     renderProjectModalContent(idx);
     if (projectModal) projectModal.open(triggerEl);
   }
 
   function renderProjects() {
+    const profile = P();
+    const s = S();
     const container = document.getElementById('projects-list');
     const countEl = document.getElementById('project-count');
     if (!container) return;
@@ -265,19 +304,22 @@
     container.textContent = '';
 
     if (countEl) {
-      countEl.textContent = `Mostrando ${filtered.length} de ${PROFILE.featuredProjects.length} proyectos destacados`;
+      countEl.textContent = tpl(s.showingProjects, {
+        shown: filtered.length,
+        total: profile.featuredProjects.length
+      });
     }
 
     if (filtered.length === 0) {
       const emptyCard = document.createElement('div');
       emptyCard.className = 'surface-card';
       const p = document.createElement('p');
-      p.textContent = 'Ningún proyecto destacado coincide con tu filtro actual.';
+      p.textContent = s.noProjectsFound;
       const resetBtn = document.createElement('button');
       resetBtn.type = 'button';
       resetBtn.className = 'btn btn-secondary btn-sm';
       resetBtn.style.marginTop = '0.75rem';
-      resetBtn.textContent = 'Mostrar todos los destacados';
+      resetBtn.textContent = s.showAllProjectsBtn;
       resetBtn.addEventListener('click', () => {
         state.projectFilter = 'all';
         state.projectQuery = '';
@@ -300,7 +342,7 @@
 
       const featBadge = document.createElement('span');
       featBadge.className = 'featured-badge';
-      featBadge.textContent = '★ Destacado de GitHub';
+      featBadge.textContent = s.featuredBadge;
       topRow.appendChild(featBadge);
 
       const liveRepo = project.repoName ? state.githubReposMap.get(project.repoName) : null;
@@ -308,7 +350,7 @@
         const syncTag = document.createElement('span');
         syncTag.className = 'repo-sync-tag';
         const dateStr = formatShortDate(liveRepo.updated_at);
-        syncTag.textContent = dateStr ? `GitHub · act. ${dateStr}` : 'Sincronizado con GitHub';
+        syncTag.textContent = dateStr ? `${s.githubSyncTag} ${dateStr}` : s.githubSyncedTag;
         topRow.appendChild(syncTag);
       }
       card.appendChild(topRow);
@@ -317,18 +359,18 @@
         const mediaBtn = document.createElement('button');
         mediaBtn.type = 'button';
         mediaBtn.className = 'project-media-btn';
-        mediaBtn.setAttribute('aria-label', `Ampliar captura de ${project.title}`);
+        mediaBtn.setAttribute('aria-label', `${s.viewDetailsBtn}: ${project.title}`);
 
         const img = document.createElement('img');
         img.className = 'project-media-img';
         img.src = project.image;
-        img.alt = project.imageAlt || `Captura de ${project.title}`;
+        img.alt = project.imageAlt || project.title;
         img.loading = 'lazy';
 
         const badge = document.createElement('span');
         badge.className = 'project-media-badge';
         badge.setAttribute('aria-hidden', 'true');
-        badge.textContent = '🔍 Ampliar';
+        badge.textContent = s.zoomLabel;
 
         mediaBtn.append(img, badge);
         mediaBtn.addEventListener('click', () => openProjectModal(project.id, mediaBtn));
@@ -343,12 +385,12 @@
       dl.className = 'project-details';
 
       const dtProb = document.createElement('dt');
-      dtProb.textContent = 'Problema';
+      dtProb.textContent = s.problemLabel;
       const ddProb = document.createElement('dd');
       ddProb.textContent = project.problem;
 
       const dtSol = document.createElement('dt');
-      dtSol.textContent = 'Solución';
+      dtSol.textContent = s.solutionLabel;
       const ddSol = document.createElement('dd');
       ddSol.textContent = project.solution;
 
@@ -356,7 +398,7 @@
 
       const stackList = document.createElement('ul');
       stackList.className = 'tag-list';
-      stackList.setAttribute('aria-label', `Tecnologías de ${project.title}`);
+      stackList.setAttribute('aria-label', `${project.title} stack`);
       for (const tech of project.stack || []) {
         const li = document.createElement('li');
         li.className = 'tag';
@@ -370,7 +412,7 @@
       const detailBtn = document.createElement('button');
       detailBtn.type = 'button';
       detailBtn.className = 'btn btn-primary btn-sm';
-      detailBtn.textContent = 'Ver captura y detalles';
+      detailBtn.textContent = s.viewDetailsBtn;
       detailBtn.addEventListener('click', () => openProjectModal(project.id, detailBtn));
       links.appendChild(detailBtn);
 
@@ -379,7 +421,7 @@
       repoLink.href = project.repoUrl;
       repoLink.target = '_blank';
       repoLink.rel = 'noopener noreferrer';
-      repoLink.textContent = 'Repositorio en GitHub';
+      repoLink.textContent = s.repoGithubBtn;
       links.appendChild(repoLink);
 
       if (project.demoUrl) {
@@ -388,7 +430,7 @@
         demoLink.href = project.demoUrl;
         demoLink.target = '_blank';
         demoLink.rel = 'noopener noreferrer';
-        demoLink.textContent = 'Ver web';
+        demoLink.textContent = s.viewWebBtn;
         links.appendChild(demoLink);
       }
 
@@ -463,7 +505,7 @@
     if (!list) return;
     list.textContent = '';
 
-    for (const item of PROFILE.academicEducation) {
+    for (const item of P().academicEducation) {
       const li = document.createElement('li');
       li.className = `surface-card academic-card ${item.highlight ? 'is-primary' : ''}`;
 
@@ -485,18 +527,22 @@
   }
 
   function renderComplementaryCourses() {
+    const profile = P();
     const list = document.getElementById('courses-list');
     const countEl = document.getElementById('courses-count');
     if (!list) return;
 
     const filtered =
       state.courseFilter === 'all'
-        ? PROFILE.complementaryCourses
-        : PROFILE.complementaryCourses.filter((c) => c.category === state.courseFilter);
+        ? profile.complementaryCourses
+        : profile.complementaryCourses.filter((c) => c.category === state.courseFilter);
 
     list.textContent = '';
     if (countEl) {
-      countEl.textContent = `${filtered.length} de ${PROFILE.complementaryCourses.length} certificaciones`;
+      countEl.textContent = tpl(S().coursesCountText, {
+        shown: filtered.length,
+        total: profile.complementaryCourses.length
+      });
     }
 
     for (const course of filtered) {
@@ -536,10 +582,13 @@
   }
 
   function renderCompetencies() {
+    const profile = P();
+    const s = S();
+
     const techList = document.getElementById('tech-skills-list');
     if (techList) {
       techList.textContent = '';
-      for (const skill of PROFILE.technicalSkills) {
+      for (const skill of profile.technicalSkills) {
         const li = document.createElement('li');
         li.textContent = skill;
         techList.appendChild(li);
@@ -549,13 +598,13 @@
     const appliedList = document.getElementById('applied-stack-list');
     if (appliedList) {
       appliedList.textContent = '';
-      for (const tech of PROFILE.appliedStack) {
+      for (const tech of profile.appliedStack) {
         const li = document.createElement('li');
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'tag tag-interactive';
         btn.textContent = tech;
-        btn.title = `Filtrar proyectos destacados que usan ${tech}`;
+        btn.title = tpl(s.toastFilteredBy, { tech });
         btn.addEventListener('click', () => {
           state.projectFilter = 'all';
           state.projectQuery = tech;
@@ -564,7 +613,7 @@
           if (searchInput) searchInput.value = tech;
           renderProjects();
           document.getElementById('proyectos-destacados')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          showToast(`Filtrando proyectos destacados por "${tech}"`);
+          showToast(tpl(S().toastFilteredBy, { tech }));
         });
         li.appendChild(btn);
         appliedList.appendChild(li);
@@ -574,7 +623,7 @@
     const softList = document.getElementById('soft-skills-list');
     if (softList) {
       softList.textContent = '';
-      for (const soft of PROFILE.softSkills) {
+      for (const soft of profile.softSkills) {
         const li = document.createElement('li');
         li.className = 'tag';
         li.textContent = soft;
@@ -585,7 +634,7 @@
     const langList = document.getElementById('languages-list');
     if (langList) {
       langList.textContent = '';
-      for (const lang of PROFILE.languages) {
+      for (const lang of profile.languages) {
         const row = document.createElement('div');
         row.className = 'language-row';
 
@@ -613,7 +662,7 @@
     const addList = document.getElementById('additional-info-list');
     if (addList) {
       addList.textContent = '';
-      for (const info of PROFILE.additionalInfo) {
+      for (const info of profile.additionalInfo) {
         const li = document.createElement('li');
         li.textContent = info;
         addList.appendChild(li);
@@ -622,33 +671,35 @@
   }
 
   function renderContact() {
+    const profile = P();
+    const s = S();
     const contactList = document.getElementById('contact-list');
     if (!contactList) return;
     contactList.textContent = '';
 
     const entries = [
       {
-        label: 'Teléfono',
-        value: PROFILE.contact.phone,
-        href: PROFILE.contact.phoneHref,
-        copyLabel: 'Teléfono'
+        label: s.contactPhoneLabel,
+        value: profile.contact.phone,
+        href: profile.contact.phoneHref,
+        copyLabel: s.contactPhoneLabel
       },
       {
-        label: 'Correo electrónico',
-        value: PROFILE.contact.email,
-        href: `mailto:${PROFILE.contact.email}`,
+        label: s.contactEmailLabel,
+        value: profile.contact.email,
+        href: `mailto:${profile.contact.email}`,
         copyLabel: 'Email'
       },
       {
-        label: 'Ubicación',
-        value: PROFILE.contact.location,
+        label: s.contactLocationLabel,
+        value: profile.contact.location,
         href: null,
         copyLabel: null
       },
       {
-        label: 'GitHub',
-        value: PROFILE.contact.githubUrl,
-        href: PROFILE.contact.githubUrl,
+        label: s.contactGitHubLabel,
+        value: profile.contact.githubUrl,
+        href: profile.contact.githubUrl,
         external: true,
         copyLabel: null
       }
@@ -684,7 +735,7 @@
         const copyBtn = document.createElement('button');
         copyBtn.type = 'button';
         copyBtn.className = 'btn btn-ghost btn-xs';
-        copyBtn.textContent = 'Copiar';
+        copyBtn.textContent = s.copyBtn;
         copyBtn.addEventListener('click', () => copyToClipboard(entry.value, entry.copyLabel));
         valueBox.appendChild(copyBtn);
       }
@@ -695,11 +746,13 @@
   }
 
   function renderCvSheet() {
+    const profile = P();
+    const s = S();
     const sheet = document.getElementById('cv-modal-content');
     const pdfLink = document.getElementById('cv-pdf-link');
 
-    if (pdfLink && PROFILE.contact.cvPdfUrl) {
-      pdfLink.href = PROFILE.contact.cvPdfUrl;
+    if (pdfLink && profile.contact.cvPdfUrl) {
+      pdfLink.href = profile.contact.cvPdfUrl;
     }
     if (!sheet) return;
     sheet.textContent = '';
@@ -708,16 +761,16 @@
     header.className = 'cv-header';
 
     const nameH3 = document.createElement('h3');
-    nameH3.textContent = PROFILE.name;
+    nameH3.textContent = profile.name;
 
     const roleP = document.createElement('p');
     roleP.className = 'cv-role';
-    roleP.textContent = PROFILE.role;
+    roleP.textContent = profile.role;
 
     const contactP = document.createElement('p');
     contactP.className = 'cv-contact-line';
     contactP.textContent =
-      `${PROFILE.contact.phone} · ${PROFILE.contact.email} · ${PROFILE.contact.location} · ${PROFILE.contact.githubUrl}`;
+      `${profile.contact.phone} · ${profile.contact.email} · ${profile.contact.location} · ${profile.contact.githubUrl}`;
 
     header.append(nameH3, roleP, contactP);
     sheet.appendChild(header);
@@ -732,13 +785,13 @@
       return sec;
     };
 
-    const aboutSec = addSection('Sobre mí');
+    const aboutSec = addSection(s.cvSecAbout);
     const aboutP = document.createElement('p');
-    aboutP.textContent = PROFILE.about;
+    aboutP.textContent = profile.about;
     aboutSec.appendChild(aboutP);
 
-    const eduSec = addSection('Formación Académica');
-    for (const edu of PROFILE.academicEducation) {
+    const eduSec = addSection(s.cvSecEdu);
+    for (const edu of profile.academicEducation) {
       const item = document.createElement('div');
       item.className = 'cv-item';
       const strong = document.createElement('strong');
@@ -749,8 +802,8 @@
       eduSec.appendChild(item);
     }
 
-    const projSec = addSection('Proyectos Destacados de GitHub');
-    for (const p of PROFILE.featuredProjects) {
+    const projSec = addSection(s.cvSecProj);
+    for (const p of profile.featuredProjects) {
       const item = document.createElement('div');
       item.className = 'cv-item';
       const strong = document.createElement('strong');
@@ -764,22 +817,22 @@
       projSec.appendChild(item);
     }
 
-    const coursesSec = addSection('Formación Complementaria');
-    for (const c of PROFILE.complementaryCourses) {
+    const coursesSec = addSection(s.cvSecCourses);
+    for (const c of profile.complementaryCourses) {
       const p = document.createElement('p');
       p.textContent = `• ${c.title} — ${c.provider} | ${c.date}`;
       coursesSec.appendChild(p);
     }
 
-    const compSec = addSection('Habilidades, Idiomas y Más Información');
+    const compSec = addSection(s.cvSecComp);
     const pTech = document.createElement('p');
-    pTech.textContent = `Habilidades Técnicas: ${PROFILE.technicalSkills.join(' · ')}`;
+    pTech.textContent = `${s.cvLabelTech}: ${profile.technicalSkills.join(' · ')}`;
     const pSoft = document.createElement('p');
-    pSoft.textContent = `Soft Skills: ${PROFILE.softSkills.join(' · ')}`;
+    pSoft.textContent = `${s.cvLabelSoft}: ${profile.softSkills.join(' · ')}`;
     const pLang = document.createElement('p');
-    pLang.textContent = `Idiomas: ${PROFILE.languages.map((l) => `${l.name} (${l.level})`).join(' · ')}`;
+    pLang.textContent = `${s.cvLabelLang}: ${profile.languages.map((l) => `${l.name} (${l.level})`).join(' · ')}`;
     const pAdd = document.createElement('p');
-    pAdd.textContent = `Más información: ${PROFILE.additionalInfo.join(' · ')}`;
+    pAdd.textContent = `${s.cvLabelAdd}: ${profile.additionalInfo.join(' · ')}`;
     compSec.append(pTech, pSoft, pLang, pAdd);
   }
 
@@ -787,7 +840,77 @@
     const yearEl = document.getElementById('footer-year');
     const nameEl = document.getElementById('footer-name');
     if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-    if (nameEl) nameEl.textContent = PROFILE.name;
+    if (nameEl) nameEl.textContent = P().name;
+  }
+
+  function updateThemeButtonLabel() {
+    const btn = document.getElementById('btn-theme-toggle');
+    if (!btn) return;
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    btn.setAttribute('aria-pressed', String(isLight));
+    btn.textContent = isLight ? S().themeToDark : S().themeToLight;
+  }
+
+  function applyTranslations(announceToast = false) {
+    const s = S();
+    const lang = L();
+
+    document.documentElement.lang = lang;
+    document.title = s.pageTitle;
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key && Object.prototype.hasOwnProperty.call(s, key)) {
+        el.textContent = s[key];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (key && Object.prototype.hasOwnProperty.call(s, key)) {
+        el.setAttribute('placeholder', s[key]);
+      }
+    });
+
+    const langBtn = document.getElementById('btn-lang-toggle');
+    if (langBtn) {
+      langBtn.textContent = s.langBtnText;
+      langBtn.setAttribute('aria-label', s.langBtnAria);
+    }
+
+    updateThemeButtonLabel();
+    renderHero();
+    renderProjects();
+    renderAcademicEducation();
+    renderComplementaryCourses();
+    renderCompetencies();
+    renderContact();
+    renderCvSheet();
+    renderFooter();
+
+    if (projectModal && projectModal.isOpen()) {
+      renderProjectModalContent(state.modalProjectIndex);
+    }
+    if (typeof Portfolio.refreshGitHubLanguage === 'function') {
+      Portfolio.refreshGitHubLanguage();
+    }
+    if (typeof Portfolio.refreshTerminalLanguage === 'function') {
+      Portfolio.refreshTerminalLanguage();
+    }
+
+    if (announceToast) {
+      showToast(s.toastLangChanged);
+    }
+  }
+
+  function setupLanguageToggle() {
+    const langBtn = document.getElementById('btn-lang-toggle');
+    if (!langBtn) return;
+    langBtn.addEventListener('click', () => {
+      const next = L() === 'es' ? 'en' : 'es';
+      Portfolio.setLang(next);
+      applyTranslations(true);
+    });
   }
 
   function setupThemeToggle() {
@@ -795,14 +918,12 @@
     if (!btn) return;
 
     function applyTheme(theme) {
-      const isLight = theme === 'light';
-      if (isLight) {
+      if (theme === 'light') {
         document.documentElement.setAttribute('data-theme', 'light');
       } else {
         document.documentElement.removeAttribute('data-theme');
       }
-      btn.setAttribute('aria-pressed', String(isLight));
-      btn.textContent = isLight ? '🌙 Modo Oscuro Naval' : '☀️ Modo Claro CV';
+      updateThemeButtonLabel();
     }
 
     try {
@@ -822,7 +943,7 @@
       } catch {
         // Ignorar
       }
-      showToast(next === 'light' ? 'Modo Claro CV activado' : 'Modo Oscuro Naval activado');
+      showToast(next === 'light' ? S().toastThemeLight : S().toastThemeDark);
     });
   }
 
@@ -865,18 +986,12 @@
   }
 
   function initApp() {
-    renderHero();
+    setupQuickCopyButtons();
     setupProjectModal();
-    renderProjects();
     setupProjectControls();
-    renderAcademicEducation();
-    renderComplementaryCourses();
     setupCourseFilters();
-    renderCompetencies();
-    renderContact();
-    renderCvSheet();
-    renderFooter();
     setupThemeToggle();
+    setupLanguageToggle();
     setupCardSpotlight();
     setupScrollReveal();
 
@@ -896,7 +1011,7 @@
     let githubState = { ok: false, mode: 'loading', data: null, error: null };
     if (typeof Portfolio.initGitHubSection === 'function') {
       Portfolio.initGitHubSection({
-        username: PROFILE.contact.githubUser,
+        username: P().contact.githubUser,
         onStateChange: (nextState) => {
           githubState = nextState;
           if (nextState.data && Array.isArray(nextState.data.repos)) {
@@ -909,11 +1024,12 @@
 
     if (typeof Portfolio.initTerminal === 'function') {
       Portfolio.initTerminal({
-        profile: PROFILE,
         getGitHubState: () => githubState,
         openCvModal: (trigger) => cvModal.open(trigger)
       });
     }
+
+    applyTranslations(false);
   }
 
   if (document.readyState === 'loading') {
