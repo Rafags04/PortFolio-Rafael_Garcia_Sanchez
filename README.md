@@ -24,7 +24,7 @@ PortFolio/
 │   ├── CV-Rafael-Garcia-Sanchez.pdf     # CV oficial descargable
 │   ├── profile-rafa.png                 # Retrato de perfil (356×357)
 │   └── projects/                        # Capturas de los proyectos destacados
-│       ├── iso2-testing.svg
+│       ├── simulador-pda.png
 │       └── portfolio-web.svg
 └── src/
     ├── main.js                          # Renderizado seguro (textContent), buscador, filtros y modales

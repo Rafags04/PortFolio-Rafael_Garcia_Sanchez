@@ -33,27 +33,34 @@
 
     featuredProjects: [
       {
-        id: 'iso2-testing-p2',
-        repoName: 'ISO2-2025GrupoB.03-Testing-P2',
+        id: 'simulador-pda-permiso-b',
+        repoName: 'SimuladorPDA-PermisoConduccionB',
         featured: true,
-        title: 'ISO2-2025GrupoB.03-Testing-P2 — Calculadora de Tarifas & Testing JUnit 5',
-        categories: ['java', 'testing'],
-        image: './assets/projects/iso2-testing.svg',
+        title: 'SimuladorPDA-PermisoConduccionB — Simulador PDA DGT (Permiso B)',
+        categories: ['pwa', 'javascript', 'python-docker'],
+        image: './assets/projects/simulador-pda.png',
         imageAlt:
-          'Captura técnica del proyecto ISO2-2025GrupoB.03-Testing-P2 con CalculadoraTarifas.java y pruebas JUnit 5',
+          'Captura real en ejecución del Simulador PDA de examen práctico del permiso B',
         problem:
-          'Validar de forma rigurosa la lógica de negocio de asignación de tarifas aéreas según múltiples condiciones combinadas (edad, frecuencia de vuelos, estudios, ingresos, destino y acompañantes).',
+          'Facilitar a los profesores de autoescuela el registro ágil de faltas (leves, deficientes y eliminatorias), tiempos y maniobras desde el móvil durante las clases prácticas, simulando la PDA oficial de los examinadores de la DGT.',
         solution:
-          'Implementación modular en Java (CalculadoraTarifas, Cliente, Tarifa) junto con una batería sistemática de casos de prueba unitarios en JUnit 5 (Jupiter) gestionada con Maven e informes técnicos.',
-        stack: ['Java', 'JUnit 5', 'Maven', 'Eclipse', 'HTML', 'Git'],
+          'Aplicación web progresiva (PWA) mobile-first con catálogo buscable de faltas, cálculo automático de APTO / NO APTO según criterios DGT, cronómetros de examen y maniobra, historial local con IndexedDB, exportación de informe PDF y despliegue con Flask y Docker.',
+        stack: [
+          'JavaScript (ES6+)',
+          'Vite / PWA',
+          'IndexedDB',
+          'Python (Flask)',
+          'Docker',
+          'HTML5 / CSS3'
+        ],
         highlights: [
-          'Diseño de casos de prueba con clases de equivalencia y valores límite en CalculadoraTarifaTest.',
-          'Separación clara de dominio entre Cliente, Tarifa y CalculadoraTarifas.',
-          'Configuración reproducible con Maven (pom.xml) y plugin Surefire para JUnit Jupiter 5.10.0.'
+          'Motor de evaluación DGT en src/rules.js (1 eliminatoria, 2 deficientes, 1D+5L o 10 leves).',
+          'Persistencia local offline en IndexedDB, cronómetros integrados y exportación a PDF/JSON.',
+          'Lista para producción con Service Worker PWA, servidor Flask (app.py) y Docker Compose.'
         ],
         codeSnippet:
-          '@Test\npublic void testCP1_1() {\n  CalculadoraTarifas calc = new CalculadoraTarifas();\n  Cliente cli = new Cliente(-3, -1, true, true, true, true, true, -5000, "turista", "europa", true);\n  Tarifa tarifa = calc.calcularTarifa(cli);\n  assertEquals(null, tarifa);\n}',
-        repoUrl: 'https://github.com/Rafags04/ISO2-2025GrupoB.03-Testing-P2',
+          'export function evaluateSimulation(faults = []) {\n  const counts = countFaults(faults);\n  const noApto =\n    counts.E >= 1 ||\n    counts.D >= 2 ||\n    (counts.D >= 1 && counts.L >= 5) ||\n    counts.L >= 10;\n  return { ...counts, result: noApto ? "NO APTO" : "APTO", noApto };\n}',
+        repoUrl: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB',
         demoUrl: null
       },
       {
@@ -194,12 +201,12 @@
     ],
 
     appliedStack: [
-      'Java',
-      'JUnit 5',
-      'Maven',
-      'HTML5',
-      'CSS3',
-      'JavaScript'
+      'JavaScript (ES6+)',
+      'PWA / IndexedDB',
+      'Vite',
+      'Python (Flask)',
+      'Docker',
+      'HTML5 / CSS3'
     ],
 
     softSkills: [

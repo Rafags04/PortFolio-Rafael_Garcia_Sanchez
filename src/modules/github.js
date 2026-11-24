@@ -15,6 +15,8 @@
     TypeScript: '#38bdf8',
     Java: '#f97316',
     Python: '#22c55e',
+    Dockerfile: '#0ea5e9',
+    Batchfile: '#64748b',
     Shell: '#94a3b8'
   };
 
@@ -22,14 +24,25 @@
   const VERIFIED_OFFLINE_SNAPSHOT = {
     username: 'Rafags04',
     fetchedAt: Date.now(),
-    totalBytes: 578700,
+    totalBytes: 689112,
     languageEntries: [
-      { name: 'HTML', bytes: 302940 },
-      { name: 'JavaScript', bytes: 189036 },
+      { name: 'HTML', bytes: 304021 },
+      { name: 'JavaScript', bytes: 276104 },
       { name: 'Java', bytes: 58167 },
-      { name: 'CSS', bytes: 28557 }
+      { name: 'CSS', bytes: 48911 },
+      { name: 'Python', bytes: 1323 },
+      { name: 'Dockerfile', bytes: 739 },
+      { name: 'Batchfile', bytes: 447 }
     ],
     repos: [
+      {
+        name: 'SimuladorPDA-PermisoConduccionB',
+        description:
+          'Simulador para profesores de Autoescuela que permite simular la PDA de los examinadores de la DGT, para realizar simulaciones de exámenes en las clases.',
+        language: 'JavaScript',
+        html_url: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB',
+        updated_at: '2026-11-24T09:37:32Z'
+      },
       {
         name: 'ISO2-2025GrupoB.03-Testing-P2',
         description: 'Proyecto de testing unitario con JUnit 5 y Maven en Java.',
