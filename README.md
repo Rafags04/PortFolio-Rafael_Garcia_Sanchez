@@ -1,14 +1,14 @@
 # Portfolio Personal — Rafael García Sánchez (@Rafags04)
 
-Portfolio estático construido desde cero con **HTML5 + CSS3 + JavaScript (ES6+)** a partir del currículum oficial de **Rafael García Sánchez** y sus repositorios reales en GitHub. Funciona tanto al abrir [index.html](index.html) directamente en local (`file://`) como publicado en **GitHub Pages**.
+Portfolio estático construido con **HTML5 + CSS3 + JavaScript (ES6+)** a partir del currículum oficial de **Rafael García Sánchez** y sus repositorios públicos en GitHub. Funciona tanto al abrir [index.html](index.html) directamente en local (`file://`) como publicado en **GitHub Pages**.
 
 ## Características principales
-- **Datos reales del CV:** incluye retrato de perfil ([assets/profile-rafa.png](assets/profile-rafa.png)), descarga directa del PDF oficial ([assets/CV-Rafael-Garcia-Sanchez.pdf](assets/CV-Rafael-Garcia-Sanchez.pdf)), formación académica en la UCLM, las 12 certificaciones de formación complementaria filtrables, habilidades técnicas, soft skills, idiomas y datos de contacto copiables.
-- **Sección de Proyectos Destacados de GitHub:** muestra tus repositorios seleccionados con capturas ampliables, buscador en vivo, filtros por tecnología, sincronización con GitHub y visor modal con código real (`Problema → Solución → Stack`).
-- **Actividad real de GitHub API (`@Rafags04`):** consulta repositorios propios (sin forks) y calcula bytes exactos por lenguaje.
-- **Bilingüe Español / Inglés (`ES / EN`):** botón de traducción instantánea en la cabecera con persistencia en `localStorage` que traduce toda la web, la terminal y el CV imprimible.
-- **Tema dual (Modo Oscuro Naval / Modo Claro CV):** conmutador en la cabecera con persistencia en `localStorage`.
-- **Terminal interactiva:** consulta rápida de todo el perfil (`whoami`, `projects`, `education`, `courses`, `skills`, `languages`, `github`, `contact`, `cv`).
+- **Presentación y CV:** incluye retrato de perfil ([assets/profile-rafa.png](assets/profile-rafa.png)), descarga directa del PDF oficial ([assets/CV-Rafael-Garcia-Sanchez.pdf](assets/CV-Rafael-Garcia-Sanchez.pdf)) y vista rápida imprimible accesible (`aria-modal`).
+- **Proyectos Destacados de GitHub:** escaparate visual de [SimuladorPDA-PermisoConduccionB](https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB) con captura en ejecución ampliable y código real (`Problema → Solución → Stack`).
+- **Actividad real de GitHub API (`@Rafags04`):** consulta repositorios propios (sin forks) y calcula bytes por lenguaje en tiempo real.
+- **Formación y Competencias:** Grado en Ingeniería Informática (UCLM), Bachillerato de Ciencias, capacitación en Calidad del Software Cuántico (AQC Lab), stack técnico, idiomas y disponibilidad.
+- **Footer visual de contacto:** acceso directo con iconos vectoriales a teléfono, email, ubicación y LinkedIn.
+- **Bilingüe Español / Inglés (`ES / EN`) y Tema Dual:** conmutadores persistentes (`localStorage`) en la cabecera.
 
 ## Estructura de carpetas
 
@@ -16,7 +16,7 @@ Portfolio estático construido desde cero con **HTML5 + CSS3 + JavaScript (ES6+)
 PortFolio/
 ├── index.html                           # Página principal semántica, SEO/Open Graph y scripts defer
 ├── 404.html                             # Página de error 404 para GitHub Pages
-├── style.css                            # Diseño editorial naval/blanco, tema dual e impresión PDF
+├── style.css                            # Diseño naval/blanco con tema dual e impresión PDF
 ├── favicon.svg                          # Favicon vectorial
 ├── robots.txt                           # Directivas de rastreo
 ├── sitemap.xml                          # Mapa del sitio
@@ -24,31 +24,29 @@ PortFolio/
 ├── assets/
 │   ├── CV-Rafael-Garcia-Sanchez.pdf     # CV oficial descargable
 │   ├── profile-rafa.png                 # Retrato de perfil (356×357)
-│   └── projects/                        # Capturas de los proyectos destacados
-│       ├── simulador-pda.png
-│       └── portfolio-web.svg
+│   └── projects/
+│       └── simulador-pda.png            # Captura en vivo del simulador PDA DGT
 └── src/
-    ├── main.js                          # Renderizado seguro (textContent), buscador, filtros y modales
+    ├── main.js                          # Renderizado seguro (textContent) y modales
     ├── data/
-    │   └── profile.js                   # Fuente única de datos del CV y proyectos destacados
+    │   └── profile.js                   # Fuente única bilingüe de datos del CV y proyectos
     └── modules/
         ├── github.js                    # API pública de GitHub (repos + bytes)
-        ├── modal.js                     # Diálogos accesibles (trampa y retorno de foco)
-        └── terminal.js                  # Terminal interactiva y bucle rAF único pausable
+        └── modal.js                     # Diálogos accesibles (trampa y retorno de foco)
 ```
 
 ## Cómo añadir nuevos proyectos destacados de GitHub
 
-1. Abre [src/data/profile.js](src/data/profile.js) y localiza el array `featuredProjects`.
-2. Añade un nuevo objeto con `id`, `repoName` (el nombre exacto en GitHub para sincronizar su fecha), `title`, `categories`, `image` (opcional, o `null`), `problem`, `solution`, `stack`, `highlights`, `codeSnippet`, `repoUrl` y `demoUrl`.
-3. Si incluyes captura, guárdala en `assets/projects/` (SVG, PNG, JPG o WebP) y enlázala en `image`.
+1. Abre [src/data/profile.js](src/data/profile.js) y localiza `featuredProjects` dentro de `PROFILES.es` y `PROFILES.en`.
+2. Añade un nuevo objeto con `id`, `repoName`, `title`, `image`, `imageAlt`, `problem`, `solution`, `stack`, `highlights`, `codeSnippet`, `repoUrl` y `demoUrl`.
+3. Guarda su captura en `assets/projects/` (PNG, JPG, WebP o SVG). Con 2 o más proyectos la rejilla se adapta automáticamente a múltiples columnas.
 
 ## Despliegue en GitHub Pages
 
 1. Sube los cambios a la rama `main` de `Rafags04/PortFolio`:
    ```bash
    git add .
-   git commit -m "feat: rediseño completo del portfolio con CV real y proyectos destacados"
+   git commit -m "feat: portfolio limpio, visual y bilingüe ES/EN"
    git push origin main
    ```
 2. En GitHub, entra en **Settings → Pages**, selecciona **Deploy from a branch**, rama `main`, carpeta `/ (root)` y guarda.

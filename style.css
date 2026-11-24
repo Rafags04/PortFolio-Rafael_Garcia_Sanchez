@@ -373,26 +373,11 @@ code {
   margin-bottom: 0.9rem;
 }
 
-.hero-about-box {
-  background: var(--surface-alt);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 0.85rem 1rem;
-  margin-bottom: 1.15rem;
-}
-
-.hero-about-label {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent);
-  margin-bottom: 0.25rem;
-}
-
 .hero-lead {
   color: var(--text-secondary);
   font-size: 0.98rem;
+  margin-bottom: 1.15rem;
+  max-width: 62ch;
 }
 
 .hero-actions {
@@ -469,74 +454,6 @@ code {
 /* --------------------------------------------------------------------------
    PROYECTOS DESTACADOS DE GITHUB
    -------------------------------------------------------------------------- */
-.projects-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem 1rem;
-  margin-bottom: 0.8rem;
-}
-
-.search-box {
-  flex: 1 1 260px;
-  max-width: 480px;
-}
-
-.search-input {
-  width: 100%;
-  min-height: 42px;
-  padding: 0.5rem 0.85rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-strong);
-  background: var(--surface);
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 0.94rem;
-}
-
-.search-input::placeholder {
-  color: var(--text-muted);
-}
-
-.project-count {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--text-muted);
-}
-
-.project-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.filter-btn {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 600;
-  min-height: 36px;
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
-}
-
-.filter-btn:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
-
-.filter-btn.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
-}
-
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -546,32 +463,22 @@ code {
 .project-card {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
-.project-card-top {
+.project-card-body {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.featured-badge {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--accent);
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid var(--border-strong);
-  padding: 0.18rem 0.55rem;
-  border-radius: 999px;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-width: 0;
+  height: 100%;
 }
 
 .repo-sync-tag {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-muted);
+  align-self: flex-start;
 }
 
 .project-media-btn {
@@ -816,15 +723,6 @@ code {
   color: var(--text-secondary);
 }
 
-.courses-header-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 0.75rem;
-  margin-bottom: 0.85rem;
-}
-
 .courses-grid {
   list-style: none;
   display: grid;
@@ -921,133 +819,6 @@ code {
   height: 100%;
   border-radius: 999px;
   background: var(--accent);
-}
-
-/* --------------------------------------------------------------------------
-   TERMINAL INTERACTIVA
-   -------------------------------------------------------------------------- */
-.terminal-card {
-  background: #060d18;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  overflow: hidden;
-  color: #f8fafc;
-}
-
-.terminal-topbar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 0.9rem;
-  background: #0a192f;
-  border-bottom: 1px solid #1b365d;
-}
-
-.terminal-status-left {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.terminal-pulse-canvas {
-  display: none;
-  width: 20px;
-  height: 20px;
-}
-
-.terminal-static-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #38bdf8;
-}
-
-.terminal-title {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.terminal-badge {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: #94a3b8;
-}
-
-.terminal-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0.6rem 0.9rem;
-  border-bottom: 1px solid #1b365d;
-}
-
-.term-cmd-btn {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  background: #0b1d36;
-  color: #38bdf8;
-  border: 1px solid #1b365d;
-  border-radius: 6px;
-  padding: 0.3rem 0.55rem;
-  cursor: pointer;
-}
-
-.term-cmd-btn:hover {
-  border-color: #38bdf8;
-}
-
-.terminal-output {
-  font-family: var(--font-mono);
-  font-size: 0.84rem;
-  padding: 0.9rem;
-  height: 225px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.term-line {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.term-cmd { color: #f8fafc; font-weight: 700; }
-.term-accent { color: #38bdf8; }
-.term-warn { color: #fde68a; }
-.term-info { color: #cbd5e1; }
-
-.terminal-form {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 0.9rem;
-  border-top: 1px solid #1b365d;
-  background: #0a192f;
-}
-
-.terminal-prompt {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  color: #38bdf8;
-}
-
-.terminal-input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  border: none;
-  color: #f8fafc;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  padding: 0.35rem 0;
-}
-
-.terminal-input:focus-visible {
-  outline: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -1404,20 +1175,24 @@ code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .projects-grid.is-single {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid.is-single .project-card {
+    display: grid;
+    grid-template-columns: minmax(280px, 1.05fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+  }
+
   .courses-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
-
-  .projects-grid {
-    min-height: 360px;
-  }
-
-  .terminal-pulse-canvas { display: inline-block; }
-  .terminal-static-dot { display: none; }
 }
 
 @media (min-width: 1024px) {
-  .courses-grid {
+  .competencies-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -1441,8 +1216,6 @@ code {
   }
   .surface-card::after { display: none !important; }
   .reveal-ready .reveal-target { opacity: 1 !important; transform: none !important; }
-  .terminal-pulse-canvas { display: none !important; }
-  .terminal-static-dot { display: inline-block !important; }
 }
 
 @media print {

@@ -7,9 +7,6 @@
   if (typeof Portfolio.getProfile !== 'function' || typeof Portfolio.getStrings !== 'function') return;
 
   const state = {
-    projectFilter: 'all',
-    projectQuery: '',
-    courseFilter: 'all',
     currentProjects: Portfolio.getProfile().featuredProjects.slice(),
     modalProjectIndex: 0,
     githubReposMap: new Map()
@@ -124,28 +121,6 @@
     }
   }
 
-  function getFilteredProjects() {
-    const profile = P();
-    const q = state.projectQuery.trim().toLowerCase();
-    return profile.featuredProjects.filter((project) => {
-      const matchesCat =
-        state.projectFilter === 'all' ||
-        (Array.isArray(project.categories) && project.categories.includes(state.projectFilter));
-      if (!matchesCat) return false;
-      if (!q) return true;
-      const haystack = [
-        project.title,
-        project.repoName || '',
-        project.problem,
-        project.solution,
-        ...(project.stack || [])
-      ]
-        .join(' ')
-        .toLowerCase();
-      return haystack.includes(q);
-    });
-  }
-
   let projectModal = null;
 
   function setProjectModalTab(tabName) {
@@ -175,6 +150,8 @@
     const project = list[safeIdx];
 
     const indexEl = document.getElementById('proj-modal-index');
+    const prevBtn = document.getElementById('btn-prev-project');
+    const navGroup = prevBtn ? prevBtn.parentElement : null;
     const titleEl = document.getElementById('proj-modal-title');
     const figureEl = document.getElementById('proj-modal-figure');
     const imgEl = document.getElementById('proj-modal-img');
@@ -183,7 +160,14 @@
     const stackPanel = document.getElementById('proj-tab-panel-stack');
     const linksGroup = document.getElementById('proj-modal-external-links');
 
-    if (indexEl) indexEl.textContent = tpl(s.projModalIndex, { idx: safeIdx + 1, total: list.length });
+    const isMulti = list.length > 1;
+    if (indexEl) {
+      indexEl.hidden = !isMulti;
+      if (isMulti) indexEl.textContent = tpl(s.projModalIndex, { idx: safeIdx + 1, total: list.length });
+    }
+    if (navGroup) {
+      navGroup.hidden = !isMulti;
+    }
     if (titleEl) titleEl.textContent = project.title;
 
     if (figureEl && imgEl) {
@@ -280,64 +264,16 @@
     const profile = P();
     const s = S();
     const container = document.getElementById('projects-list');
-    const countEl = document.getElementById('project-count');
     if (!container) return;
 
-    const filtered = getFilteredProjects();
-    state.currentProjects = filtered;
+    const projects = profile.featuredProjects;
+    state.currentProjects = projects;
     container.textContent = '';
+    container.classList.toggle('is-single', projects.length === 1);
 
-    if (countEl) {
-      countEl.textContent = tpl(s.showingProjects, {
-        shown: filtered.length,
-        total: profile.featuredProjects.length
-      });
-    }
-
-    if (filtered.length === 0) {
-      const emptyCard = document.createElement('div');
-      emptyCard.className = 'surface-card';
-      const p = document.createElement('p');
-      p.textContent = s.noProjectsFound;
-      const resetBtn = document.createElement('button');
-      resetBtn.type = 'button';
-      resetBtn.className = 'btn btn-secondary btn-sm';
-      resetBtn.style.marginTop = '0.75rem';
-      resetBtn.textContent = s.showAllProjectsBtn;
-      resetBtn.addEventListener('click', () => {
-        state.projectFilter = 'all';
-        state.projectQuery = '';
-        const searchInput = document.getElementById('project-search');
-        if (searchInput) searchInput.value = '';
-        updateProjectFilterButtons('all');
-        renderProjects();
-      });
-      emptyCard.append(p, resetBtn);
-      container.appendChild(emptyCard);
-      return;
-    }
-
-    for (const project of filtered) {
+    for (const project of projects) {
       const card = document.createElement('article');
       card.className = 'surface-card project-card';
-
-      const topRow = document.createElement('div');
-      topRow.className = 'project-card-top';
-
-      const featBadge = document.createElement('span');
-      featBadge.className = 'featured-badge';
-      featBadge.textContent = s.featuredBadge;
-      topRow.appendChild(featBadge);
-
-      const liveRepo = project.repoName ? state.githubReposMap.get(project.repoName) : null;
-      if (liveRepo) {
-        const syncTag = document.createElement('span');
-        syncTag.className = 'repo-sync-tag';
-        const dateStr = formatShortDate(liveRepo.updated_at);
-        syncTag.textContent = dateStr ? `${s.githubSyncTag} ${dateStr}` : s.githubSyncedTag;
-        topRow.appendChild(syncTag);
-      }
-      card.appendChild(topRow);
 
       if (project.image) {
         const mediaBtn = document.createElement('button');
@@ -359,6 +295,18 @@
         mediaBtn.append(img, badge);
         mediaBtn.addEventListener('click', () => openProjectModal(project.id, mediaBtn));
         card.appendChild(mediaBtn);
+      }
+
+      const body = document.createElement('div');
+      body.className = 'project-card-body';
+
+      const liveRepo = project.repoName ? state.githubReposMap.get(project.repoName) : null;
+      if (liveRepo) {
+        const syncTag = document.createElement('span');
+        syncTag.className = 'repo-sync-tag';
+        const dateStr = formatShortDate(liveRepo.updated_at);
+        syncTag.textContent = dateStr ? `${s.githubSyncTag} ${dateStr}` : s.githubSyncedTag;
+        body.appendChild(syncTag);
       }
 
       const title = document.createElement('h3');
@@ -418,36 +366,9 @@
         links.appendChild(demoLink);
       }
 
-      card.append(title, dl, stackList, links);
+      body.append(title, dl, stackList, links);
+      card.appendChild(body);
       container.appendChild(card);
-    }
-  }
-
-  function updateProjectFilterButtons(activeKey) {
-    const filterBtns = document.querySelectorAll('.project-filters .filter-btn[data-filter]');
-    filterBtns.forEach((b) => {
-      const isMatch = b.getAttribute('data-filter') === activeKey;
-      b.classList.toggle('active', isMatch);
-      b.setAttribute('aria-pressed', String(isMatch));
-    });
-  }
-
-  function setupProjectControls() {
-    const filterBtns = document.querySelectorAll('.project-filters .filter-btn[data-filter]');
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.projectFilter = btn.getAttribute('data-filter') || 'all';
-        updateProjectFilterButtons(state.projectFilter);
-        renderProjects();
-      });
-    });
-
-    const searchInput = document.getElementById('project-search');
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        state.projectQuery = e.target.value || '';
-        renderProjects();
-      });
     }
   }
 
@@ -473,7 +394,7 @@
     });
 
     document.addEventListener('keydown', (event) => {
-      if (!projectModal.isOpen()) return;
+      if (!projectModal.isOpen() || state.currentProjects.length <= 1) return;
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
         renderProjectModalContent(state.modalProjectIndex - 1);
@@ -513,23 +434,10 @@
   function renderComplementaryCourses() {
     const profile = P();
     const list = document.getElementById('courses-list');
-    const countEl = document.getElementById('courses-count');
     if (!list) return;
 
-    const filtered =
-      state.courseFilter === 'all'
-        ? profile.complementaryCourses
-        : profile.complementaryCourses.filter((c) => c.category === state.courseFilter);
-
     list.textContent = '';
-    if (countEl) {
-      countEl.textContent = tpl(S().coursesCountText, {
-        shown: filtered.length,
-        total: profile.complementaryCourses.length
-      });
-    }
-
-    for (const course of filtered) {
+    for (const course of profile.complementaryCourses) {
       const li = document.createElement('li');
       li.className = `surface-card course-card ${course.featured ? 'is-featured' : ''}`;
 
@@ -550,21 +458,6 @@
     }
   }
 
-  function setupCourseFilters() {
-    const filterBtns = document.querySelectorAll('#courses-filters .filter-btn[data-course-filter]');
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.courseFilter = btn.getAttribute('data-course-filter') || 'all';
-        filterBtns.forEach((b) => {
-          const active = b === btn;
-          b.classList.toggle('active', active);
-          b.setAttribute('aria-pressed', String(active));
-        });
-        renderComplementaryCourses();
-      });
-    });
-  }
-
   function renderCompetencies() {
     const profile = P();
 
@@ -573,19 +466,9 @@
       techList.textContent = '';
       for (const skill of profile.technicalSkills) {
         const li = document.createElement('li');
+        li.className = 'tag';
         li.textContent = skill;
         techList.appendChild(li);
-      }
-    }
-
-    const softList = document.getElementById('soft-skills-list');
-    if (softList) {
-      softList.textContent = '';
-      for (const soft of profile.softSkills) {
-        const li = document.createElement('li');
-        li.className = 'tag';
-        li.textContent = soft;
-        softList.appendChild(li);
       }
     }
 
@@ -617,13 +500,13 @@
       }
     }
 
-    const addList = document.getElementById('additional-info-list');
-    if (addList) {
-      addList.textContent = '';
-      for (const info of profile.additionalInfo) {
+    const extraList = document.getElementById('profile-extra-list');
+    if (extraList) {
+      extraList.textContent = '';
+      for (const itemText of [...profile.softSkills, ...profile.additionalInfo]) {
         const li = document.createElement('li');
-        li.textContent = info;
-        addList.appendChild(li);
+        li.textContent = itemText;
+        extraList.appendChild(li);
       }
     }
   }
@@ -938,9 +821,6 @@
     if (typeof Portfolio.refreshGitHubLanguage === 'function') {
       Portfolio.refreshGitHubLanguage();
     }
-    if (typeof Portfolio.refreshTerminalLanguage === 'function') {
-      Portfolio.refreshTerminalLanguage();
-    }
 
     if (announceToast) {
       showToast(s.toastLangChanged);
@@ -1035,8 +915,6 @@
 
   function initApp() {
     setupProjectModal();
-    setupProjectControls();
-    setupCourseFilters();
     setupThemeToggle();
     setupLanguageToggle();
     setupCardSpotlight();
@@ -1053,24 +931,15 @@
     if (closeBottomBtn) closeBottomBtn.addEventListener('click', () => cvModal.close());
     if (printBtn) printBtn.addEventListener('click', () => window.print());
 
-    let githubState = { ok: false, mode: 'loading', data: null, error: null };
     if (typeof Portfolio.initGitHubSection === 'function') {
       Portfolio.initGitHubSection({
         username: P().contact.githubUser,
         onStateChange: (nextState) => {
-          githubState = nextState;
           if (nextState.data && Array.isArray(nextState.data.repos)) {
             state.githubReposMap = new Map(nextState.data.repos.map((r) => [r.name, r]));
             renderProjects();
           }
         }
-      });
-    }
-
-    if (typeof Portfolio.initTerminal === 'function') {
-      Portfolio.initTerminal({
-        getGitHubState: () => githubState,
-        openCvModal: (trigger) => cvModal.open(trigger)
       });
     }
 

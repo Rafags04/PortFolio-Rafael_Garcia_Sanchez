@@ -25,7 +25,6 @@
   <script defer src="./src/data/profile.js"></script>
   <script defer src="./src/modules/modal.js"></script>
   <script defer src="./src/modules/github.js"></script>
-  <script defer src="./src/modules/terminal.js"></script>
   <script defer src="./src/main.js"></script>
 </head>
 <body>
@@ -44,7 +43,6 @@
         <a href="#actividad-github" data-i18n="navGithub">GitHub</a>
         <a href="#formacion" data-i18n="navEducation">Formación</a>
         <a href="#competencias" data-i18n="navSkills">Competencias</a>
-        <a href="#terminal" data-i18n="navTerminal">Terminal</a>
         <a href="#contacto" data-i18n="navContact">Contacto</a>
       </nav>
 
@@ -77,16 +75,11 @@
         </div>
 
         <div class="hero-main">
-          <p class="eyebrow" data-i18n="heroEyebrow">Currículum &amp; Portfolio · GitHub Pages</p>
           <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
           <p id="hero-role" class="hero-role">Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha (UCLM)</p>
-
-          <div class="hero-about-box">
-            <h2 class="hero-about-label" data-i18n="heroAboutLabel">Sobre mí</h2>
-            <p id="hero-about" class="hero-lead">
-              Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
-            </p>
-          </div>
+          <p id="hero-about" class="hero-lead">
+            Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
+          </p>
 
           <div class="hero-actions">
             <a
@@ -115,54 +108,22 @@
     </section>
 
     <!-- ================================================================
-         01 · PROYECTOS DESTACADOS DE GITHUB
+         PROYECTOS DESTACADOS DE GITHUB
          ================================================================ -->
     <section id="proyectos-destacados" class="content-section" aria-labelledby="projects-heading">
       <div class="section-header">
-        <div>
-          <p class="eyebrow" data-i18n="projectsEyebrow">01 · Repositorios Seleccionados</p>
-          <h2 id="projects-heading" data-i18n="projectsHeading">Proyectos Destacados de GitHub</h2>
-        </div>
-        <p class="section-subtitle" data-i18n="projectsSubtitle">
-          Selección de proyectos públicos de @Rafags04 con documentación técnica, fragmentos de código y captura ampliable.
-        </p>
-      </div>
-
-      <div class="projects-toolbar">
-        <div class="search-box">
-          <label for="project-search" class="visually-hidden">Buscar proyectos destacados por nombre o tecnología</label>
-          <input
-            id="project-search"
-            class="search-input"
-            type="search"
-            autocomplete="off"
-            data-i18n-placeholder="projectSearchPlaceholder"
-            placeholder="Buscar en proyectos destacados (ej. PWA, Docker, Flask, IndexedDB)…"
-          >
-        </div>
-        <span id="project-count" class="project-count" aria-live="polite">Mostrando 2 de 2 proyectos destacados</span>
-      </div>
-
-      <div class="project-filters" role="group" aria-label="Filtrar proyectos destacados por tecnología">
-        <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true" data-i18n="filterAll">Todos</button>
-        <button type="button" class="filter-btn" data-filter="pwa" aria-pressed="false" data-i18n="filterPwa">PWA &amp; Móvil</button>
-        <button type="button" class="filter-btn" data-filter="javascript" aria-pressed="false" data-i18n="filterJs">JavaScript</button>
-        <button type="button" class="filter-btn" data-filter="python-docker" aria-pressed="false" data-i18n="filterPythonDocker">Python &amp; Docker</button>
-        <button type="button" class="filter-btn" data-filter="web" aria-pressed="false" data-i18n="filterWeb">Web</button>
+        <h2 id="projects-heading" data-i18n="projectsHeading">Proyectos Destacados</h2>
       </div>
 
       <div id="projects-list" class="projects-grid"></div>
     </section>
 
     <!-- ================================================================
-         02 · ACTIVIDAD EN VIVO EN GITHUB (@Rafags04)
+         ACTIVIDAD EN VIVO EN GITHUB (@Rafags04)
          ================================================================ -->
     <section id="actividad-github" class="content-section" aria-labelledby="github-heading">
       <div class="section-header">
-        <div>
-          <p class="eyebrow" data-i18n="githubEyebrow">02 · GitHub API en Vivo</p>
-          <h2 id="github-heading" data-i18n="githubHeading">Actividad y Lenguajes en GitHub (@Rafags04)</h2>
-        </div>
+        <h2 id="github-heading" data-i18n="githubHeading">Actividad en GitHub (@Rafags04)</h2>
         <button type="button" id="btn-retry-github" class="btn btn-secondary btn-sm" data-i18n="githubSyncBtn">
           Sincronizar con GitHub
         </button>
@@ -187,60 +148,32 @@
     </section>
 
     <!-- ================================================================
-         03 · FORMACIÓN ACADÉMICA Y COMPLEMENTARIA (CV)
+         FORMACIÓN ACADÉMICA Y CERTIFICACIONES
          ================================================================ -->
     <section id="formacion" class="content-section" aria-labelledby="education-heading">
       <div class="section-header">
-        <div>
-          <p class="eyebrow" data-i18n="eduEyebrow">03 · Currículum Académico</p>
-          <h2 id="education-heading" data-i18n="eduHeading">Formación Académica y Complementaria</h2>
-        </div>
+        <h2 id="education-heading" data-i18n="eduHeading">Formación</h2>
       </div>
 
       <h3 class="subsection-title" data-i18n="eduAcademicTitle">Formación Académica</h3>
       <ol id="academic-list" class="academic-grid"></ol>
 
-      <div class="courses-header-row">
-        <div>
-          <h3 class="subsection-title" data-i18n="eduCoursesTitle">Formación Complementaria</h3>
-          <p class="section-subtitle" data-i18n="eduCoursesSubtitle">
-            Capacitaciones y competencias cursadas en AQC Lab y el Aula de Competencias Transversales.
-          </p>
-        </div>
-        <span id="courses-count" class="project-count" aria-live="polite">12 certificaciones</span>
-      </div>
-
-      <div id="courses-filters" class="project-filters" role="group" aria-label="Filtrar formación complementaria">
-        <button type="button" class="filter-btn active" data-course-filter="all" aria-pressed="true" data-i18n="coursesAll">Todas (12)</button>
-        <button type="button" class="filter-btn" data-course-filter="tecnologia" aria-pressed="false" data-i18n="coursesTech">Software Cuántico</button>
-        <button type="button" class="filter-btn" data-course-filter="informacion" aria-pressed="false" data-i18n="coursesInfo">Búsqueda de Información</button>
-        <button type="button" class="filter-btn" data-course-filter="liderazgo" aria-pressed="false" data-i18n="coursesLead">Liderazgo &amp; Productividad</button>
-        <button type="button" class="filter-btn" data-course-filter="transversales" aria-pressed="false" data-i18n="coursesTrans">Competencias Transversales</button>
-      </div>
-
+      <h3 class="subsection-title" data-i18n="eduCoursesTitle">Certificaciones</h3>
       <ol id="courses-list" class="courses-grid"></ol>
     </section>
 
     <!-- ================================================================
-         04 · HABILIDADES TÉCNICAS, SOFT SKILLS, IDIOMAS Y MÁS INFO
+         COMPETENCIAS E IDIOMAS
          ================================================================ -->
     <section id="competencias" class="content-section" aria-labelledby="competencies-heading">
       <div class="section-header">
-        <div>
-          <p class="eyebrow" data-i18n="compEyebrow">04 · Perfil Completo</p>
-          <h2 id="competencies-heading" data-i18n="compHeading">Habilidades, Idiomas y Más Información</h2>
-        </div>
+        <h2 id="competencies-heading" data-i18n="compHeading">Competencias e Idiomas</h2>
       </div>
 
       <div class="competencies-grid">
         <article class="surface-card" aria-labelledby="tech-skills-heading">
-          <h3 id="tech-skills-heading" data-i18n="techSkillsHeading">Habilidades Técnicas (CV)</h3>
-          <ul id="tech-skills-list" class="bullet-list"></ul>
-        </article>
-
-        <article class="surface-card" aria-labelledby="soft-skills-heading">
-          <h3 id="soft-skills-heading" data-i18n="softSkillsHeading">Soft Skills</h3>
-          <ul id="soft-skills-list" class="tag-list"></ul>
+          <h3 id="tech-skills-heading" data-i18n="techSkillsHeading">Stack Técnico</h3>
+          <ul id="tech-skills-list" class="tag-list"></ul>
         </article>
 
         <article class="surface-card" aria-labelledby="languages-heading">
@@ -248,66 +181,10 @@
           <div id="languages-list" class="languages-stack"></div>
         </article>
 
-        <article class="surface-card" aria-labelledby="additional-info-heading">
-          <h3 id="additional-info-heading" data-i18n="additionalInfoHeading">Más Información</h3>
-          <ul id="additional-info-list" class="bullet-list"></ul>
+        <article class="surface-card" aria-labelledby="profile-extra-heading">
+          <h3 id="profile-extra-heading" data-i18n="profileExtraHeading">Perfil y Disponibilidad</h3>
+          <ul id="profile-extra-list" class="bullet-list"></ul>
         </article>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         05 · TERMINAL INTERACTIVA DE CONSULTA
-         ================================================================ -->
-    <section id="terminal" class="content-section" aria-labelledby="terminal-heading">
-      <div class="section-header">
-        <div>
-          <p class="eyebrow" data-i18n="termEyebrow">05 · Modo Interactivo</p>
-          <h2 id="terminal-heading" data-i18n="termHeading">Terminal de Consulta Rápida</h2>
-        </div>
-        <p class="section-subtitle" data-i18n="termSubtitle">
-          Explora todo el currículum y los proyectos por comandos. Prueba courses, projects o languages.
-        </p>
-      </div>
-
-      <div class="terminal-card">
-        <div class="terminal-topbar">
-          <div class="terminal-status-left">
-            <canvas id="terminal-pulse-canvas" class="terminal-pulse-canvas" width="20" height="20" aria-hidden="true"></canvas>
-            <span class="terminal-static-dot" aria-hidden="true"></span>
-            <span class="terminal-title">rafa@uclm:~$</span>
-          </div>
-          <span id="terminal-loader-badge" class="terminal-badge">Activa</span>
-        </div>
-
-        <div class="terminal-chips" aria-label="Comandos rápidos">
-          <button type="button" class="term-cmd-btn" data-cmd="help">help</button>
-          <button type="button" class="term-cmd-btn" data-cmd="whoami">whoami</button>
-          <button type="button" class="term-cmd-btn" data-cmd="projects">projects</button>
-          <button type="button" class="term-cmd-btn" data-cmd="education">education</button>
-          <button type="button" class="term-cmd-btn" data-cmd="courses">courses</button>
-          <button type="button" class="term-cmd-btn" data-cmd="skills">skills</button>
-          <button type="button" class="term-cmd-btn" data-cmd="languages">languages</button>
-          <button type="button" class="term-cmd-btn" data-cmd="github">github</button>
-          <button type="button" class="term-cmd-btn" data-cmd="contact">contact</button>
-          <button type="button" class="term-cmd-btn" data-cmd="cv">cv</button>
-          <button type="button" class="term-cmd-btn" data-cmd="clear">clear</button>
-        </div>
-
-        <div id="terminal-output" class="terminal-output" role="log" aria-live="polite" aria-label="Salida de la terminal"></div>
-
-        <form id="terminal-form" class="terminal-form">
-          <label for="terminal-input" class="terminal-prompt">$</label>
-          <input
-            id="terminal-input"
-            class="terminal-input"
-            type="text"
-            autocomplete="off"
-            spellcheck="false"
-            data-i18n-placeholder="termInputPlaceholder"
-            placeholder="Escribe un comando (ej. help) y pulsa Enter…"
-          >
-          <button type="submit" class="btn btn-secondary btn-sm" data-i18n="termExecBtn">Ejecutar</button>
-        </form>
       </div>
     </section>
 
