@@ -42,11 +42,12 @@
         updated_at: '2026-11-24T09:37:32Z'
       },
       {
-        name: 'ISO2-2025GrupoB.03-Testing-P2',
-        description: 'Proyecto de testing unitario con JUnit 5 y Maven en Java.',
-        language: 'HTML',
-        html_url: 'https://github.com/Rafags04/ISO2-2025GrupoB.03-Testing-P2',
-        updated_at: '2025-12-18T11:02:44Z'
+        name: 'PortFolio',
+        description:
+          'Portfolio interactivo estilo macOS en GitHub Pages basado en mi currículum oficial y API de GitHub.',
+        language: 'JavaScript',
+        html_url: 'https://github.com/Rafags04/PortFolio',
+        updated_at: '2026-11-24T12:00:00Z'
       },
       {
         name: 'Rafags04',

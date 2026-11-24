@@ -3,218 +3,415 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rafael García Sánchez | Estudiante de Ingeniería Informática &amp; Portfolio</title>
-  <meta name="description" content="Portfolio de Rafael García Sánchez (@Rafags04): Estudiante de Ingeniería Informática (UCLM), proyectos destacados de GitHub, formación académica, certificaciones, competencias y CV oficial en PDF.">
+  <title>Rafael García Sánchez | RafaOS — Portfolio macOS</title>
+  <meta name="description" content="RafaOS: Portfolio interactivo estilo macOS de Rafael García Sánchez (@Rafags04). Estudiante de Ingeniería Informática (UCLM), Simulador PDA DGT, actividad de GitHub y CV oficial.">
   <meta name="author" content="Rafael García Sánchez">
 
   <!-- Open Graph / Twitter Card -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Rafael García Sánchez | Portfolio &amp; Proyectos de GitHub">
-  <meta property="og:description" content="Estudiante de Ingeniería Informática (UCLM). Proyectos destacados en GitHub, formación, habilidades y CV descargable.">
+  <meta property="og:title" content="Rafael García Sánchez | RafaOS Portfolio">
+  <meta property="og:description" content="Portfolio interactivo estilo macOS con ventanas reales, Dock, Spotlight, Simulador PDA DGT en vivo, API de GitHub y CV en PDF.">
   <meta property="og:url" content="https://rafags04.github.io/PortFolio/">
   <meta property="og:image" content="https://rafags04.github.io/PortFolio/assets/profile-rafa.png">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Rafael García Sánchez | Portfolio">
-  <meta name="twitter:description" content="Portfolio en GitHub Pages basado en mi currículum real y proyectos de GitHub.">
+  <meta name="twitter:title" content="Rafael García Sánchez | RafaOS Portfolio">
+  <meta name="twitter:description" content="Portfolio estilo macOS basado en el currículum real de Rafael García Sánchez y GitHub (@Rafags04).">
 
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="canonical" href="https://rafags04.github.io/PortFolio/">
   <link rel="stylesheet" href="./style.css">
 
-  <!-- Scripts diferidos ordenados: funcionan en apertura local (file://) y en GitHub Pages -->
+  <!-- Scripts diferidos ordenados: funcionan en local (file://) y en GitHub Pages -->
   <script defer src="./src/data/profile.js"></script>
   <script defer src="./src/modules/modal.js"></script>
   <script defer src="./src/modules/github.js"></script>
   <script defer src="./src/main.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content" data-i18n="skipLink">Saltar al contenido principal</a>
+  <a class="skip-link" href="#desktop-stage" data-i18n="skipLink">Saltar al escritorio</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#hero">
-        <span class="brand-mark" aria-hidden="true">&lt;RG/&gt;</span>
-        <span>Rafael García</span>
-      </a>
+  <!-- ================================================================
+       BARRA DE MENÚ SUPERIOR ESTILO macOS SEQUOIA
+       ================================================================ -->
+  <header class="mac-menubar">
+    <div class="menubar-left">
+      <span class="menubar-apple" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+        </svg>
+      </span>
+      <strong id="menubar-active-app" class="menubar-app-name">Sobre mí</strong>
 
-      <nav class="site-nav" aria-label="Navegación principal">
-        <a href="#hero" data-i18n="navAbout">Sobre mí</a>
-        <a href="#proyectos-destacados" data-i18n="navProjects">Proyectos</a>
-        <a href="#actividad-github" data-i18n="navGithub">GitHub</a>
-        <a href="#formacion" data-i18n="navEducation">Formación</a>
-        <a href="#competencias" data-i18n="navSkills">Competencias</a>
-        <a href="#contacto" data-i18n="navContact">Contacto</a>
-      </nav>
-
-      <div class="header-actions">
-        <button type="button" id="btn-lang-toggle" class="lang-toggle-btn" aria-label="Switch language to English">
-          🌐 EN
+      <div class="menubar-menu-wrap">
+        <button type="button" id="btn-window-menu" class="menubar-item" aria-expanded="false" aria-haspopup="true" data-i18n="menuWindow">
+          Ventana
         </button>
-        <button type="button" id="btn-theme-toggle" class="theme-toggle-btn" aria-pressed="false" title="Cambiar entre tema oscuro naval y tema claro">
-          ☀️ Modo Claro CV
-        </button>
+        <div id="window-dropdown" class="mac-dropdown" role="menu" hidden>
+          <button type="button" id="menu-act-tile" class="mac-dropdown-item" role="menuitem" data-i18n="menuTile">Ordenar en mosaico</button>
+          <button type="button" id="menu-act-show-all" class="mac-dropdown-item" role="menuitem" data-i18n="menuShowAll">Mostrar todas las ventanas</button>
+          <button type="button" id="menu-act-min-all" class="mac-dropdown-item" role="menuitem" data-i18n="menuMinimizeAll">Minimizar todas</button>
+          <div class="mac-dropdown-sep" role="separator"></div>
+          <a id="menu-act-cv" class="mac-dropdown-item" role="menuitem" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" download="CV-Rafael-Garcia-Sanchez.pdf" data-i18n="menuCvPdf">Descargar CV.pdf</a>
+        </div>
       </div>
+    </div>
+
+    <div class="menubar-right">
+      <span class="menubar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span data-i18n="statusAvailable">Disponible · Ciudad Real</span>
+      </span>
+
+      <button type="button" id="btn-spotlight" class="menubar-icon-btn" aria-label="Buscar con Spotlight (⌘K)">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <kbd class="menubar-kbd">⌘K</kbd>
+      </button>
+
+      <button type="button" id="btn-lang-toggle" class="menubar-pill-btn" aria-label="Switch language to English">
+        EN
+      </button>
+
+      <button type="button" id="btn-theme-toggle" class="menubar-icon-btn" aria-pressed="false" title="Modo Claro">
+        ☀️
+      </button>
+
+      <time id="menubar-clock" class="menubar-clock"></time>
     </div>
   </header>
 
-  <main id="main-content" class="container main-layout">
-    <!-- ================================================================
-         HERO PRINCIPAL (SOBRE MÍ, RETRATO REAL, CONTACTO Y CV PDF)
-         ================================================================ -->
-    <section id="hero" class="hero-section surface-card" aria-labelledby="hero-name">
-      <div class="hero-grid">
-        <div class="hero-avatar-wrap">
-          <img
-            id="hero-avatar"
-            src="./assets/profile-rafa.png"
-            alt="Retrato de Rafael García Sánchez"
-            width="168"
-            height="168"
-            class="hero-avatar"
-          >
+  <!-- ================================================================
+       ESCRITORIO macOS CON 5 VENTANAS INTERACTIVAS (Mosaico Sequoia)
+       ================================================================ -->
+  <main id="desktop-stage" class="mac-desktop">
+    <!-- VENTANA 1: SOBRE MÍ (ABOUT THIS DEV) -->
+    <section id="win-about" class="mac-window is-focused" data-window="about" aria-labelledby="hero-name">
+      <header class="mac-titlebar">
+        <div class="traffic-lights">
+          <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
+          <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
+          <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
+        </div>
+        <span class="mac-window-title" data-i18n="winAboutTitle">Sobre mí — Rafael García</span>
+        <span class="titlebar-spacer" aria-hidden="true"></span>
+      </header>
+
+      <div class="mac-window-body about-window-body">
+        <div class="hero-top-row">
+          <div class="hero-avatar-wrap">
+            <img
+              id="hero-avatar"
+              src="./assets/profile-rafa.png"
+              alt="Retrato de Rafael García Sánchez"
+              width="104"
+              height="104"
+              class="hero-avatar"
+            >
+          </div>
+          <div class="hero-id-text">
+            <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
+            <p id="hero-role" class="hero-role">Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha (UCLM)</p>
+          </div>
         </div>
 
-        <div class="hero-main">
-          <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
-          <p id="hero-role" class="hero-role">Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha (UCLM)</p>
-          <p id="hero-about" class="hero-lead">
-            Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
-          </p>
+        <p id="hero-about" class="hero-lead">
+          Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
+        </p>
 
-          <div class="hero-actions">
-            <a
-              id="btn-download-cv"
-              class="btn btn-primary"
-              href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
-              download="CV-Rafael-Garcia-Sanchez.pdf"
-            >
-              Descargar CV Original (PDF)
-            </a>
-            <button type="button" id="btn-open-cv" class="btn btn-secondary">
-              Vista Rápida / Imprimir CV
-            </button>
-            <a
-              id="hero-github-link"
-              class="btn btn-ghost"
-              href="https://github.com/Rafags04"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub (@Rafags04)
-            </a>
+        <div class="hero-actions">
+          <a
+            id="btn-download-cv"
+            class="btn btn-primary"
+            href="./assets/CV-Rafael-Garcia-Sanchez.pdf"
+            download="CV-Rafael-Garcia-Sanchez.pdf"
+          >
+            Descargar CV (PDF)
+          </a>
+          <button type="button" id="btn-open-cv" class="btn btn-secondary">
+            Vista Previa CV…
+          </button>
+          <a
+            id="hero-github-link"
+            class="btn btn-ghost"
+            href="https://github.com/Rafags04"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub (@Rafags04)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- VENTANA 2: SIMULADOR PDA (APP + PROBADOR EN VIVO DGT + CÓDIGO) -->
+    <section id="win-projects" class="mac-window" data-window="projects" aria-labelledby="win-projects-title">
+      <header class="mac-titlebar">
+        <div class="traffic-lights">
+          <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
+          <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
+          <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
+        </div>
+        <h2 id="win-projects-title" class="mac-window-title" data-i18n="winProjectsTitle">SimuladorPDA_PermisoB.app</h2>
+        <div class="mac-segmented" role="tablist" aria-label="Vistas del proyecto">
+          <button type="button" class="mac-seg-btn active" data-win-proj-tab="overview" role="tab" aria-selected="true" data-i18n="tabOverview">Vista General</button>
+          <button type="button" class="mac-seg-btn" data-win-proj-tab="simulator" role="tab" aria-selected="false" data-i18n="tabLiveSim">Probar Simulador DGT</button>
+          <button type="button" class="mac-seg-btn" data-win-proj-tab="code" role="tab" aria-selected="false" data-i18n="tabCode">Código</button>
+        </div>
+      </header>
+
+      <div class="mac-window-body">
+        <div id="projects-list" class="projects-grid" role="tabpanel"></div>
+
+        <div id="dgt-live-panel" class="dgt-live-panel" role="tabpanel" hidden>
+          <div class="dgt-live-head">
+            <div>
+              <h3 data-i18n="dgtSimTitle">Evaluador Oficial DGT — Permiso B</h3>
+              <p class="dgt-rule-note" data-i18n="dgtSimRule">NO APTO con: 1 Eliminatoria · 2 Deficientes · 1 Deficiente + 5 Leves · 10 Leves</p>
+            </div>
+            <span id="dgt-result-pill" class="dgt-result-pill is-pass" role="status" aria-live="polite" data-i18n="dgtPass">APTO</span>
+          </div>
+
+          <div class="dgt-counters-grid">
+            <div class="mac-group-box dgt-counter-card">
+              <span class="dgt-counter-label" data-i18n="dgtMinorLabel">Leves</span>
+              <strong id="dgt-count-l" class="dgt-counter-num">0</strong>
+            </div>
+            <div class="mac-group-box dgt-counter-card">
+              <span class="dgt-counter-label" data-i18n="dgtMajorLabel">Deficientes</span>
+              <strong id="dgt-count-d" class="dgt-counter-num">0</strong>
+            </div>
+            <div class="mac-group-box dgt-counter-card">
+              <span class="dgt-counter-label" data-i18n="dgtDisqLabel">Eliminatorias</span>
+              <strong id="dgt-count-e" class="dgt-counter-num">0</strong>
+            </div>
+          </div>
+
+          <div class="dgt-actions-row">
+            <button type="button" id="btn-dgt-l" class="btn btn-secondary btn-sm" data-i18n="dgtAddMinor">+ Leve</button>
+            <button type="button" id="btn-dgt-d" class="btn btn-secondary btn-sm" data-i18n="dgtAddMajor">+ Deficiente</button>
+            <button type="button" id="btn-dgt-e" class="btn btn-secondary btn-sm" data-i18n="dgtAddDisq">+ Eliminatoria</button>
+            <button type="button" id="btn-dgt-reset" class="btn btn-ghost btn-sm" data-i18n="dgtReset">Reiniciar examen</button>
+          </div>
+        </div>
+
+        <div id="proj-inline-code-panel" class="proj-inline-code-panel" role="tabpanel" hidden></div>
+      </div>
+    </section>
+
+    <!-- VENTANA 3: FORMACIÓN Y COMPETENCIAS (AJUSTES DEL SISTEMA) -->
+    <section id="win-education" class="mac-window" data-window="education" aria-labelledby="win-edu-title">
+      <header class="mac-titlebar">
+        <div class="traffic-lights">
+          <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
+          <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
+          <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
+        </div>
+        <h2 id="win-edu-title" class="mac-window-title" data-i18n="winEduTitle">Formación y Competencias</h2>
+        <span class="titlebar-spacer" aria-hidden="true"></span>
+      </header>
+
+      <div class="mac-window-body settings-body">
+        <div class="settings-section">
+          <h3 class="mac-section-label" data-i18n="eduAcademicTitle">Formación Académica</h3>
+          <ol id="academic-list" class="mac-group-list"></ol>
+        </div>
+
+        <div class="settings-section">
+          <h3 class="mac-section-label" data-i18n="eduCoursesTitle">Certificaciones</h3>
+          <ol id="courses-list" class="mac-group-list"></ol>
+        </div>
+
+        <div class="settings-section">
+          <h3 class="mac-section-label" data-i18n="techSkillsHeading">Stack Técnico</h3>
+          <ul id="tech-skills-list" class="tag-list"></ul>
+        </div>
+
+        <div class="settings-two-col">
+          <div class="mac-group-box">
+            <h3 class="mac-section-label" data-i18n="languagesHeading">Idiomas</h3>
+            <div id="languages-list" class="languages-stack"></div>
+          </div>
+          <div class="mac-group-box">
+            <h3 class="mac-section-label" data-i18n="profileExtraHeading">Perfil y Disponibilidad</h3>
+            <ul id="profile-extra-list" class="bullet-list"></ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================================================================
-         PROYECTOS DESTACADOS DE GITHUB
-         ================================================================ -->
-    <section id="proyectos-destacados" class="content-section" aria-labelledby="projects-heading">
-      <div class="section-header">
-        <h2 id="projects-heading" data-i18n="projectsHeading">Proyectos Destacados</h2>
-      </div>
+    <!-- VENTANA 4: MONITOR DE ACTIVIDAD GITHUB (@Rafags04) -->
+    <section id="win-github" class="mac-window" data-window="github" aria-labelledby="win-github-title">
+      <header class="mac-titlebar">
+        <div class="traffic-lights">
+          <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
+          <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
+          <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
+        </div>
+        <h2 id="win-github-title" class="mac-window-title" data-i18n="winGithubTitle">Monitor GitHub — @Rafags04</h2>
+        <button type="button" id="btn-retry-github" class="titlebar-action-btn" data-i18n="githubSyncBtn">Actualizar</button>
+      </header>
 
-      <div id="projects-list" class="projects-grid"></div>
-    </section>
+      <div class="mac-window-body github-window-body">
+        <div id="github-status" class="status-banner" role="status" aria-live="polite">
+          Consultando API pública de GitHub…
+        </div>
 
-    <!-- ================================================================
-         ACTIVIDAD EN VIVO EN GITHUB (@Rafags04)
-         ================================================================ -->
-    <section id="actividad-github" class="content-section" aria-labelledby="github-heading">
-      <div class="section-header">
-        <h2 id="github-heading" data-i18n="githubHeading">Actividad en GitHub (@Rafags04)</h2>
-        <button type="button" id="btn-retry-github" class="btn btn-secondary btn-sm" data-i18n="githubSyncBtn">
-          Sincronizar con GitHub
-        </button>
-      </div>
+        <div id="github-content" class="github-stack" hidden>
+          <div class="mac-group-box">
+            <h3 class="mac-section-label" data-i18n="githubLangHeading">Lenguajes por bytes</h3>
+            <div id="github-lang-bar" class="lang-bar" role="img" aria-label="Distribución de lenguajes por bytes"></div>
+            <ul id="github-lang-list" class="lang-list"></ul>
+          </div>
 
-      <div id="github-status" class="status-banner" role="status" aria-live="polite">
-        Consultando API pública de GitHub…
-      </div>
-
-      <div id="github-content" class="github-grid" hidden>
-        <article class="surface-card" aria-labelledby="gh-lang-heading">
-          <h3 id="gh-lang-heading" data-i18n="githubLangHeading">Lenguajes por bytes (repositorios propios)</h3>
-          <div id="github-lang-bar" class="lang-bar" role="img" aria-label="Distribución de lenguajes por bytes"></div>
-          <ul id="github-lang-list" class="lang-list"></ul>
-        </article>
-
-        <article class="surface-card" aria-labelledby="gh-repos-heading">
-          <h3 id="gh-repos-heading" data-i18n="githubReposHeading">Repositorios públicos recientes (sin forks)</h3>
-          <ul id="github-repos-list" class="repo-list"></ul>
-        </article>
+          <div class="mac-group-box">
+            <h3 class="mac-section-label" data-i18n="githubReposHeading">Repositorios propios</h3>
+            <ul id="github-repos-list" class="repo-list"></ul>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ================================================================
-         FORMACIÓN ACADÉMICA Y CERTIFICACIONES
-         ================================================================ -->
-    <section id="formacion" class="content-section" aria-labelledby="education-heading">
-      <div class="section-header">
-        <h2 id="education-heading" data-i18n="eduHeading">Formación</h2>
-      </div>
+    <!-- VENTANA 5: CONTACTOS (CONTACTS.APP) -->
+    <section id="win-contact" class="mac-window" data-window="contact" aria-labelledby="win-contact-title">
+      <header class="mac-titlebar">
+        <div class="traffic-lights">
+          <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
+          <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
+          <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
+        </div>
+        <h2 id="win-contact-title" class="mac-window-title" data-i18n="winContactTitle">Contactos — Rafael García</h2>
+        <span class="titlebar-spacer" aria-hidden="true"></span>
+      </header>
 
-      <h3 class="subsection-title" data-i18n="eduAcademicTitle">Formación Académica</h3>
-      <ol id="academic-list" class="academic-grid"></ol>
-
-      <h3 class="subsection-title" data-i18n="eduCoursesTitle">Certificaciones</h3>
-      <ol id="courses-list" class="courses-grid"></ol>
-    </section>
-
-    <!-- ================================================================
-         COMPETENCIAS E IDIOMAS
-         ================================================================ -->
-    <section id="competencias" class="content-section" aria-labelledby="competencies-heading">
-      <div class="section-header">
-        <h2 id="competencies-heading" data-i18n="compHeading">Competencias e Idiomas</h2>
-      </div>
-
-      <div class="competencies-grid">
-        <article class="surface-card" aria-labelledby="tech-skills-heading">
-          <h3 id="tech-skills-heading" data-i18n="techSkillsHeading">Stack Técnico</h3>
-          <ul id="tech-skills-list" class="tag-list"></ul>
-        </article>
-
-        <article class="surface-card" aria-labelledby="languages-heading">
-          <h3 id="languages-heading" data-i18n="languagesHeading">Idiomas</h3>
-          <div id="languages-list" class="languages-stack"></div>
-        </article>
-
-        <article class="surface-card" aria-labelledby="profile-extra-heading">
-          <h3 id="profile-extra-heading" data-i18n="profileExtraHeading">Perfil y Disponibilidad</h3>
-          <ul id="profile-extra-list" class="bullet-list"></ul>
-        </article>
-      </div>
-    </section>
-
-  </main>
-
-  <footer id="contacto" class="site-footer" aria-labelledby="contact-heading">
-    <div class="container footer-minimal">
-      <div class="footer-top">
-        <h2 id="contact-heading" class="visually-hidden" data-i18n="contactHeading">Contacto</h2>
-        <div id="contact-list" class="footer-contact-list"></div>
-      </div>
-
-      <div class="footer-bottom">
-        <p class="footer-copy">
+      <div class="mac-window-body contact-window-body">
+        <div id="contact-list" class="mac-contact-list"></div>
+        <p class="contact-card-meta">
           <span id="footer-year"></span> · <span id="footer-name">Rafael García Sánchez</span>
         </p>
-        <a class="footer-text-link" href="#hero" data-i18n="footerBackTop">↑ Arriba</a>
       </div>
-    </div>
-  </footer>
+    </section>
+  </main>
 
   <!-- ================================================================
-       VISOR MODAL DE PROYECTO (CAPTURA AMPLIADA, PESTAÑAS Y NAVEGACIÓN)
+       DOCK FLOTANTE INFERIOR ESTILO macOS
+       ================================================================ -->
+  <nav id="mac-dock" class="mac-dock" aria-label="Dock">
+    <button type="button" class="dock-item is-open" data-dock-target="about" aria-label="Sobre mí">
+      <span class="dock-tooltip" data-i18n="dockAbout">Sobre mí</span>
+      <span class="dock-icon dock-ico-finder" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </button>
+
+    <button type="button" class="dock-item is-open" data-dock-target="projects" aria-label="Simulador PDA">
+      <span class="dock-tooltip" data-i18n="dockProjects">Simulador PDA</span>
+      <span class="dock-icon dock-ico-sim" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="2" width="12" height="20" rx="3"/><path d="M9 18h6"/><path d="m9.5 10.5 2 2 3.5-4"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </button>
+
+    <button type="button" class="dock-item is-open" data-dock-target="education" aria-label="Formación">
+      <span class="dock-tooltip" data-i18n="dockEdu">Formación</span>
+      <span class="dock-icon dock-ico-edu" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </button>
+
+    <button type="button" class="dock-item is-open" data-dock-target="github" aria-label="Monitor GitHub">
+      <span class="dock-tooltip" data-i18n="dockGithub">Monitor GitHub</span>
+      <span class="dock-icon dock-ico-gh" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </button>
+
+    <button type="button" class="dock-item is-open" data-dock-target="contact" aria-label="Contactos">
+      <span class="dock-tooltip" data-i18n="dockContact">Contactos</span>
+      <span class="dock-icon dock-ico-contact" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="10" r="2.5"/><path d="M8.5 17a3.5 3.5 0 0 1 7 0"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </button>
+
+    <span class="dock-divider" aria-hidden="true"></span>
+
+    <button type="button" id="dock-cv-btn" class="dock-item" aria-label="Vista Previa CV">
+      <span class="dock-tooltip" data-i18n="dockCv">Vista Previa CV</span>
+      <span class="dock-icon dock-ico-cv" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </button>
+
+    <a
+      id="dock-linkedin-link"
+      class="dock-item"
+      href="https://www.linkedin.com/in/rafa-garc%C3%ADa-725b5a367/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LinkedIn"
+    >
+      <span class="dock-tooltip" data-i18n="dockLinkedin">LinkedIn ↗</span>
+      <span class="dock-icon dock-ico-li" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </a>
+  </nav>
+
+  <!-- ================================================================
+       SPOTLIGHT SEARCH (⌘K)
+       ================================================================ -->
+  <div id="spotlight-modal" class="modal-backdrop spotlight-backdrop" role="dialog" aria-modal="true" aria-label="Spotlight" hidden>
+    <div class="spotlight-shell">
+      <div class="spotlight-input-row">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input
+          id="spotlight-input"
+          class="spotlight-input"
+          type="search"
+          autocomplete="off"
+          data-i18n-placeholder="spotlightPlaceholder"
+          placeholder="Buscar en RafaOS (proyectos, CV, email, idioma…)"
+        >
+        <kbd class="spotlight-esc">ESC</kbd>
+      </div>
+      <div id="spotlight-results" class="spotlight-results" role="listbox"></div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       QUICK LOOK: VISOR AMPLIADO DE PROYECTO
        ================================================================ -->
   <div id="project-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title" hidden>
-    <div class="modal-dialog modal-dialog-wide">
-      <header class="modal-header">
-        <div>
-          <p class="eyebrow" id="proj-modal-index">Proyecto destacado 1 de 2</p>
-          <h2 id="proj-modal-title">Detalle del proyecto</h2>
+    <div class="modal-dialog modal-dialog-wide mac-modal-shell">
+      <header class="modal-header mac-titlebar">
+        <div class="traffic-lights">
+          <button type="button" id="btn-close-project-tl" class="tl-btn tl-close" data-i18n-aria="projModalClose" aria-label="Cerrar (Esc)"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-title-center">
+          <p class="eyebrow" id="proj-modal-index">Proyecto destacado 1 de 1</p>
+          <h2 id="proj-modal-title" class="mac-window-title">Detalle del proyecto</h2>
         </div>
         <button type="button" id="btn-close-project-modal" class="btn btn-ghost btn-sm" data-i18n="projModalClose">
           Cerrar (Esc)
@@ -248,12 +445,15 @@
   </div>
 
   <!-- ================================================================
-       DIÁLOGO ACCESIBLE DE CV (TRAMPA Y RETORNO DE FOCO + IMPRESIÓN)
+       VISTA PREVIA.APP: CV IMPRIMIBLE
        ================================================================ -->
   <div id="cv-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title" hidden>
-    <div class="modal-dialog">
-      <header class="modal-header no-print">
-        <h2 id="cv-modal-title" data-i18n="cvModalTitle">Currículum Vitae</h2>
+    <div class="modal-dialog mac-modal-shell">
+      <header class="modal-header mac-titlebar no-print">
+        <div class="traffic-lights">
+          <button type="button" id="btn-close-cv-tl" class="tl-btn tl-close" data-i18n-aria="cvModalCloseTop" aria-label="Cerrar (Esc)"><span aria-hidden="true">×</span></button>
+        </div>
+        <h2 id="cv-modal-title" class="mac-window-title" data-i18n="cvModalTitle">Vista Previa — Currículum Vitae</h2>
         <button type="button" id="btn-close-cv-top" class="btn btn-ghost btn-sm" data-i18n="cvModalCloseTop">
           Cerrar (Esc)
         </button>
@@ -262,20 +462,20 @@
       <div id="cv-modal-content" class="cv-sheet"></div>
 
       <footer class="modal-footer no-print">
-        <a id="cv-pdf-link" class="btn btn-ghost" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer" data-i18n="cvModalOpenPdf">
+        <a id="cv-pdf-link" class="btn btn-ghost btn-sm" href="./assets/CV-Rafael-Garcia-Sanchez.pdf" target="_blank" rel="noopener noreferrer" data-i18n="cvModalOpenPdf">
           Abrir PDF original
         </a>
-        <button type="button" id="btn-print-cv" class="btn btn-primary" data-i18n="cvModalPrint">
+        <button type="button" id="btn-print-cv" class="btn btn-primary btn-sm" data-i18n="cvModalPrint">
           Imprimir / Guardar PDF
         </button>
-        <button type="button" id="btn-close-cv" class="btn btn-secondary" data-i18n="cvModalClose">
+        <button type="button" id="btn-close-cv" class="btn btn-secondary btn-sm" data-i18n="cvModalClose">
           Cerrar
         </button>
       </footer>
     </div>
   </div>
 
-  <!-- Notificación Toast flotante -->
+  <!-- Centro de Notificaciones macOS -->
   <div id="toast-notification" class="toast-notification" role="status" aria-live="polite" hidden></div>
 </body>
 </html>
