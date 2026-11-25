@@ -11,20 +11,23 @@ Portfolio interactivo estilo **macOS Sequoia / Sonoma** construido con **HTML5 +
 ## Estructura de carpetas
 
 ```text
-Portfolio-Rafael_Garcia_Sanchez/
-├── index.html                           # Escritorio macOS semántico, SEO/Open Graph y scripts defer
+PortFolio-Rafael_Garcia_Sanchez/
+├── index.html                           # Escritorio macOS semántico, JSON-LD SEO, hreflang y Open Graph
 ├── 404.html                             # Página de error 404 para GitHub Pages
 ├── style.css                            # Escritorio libre, Vibrancy cristal, semáforos y Dock
 ├── favicon.svg                          # Favicon vectorial
-├── robots.txt                           # Directivas de rastreo
-├── sitemap.xml                          # Mapa del sitio
+├── manifest.webmanifest                 # Web App Manifest (PWA / SEO móvil)
+├── robots.txt                           # Directivas de indexación para buscadores
+├── sitemap.xml                          # Sitemap multilingüe + Google Image Sitemap
+├── llms.txt                             # Índice estructurado para buscadores IA / LLMs
 ├── README.md                            # Documentación
 ├── assets/
 │   ├── CV-Rafael-Garcia-Sanchez.pdf     # CV oficial descargable
 │   ├── profile-rafa.png                 # Retrato de perfil (356×357)
 │   ├── projects/
 │   │   ├── simulador-pda.png            # Captura en vivo del simulador PDA DGT
-│   │   └── qiskit-case-study.png        # Vista del caso de estudio y circuito Qiskit
+│   │   ├── qiskit-case-study.png        # Vista del caso de estudio y circuito Qiskit
+│   │   └── red-corporativa-pt.png       # Topología lógica real en Cisco Packet Tracer
 │   └── wallpapers/                      # 4 fondos integrados de serie estilo macOS
 │       ├── big-sur.svg
 │       ├── sequoia.svg
@@ -41,9 +44,9 @@ Portfolio-Rafael_Garcia_Sanchez/
 
 ## Despliegue en GitHub Pages
 
-URL pública: `https://rafags04.github.io/Portfolio-Rafael_Garcia_Sanchez/`
+URL pública: `https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/`
 
-1. Sube los cambios a la rama `main` de `Rafags04/Portfolio-Rafael_Garcia_Sanchez`:
+1. Sube los cambios a la rama `main` de `Rafags04/PortFolio-Rafael_Garcia_Sanchez`:
    ```bash
    git add .
    git commit -m "feat: portfolio estilo macOS (RafaOS)"

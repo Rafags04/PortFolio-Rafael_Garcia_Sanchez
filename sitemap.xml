@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
   <url>
-    <loc>https://rafags04.github.io/Portfolio-Rafael_Garcia_Sanchez/</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/" />
+    <image:image>
+      <image:loc>https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/assets/profile-rafa.png</image:loc>
+      <image:title>Rafael García Sánchez — Estudiante de Ingeniería Informática (UCLM)</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/assets/projects/simulador-pda.png</image:loc>
+      <image:title>Simulador PDA DGT Permiso B — Aplicación Web Progresiva</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/assets/projects/red-corporativa-pt.png</image:loc>
+      <image:title>Diseño de Red Corporativa IES Antonio María Calero — Topología Cisco Packet Tracer</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/assets/projects/qiskit-case-study.png</image:loc>
+      <image:title>Análisis Estático de Mantenibilidad Cuántica en IBM Qiskit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/assets/CV-Rafael-Garcia-Sanchez.pdf</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
-

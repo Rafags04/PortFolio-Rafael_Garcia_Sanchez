@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rafags04.github.io/Portfolio-Rafael_Garcia_Sanchez/sitemap.xml
-
+Sitemap: https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/sitemap.xml

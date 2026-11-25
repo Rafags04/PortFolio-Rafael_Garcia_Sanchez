@@ -81,6 +81,34 @@
           codeSnippet:
             "from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit\nfrom numpy import pi\n\nqreg_q = QuantumRegister(3, 'q')\ncreg_crzz = ClassicalRegister(3, 'crzz')\ncreg_crxx = ClassicalRegister(4, 'crxx')\ncircuit = QuantumCircuit(qreg_q, creg_crzz, creg_crxx)\n\ncircuit.h(qreg_q[1])\ncircuit.cx(qreg_q[1], qreg_q[2])\ncircuit.p(pi / 4, qreg_q[0])\ncircuit.cx(qreg_q[0], qreg_q[1])\ncircuit.h(qreg_q[0])\ncircuit.measure(qreg_q[0], creg_crzz[0])\ncircuit.measure(qreg_q[1], creg_crxx[0])\ncircuit.z(qreg_q[2]).c_if(creg_crzz, 1)\ncircuit.x(qreg_q[2]).c_if(creg_crxx, 1)",
           repoUrl: 'https://github.com/Rafags04/qiskit-maintainability-case-study'
+        },
+        {
+          id: 'red-corporativa-ies-calero',
+          repoName: 'DisenioRedCorporativa-IESAntonioMariaCalero',
+          title: 'DisenioRedCorporativa-IESAntonioMariaCalero — Diseño de Red Corporativa',
+          image: './assets/projects/red-corporativa-pt.png',
+          imageAlt:
+            'Topología lógica jerárquica en Cisco Packet Tracer de la red corporativa del IES Antonio María Calero',
+          problem:
+            'Diseñar desde cero una infraestructura de red corporativa segura, escalable y de alta disponibilidad para el IES Antonio María Calero (Pozoblanco), segmentando profesorado, alumnado, secretaría, jefatura, cámaras IP, WiFi, gestión y servidores.',
+          solution:
+            'Arquitectura jerárquica Top-Down de tres niveles (acceso Cisco 2960, distribución multicapa Cisco 3560 con redundancia HSRP y borde dual Cisco 2911 con NAT y rutas flotantes), 8 VLANs, DHCP Relay, supervisión SNMPv2/NetFlow, presupuesto técnico real y validación completa en Cisco Packet Tracer.',
+          stack: [
+            'Cisco Packet Tracer',
+            'Redes TCP/IP & VLANs',
+            'HSRP / Alta Disponibilidad',
+            'DHCP & NAT',
+            'SNMPv2 & NetFlow',
+            'Diseño Top-Down'
+          ],
+          highlights: [
+            'Topología jerárquica con doble router de borde Cisco 2911 y reparto de carga HSRP en switches multicapa 3560.',
+            'Segmentación en 8 VLANs (/24 y /23), servidor DHCP dedicado con ip helper-address, NAT redundante, SNMPv2 y NetFlow.',
+            'Incluye simulación validada (.pkt), memoria técnica en PDF y presupuesto real dimensionado (32.378,73 €).'
+          ],
+          codeSnippet:
+            '# Segmentación VLANs + Alta Disponibilidad HSRP (Cisco 3560 / 2911)\nVLAN 10 PROFESORADO : 192.168.10.0/24  GW 192.168.10.1 (HSRP: Multicapa1)\nVLAN 20 ALUMNADO    : 192.168.20.0/23  GW 192.168.20.1 (HSRP: Multicapa2)\nVLAN 30 SECRETARIA  : 192.168.30.0/24  GW 192.168.30.1 (HSRP: Multicapa1)\nVLAN 40 JEFATURA    : 192.168.40.0/24  GW 192.168.40.1 (HSRP: Multicapa2)\nVLAN 50 CAMARAS     : 192.168.50.0/24  GW 192.168.50.1 (HSRP: Multicapa1)\nVLAN 60 WIFI        : 192.168.60.0/23  GW 192.168.60.1 (HSRP: Multicapa2)\nVLAN 70 GESTION     : 192.168.70.0/24  GW 192.168.70.1 (SNMPv2 · NetFlow)\nVLAN 80 SERVIDORES  : 192.168.80.0/24  GW 192.168.80.1 (DHCP Relay)',
+          repoUrl: 'https://github.com/Rafags04/DisenioRedCorporativa-IESAntonioMariaCalero'
         }
       ],
       academicEducation: [
@@ -107,9 +135,10 @@
       ],
       technicalSkills: [
         'JavaScript (ES6+)',
-        'Python (Flask)',
+        'Python (Flask & Qiskit)',
         'Java',
         'HTML5 & CSS3',
+        'Redes TCP/IP & Cisco PT',
         'Bases de datos & IndexedDB',
         'Docker',
         'Git & GitHub',
@@ -186,6 +215,34 @@
           codeSnippet:
             "from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit\nfrom numpy import pi\n\nqreg_q = QuantumRegister(3, 'q')\ncreg_crzz = ClassicalRegister(3, 'crzz')\ncreg_crxx = ClassicalRegister(4, 'crxx')\ncircuit = QuantumCircuit(qreg_q, creg_crzz, creg_crxx)\n\ncircuit.h(qreg_q[1])\ncircuit.cx(qreg_q[1], qreg_q[2])\ncircuit.p(pi / 4, qreg_q[0])\ncircuit.cx(qreg_q[0], qreg_q[1])\ncircuit.h(qreg_q[0])\ncircuit.measure(qreg_q[0], creg_crzz[0])\ncircuit.measure(qreg_q[1], creg_crxx[0])\ncircuit.z(qreg_q[2]).c_if(creg_crzz, 1)\ncircuit.x(qreg_q[2]).c_if(creg_crxx, 1)",
           repoUrl: 'https://github.com/Rafags04/qiskit-maintainability-case-study'
+        },
+        {
+          id: 'red-corporativa-ies-calero',
+          repoName: 'DisenioRedCorporativa-IESAntonioMariaCalero',
+          title: 'DisenioRedCorporativa-IESAntonioMariaCalero — Corporate Network Design',
+          image: './assets/projects/red-corporativa-pt.png',
+          imageAlt:
+            'Hierarchical logical topology in Cisco Packet Tracer for the IES Antonio María Calero corporate network',
+          problem:
+            'Design from scratch a secure, scalable, high-availability corporate network infrastructure for IES Antonio María Calero (Pozoblanco), logically segmenting faculty, students, administration, management, IP CCTV, WiFi, network management, and internal servers.',
+          solution:
+            'Three-tier Top-Down hierarchical architecture (Cisco 2960 access switches, redundant Cisco 3560 multilayer distribution switches with HSRP load sharing, and dual Cisco 2911 edge routers with NAT and floating static routes), 8 VLANs, DHCP Relay, SNMPv2/NetFlow monitoring, real hardware budget, and full validation in Cisco Packet Tracer.',
+          stack: [
+            'Cisco Packet Tracer',
+            'TCP/IP & VLANs',
+            'HSRP / High Availability',
+            'DHCP & NAT',
+            'SNMPv2 & NetFlow',
+            'Top-Down Design'
+          ],
+          highlights: [
+            'Hierarchical topology with dual Cisco 2911 edge routers and active/standby HSRP load balancing across Cisco 3560 switches.',
+            '8 segmented VLANs (/24 and /23), dedicated DHCP server with ip helper-address, redundant NAT, SNMPv2, and NetFlow.',
+            'Includes validated Packet Tracer prototype (.pkt), technical engineering report (PDF), and itemized budget (€32,378.73).'
+          ],
+          codeSnippet:
+            '# VLAN Segmentation + HSRP High Availability (Cisco 3560 / 2911)\nVLAN 10 FACULTY     : 192.168.10.0/24  GW 192.168.10.1 (HSRP: Multicapa1)\nVLAN 20 STUDENTS    : 192.168.20.0/23  GW 192.168.20.1 (HSRP: Multicapa2)\nVLAN 30 OFFICE      : 192.168.30.0/24  GW 192.168.30.1 (HSRP: Multicapa1)\nVLAN 40 MANAGEMENT  : 192.168.40.0/24  GW 192.168.40.1 (HSRP: Multicapa2)\nVLAN 50 CCTV        : 192.168.50.0/24  GW 192.168.50.1 (HSRP: Multicapa1)\nVLAN 60 WIFI        : 192.168.60.0/23  GW 192.168.60.1 (HSRP: Multicapa2)\nVLAN 70 NET-ADMIN   : 192.168.70.0/24  GW 192.168.70.1 (SNMPv2 · NetFlow)\nVLAN 80 SERVERS     : 192.168.80.0/24  GW 192.168.80.1 (DHCP Relay)',
+          repoUrl: 'https://github.com/Rafags04/DisenioRedCorporativa-IESAntonioMariaCalero'
         }
       ],
       academicEducation: [
@@ -212,9 +269,10 @@
       ],
       technicalSkills: [
         'JavaScript (ES6+)',
-        'Python (Flask)',
+        'Python (Flask & Qiskit)',
         'Java',
         'HTML5 & CSS3',
+        'TCP/IP Networks & Cisco PT',
         'Databases & IndexedDB',
         'Docker',
         'Git & GitHub',
@@ -231,7 +289,9 @@
 
   const UI_STRINGS = {
     es: {
-      pageTitle: 'Rafael García Sánchez | RafaOS — Portfolio macOS',
+      pageTitle: 'Rafael García Sánchez | Ingeniero Informático en formación (UCLM) — Portfolio RafaOS',
+      metaDescription:
+        'Portfolio oficial de Rafael García Sánchez (@Rafags04), estudiante de Ingeniería Informática en la UCLM (Ciudad Real). Proyectos en desarrollo web PWA, software cuántico Qiskit y diseño de redes corporativas en Cisco Packet Tracer.',
       skipLink: 'Saltar al escritorio',
       menuFinder: 'Finder',
       menuWindow: 'Ventana',
@@ -350,7 +410,9 @@
     },
 
     en: {
-      pageTitle: 'Rafael García Sánchez | RafaOS — macOS Portfolio',
+      pageTitle: 'Rafael García Sánchez | Computer Engineering Student (UCLM) — RafaOS Portfolio',
+      metaDescription:
+        'Official portfolio of Rafael García Sánchez (@Rafags04), Computer Engineering student at UCLM (Ciudad Real, Spain). Projects in PWA web development, IBM Qiskit quantum software quality, and Cisco Packet Tracer corporate network design.',
       skipLink: 'Skip to desktop',
       menuFinder: 'Finder',
       menuWindow: 'Window',
@@ -471,8 +533,14 @@
 
   let currentLang = 'es';
   try {
+    const urlLang =
+      typeof window.location !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('lang')
+        : null;
     const savedLang = localStorage.getItem('portfolio_lang');
-    if (savedLang === 'en' || savedLang === 'es') {
+    if (urlLang === 'en' || urlLang === 'es') {
+      currentLang = urlLang;
+    } else if (savedLang === 'en' || savedLang === 'es') {
       currentLang = savedLang;
     }
   } catch {

@@ -1,0 +1,22 @@
+# Rafael García Sánchez (@Rafags04) — Portfolio de Ingeniería Informática
+
+> Estudiante del Grado en Ingeniería Informática en la Escuela Superior de Informática de Ciudad Real, Universidad de Castilla-La Mancha (UCLM), en búsqueda de su primera oportunidad profesional en el sector tecnológico.
+
+- Web oficial (RafaOS): https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/
+- Versión en inglés: https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/?lang=en
+- Currículum Vitae (PDF): https://rafags04.github.io/PortFolio-Rafael_Garcia_Sanchez/assets/CV-Rafael-Garcia-Sanchez.pdf
+- GitHub: https://github.com/Rafags04
+- LinkedIn: https://www.linkedin.com/in/rafa-garc%C3%ADa-725b5a367/
+- Contacto: rafags0407@gmail.com | (+34) 644 41 06 02 | Ciudad Real, España
+
+## Proyectos Destacados
+
+- [SimuladorPDA-PermisoConduccionB](https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB): Aplicación web progresiva (PWA) mobile-first con JavaScript ES6+, Vite, IndexedDB, Python (Flask) y Docker que simula la PDA oficial de examen práctico de conducir de la DGT (Permiso B).
+- [DisenioRedCorporativa-IESAntonioMariaCalero](https://github.com/Rafags04/DisenioRedCorporativa-IESAntonioMariaCalero): Diseño jerárquico Top-Down, presupuesto real y validación en Cisco Packet Tracer de una red corporativa con 8 VLANs, alta disponibilidad HSRP (switches multicapa Cisco 3560), routers de borde redundantes Cisco 2911 con NAT, DHCP Relay, SNMPv2 y NetFlow.
+- [qiskit-maintainability-case-study](https://github.com/Rafags04/qiskit-maintainability-case-study): Caso de estudio sobre calidad y mantenibilidad de software cuántico mediante análisis estático sobre 8 algoritmos cuánticos de referencia implementados en Python e IBM Qiskit.
+
+## Formación y Certificaciones
+
+- Grado en Ingeniería Informática — Universidad de Castilla-La Mancha (UCLM), 2022–Actualidad.
+- Capacitación sobre Calidad del software cuántico — AQC Lab (Febrero 2026).
+- Idiomas: Castellano (Nativo), Inglés (Nivel Avanzado B2).

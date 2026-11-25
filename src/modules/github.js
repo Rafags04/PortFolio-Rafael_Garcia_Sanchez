@@ -34,6 +34,14 @@
     ],
     repos: [
       {
+        name: 'DisenioRedCorporativa-IESAntonioMariaCalero',
+        description:
+          'Diseño jerárquico, presupuesto técnico y validación en Cisco Packet Tracer de la red corporativa del IES Antonio María Calero.',
+        language: 'Cisco Packet Tracer',
+        html_url: 'https://github.com/Rafags04/DisenioRedCorporativa-IESAntonioMariaCalero',
+        updated_at: '2026-11-25T08:36:17Z'
+      },
+      {
         name: 'qiskit-maintainability-case-study',
         description:
           'Static analysis benchmark of quantum metrics across 8 Qiskit quantum algorithm circuits.',
@@ -50,12 +58,12 @@
         updated_at: '2026-11-24T09:37:32Z'
       },
       {
-        name: 'Portfolio-Rafael_Garcia_Sanchez',
+        name: 'PortFolio-Rafael_Garcia_Sanchez',
         description:
           'Portfolio interactivo estilo macOS en GitHub Pages basado en mi currículum oficial y API de GitHub.',
         language: 'JavaScript',
-        html_url: 'https://github.com/Rafags04/Portfolio-Rafael_Garcia_Sanchez',
-        updated_at: '2026-11-24T12:00:00Z'
+        html_url: 'https://github.com/Rafags04/PortFolio-Rafael_Garcia_Sanchez',
+        updated_at: '2026-11-25T08:37:19Z'
       },
       {
         name: 'Rafags04',
