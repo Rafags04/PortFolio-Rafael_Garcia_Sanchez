@@ -13,7 +13,6 @@
   <!-- Scripts diferidos ordenados: funcionan en local (file://) y en GitHub Pages -->
   <script defer src="./src/data/profile.js"></script>
   <script defer src="./src/modules/modal.js"></script>
-  <script defer src="./src/modules/github.js"></script>
   <script defer src="./src/main.js"></script>
 </head>
 <body>
@@ -246,11 +245,6 @@
           <ol id="courses-list" class="mac-group-list"></ol>
         </div>
 
-        <div class="settings-section">
-          <h3 class="mac-section-label" data-i18n="techSkillsHeading">Stack Técnico</h3>
-          <ul id="tech-skills-list" class="tag-list"></ul>
-        </div>
-
         <div class="settings-two-col">
           <div class="mac-group-box">
             <h3 class="mac-section-label" data-i18n="languagesHeading">Idiomas</h3>
@@ -265,35 +259,24 @@
       <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
 
-    <!-- VENTANA 4: MONITOR GITHUB (INICIALMENTE MINIMIZADA AL DOCK) -->
-    <section id="win-github" class="mac-window" data-window="github" aria-labelledby="win-github-title" hidden>
+    <!-- VENTANA 4: TECNOLOGÍAS Y NIVELES (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-tech" class="mac-window" data-window="tech" aria-labelledby="win-tech-title" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
           <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
           <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
           <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
         </div>
-        <h2 id="win-github-title" class="mac-window-title" data-i18n="winGithubTitle">Monitor GitHub — @Rafags04</h2>
-        <button type="button" id="btn-retry-github" class="titlebar-action-btn" data-i18n="githubSyncBtn">Actualizar</button>
+        <h2 id="win-tech-title" class="mac-window-title" data-i18n="winTechTitle">Tecnologías y Dominio</h2>
+        <div class="mac-segmented" role="tablist" aria-label="Categorías de tecnologías">
+          <button type="button" class="mac-seg-btn active" data-tech-filter="all" role="tab" aria-selected="true" data-i18n="techFilterAll">Todas</button>
+          <button type="button" class="mac-seg-btn" data-tech-filter="languages" role="tab" aria-selected="false" data-i18n="techFilterLangs">Lenguajes</button>
+          <button type="button" class="mac-seg-btn" data-tech-filter="tools" role="tab" aria-selected="false" data-i18n="techFilterTools">Frameworks y Redes</button>
+        </div>
       </header>
 
       <div class="mac-window-body">
-        <div id="github-status" class="status-banner" role="status" aria-live="polite">
-          Consultando API pública de GitHub…
-        </div>
-
-        <div id="github-content" class="github-stack" hidden>
-          <div class="mac-group-box">
-            <h3 class="mac-section-label" data-i18n="githubLangHeading">Lenguajes por bytes</h3>
-            <div id="github-lang-bar" class="lang-bar" role="img" aria-label="Distribución de lenguajes por bytes"></div>
-            <ul id="github-lang-list" class="lang-list"></ul>
-          </div>
-
-          <div class="mac-group-box">
-            <h3 class="mac-section-label" data-i18n="githubReposHeading">Repositorios propios</h3>
-            <ul id="github-repos-list" class="repo-list"></ul>
-          </div>
-        </div>
+        <div id="tech-categories-list" class="tech-categories-stack"></div>
       </div>
       <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
@@ -354,11 +337,11 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item" data-dock-target="github" data-i18n-aria="dockGithub" aria-label="Monitor GitHub">
-      <span class="dock-tooltip" data-i18n="dockGithub">Monitor GitHub</span>
-      <span class="dock-icon dock-ico-gh" aria-hidden="true">
+    <button type="button" class="dock-item" data-dock-target="tech" data-i18n-aria="dockTech" aria-label="Tecnologías">
+      <span class="dock-tooltip" data-i18n="dockTech">Tecnologías</span>
+      <span class="dock-icon dock-ico-tech" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>
         </svg>
       </span>
       <span class="dock-dot" aria-hidden="true"></span>

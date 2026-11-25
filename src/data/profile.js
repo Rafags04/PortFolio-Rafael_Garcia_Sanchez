@@ -152,6 +152,40 @@
         'Git & GitHub',
         'PWA / Vite'
       ],
+      techCategories: [
+        {
+          id: 'languages',
+          group: 'languages',
+          title: 'Lenguajes de Programación',
+          items: [
+            { name: 'Java', context: 'POO · JUnit · Ingeniería del Software (UCLM)', level: 'Avanzado', percent: 85 },
+            { name: 'JavaScript (ES6+)', context: 'DOM · PWA · IndexedDB · Interfaces Web', level: 'Avanzado', percent: 85 },
+            { name: 'HTML5 & CSS3', context: 'Maquetación Semántica · CSS Grid / Flexbox · Responsive', level: 'Avanzado', percent: 88 },
+            { name: 'Python', context: 'Flask · IBM Qiskit · Automatización y Análisis', level: 'Intermedio-Alto', percent: 80 },
+            { name: 'SQL & Bases de Datos', context: 'Diseño Relacional · Consultas · Persistencia Local', level: 'Intermedio-Alto', percent: 76 }
+          ]
+        },
+        {
+          id: 'frameworks',
+          group: 'tools',
+          title: 'Frameworks, Calidad de Software e I+D',
+          items: [
+            { name: 'IBM Qiskit', context: 'Circuitos Cuánticos · Mantenibilidad y Métricas Estáticas', level: 'Intermedio', percent: 74 },
+            { name: 'JUnit, Maven & JaCoCo', context: 'Testing Unitario · Cobertura de Código · Calidad', level: 'Intermedio-Alto', percent: 78 },
+            { name: 'Flask & Vite (PWA)', context: 'Servidores Web · Service Workers · Apps Offline-First', level: 'Intermedio-Alto', percent: 78 }
+          ]
+        },
+        {
+          id: 'systems',
+          group: 'tools',
+          title: 'Redes, Sistemas y Herramientas',
+          items: [
+            { name: 'Git & GitHub', context: 'Control de Versiones · Flujos de Ramas · GitHub Pages', level: 'Avanzado', percent: 88 },
+            { name: 'Redes TCP/IP & Cisco Packet Tracer', context: 'VLANs · HSRP · DHCP · NAT · SNMPv2 · NetFlow', level: 'Intermedio-Alto', percent: 82 },
+            { name: 'Docker & Entornos Linux', context: 'Contenedores · Despliegue Reproducible', level: 'Intermedio', percent: 70 }
+          ]
+        }
+      ],
       softSkills: ['Trabajo en equipo', 'Resolución de problemas'],
       languages: [
         { name: 'Inglés', level: 'Nivel Avanzado (B2)', percent: 75 },
@@ -294,6 +328,40 @@
         'Git & GitHub',
         'PWA / Vite'
       ],
+      techCategories: [
+        {
+          id: 'languages',
+          group: 'languages',
+          title: 'Programming Languages',
+          items: [
+            { name: 'Java', context: 'OOP · JUnit · Software Engineering (UCLM)', level: 'Advanced', percent: 85 },
+            { name: 'JavaScript (ES6+)', context: 'DOM · PWA · IndexedDB · Interactive Web UI', level: 'Advanced', percent: 85 },
+            { name: 'HTML5 & CSS3', context: 'Semantic Markup · CSS Grid / Flexbox · Responsive UI', level: 'Advanced', percent: 88 },
+            { name: 'Python', context: 'Flask · IBM Qiskit · Scripting & Analysis', level: 'Upper-Intermediate', percent: 80 },
+            { name: 'SQL & Databases', context: 'Relational Modeling · Queries · Local Persistence', level: 'Upper-Intermediate', percent: 76 }
+          ]
+        },
+        {
+          id: 'frameworks',
+          group: 'tools',
+          title: 'Frameworks, Software Quality & R&D',
+          items: [
+            { name: 'IBM Qiskit', context: 'Quantum Circuits · Maintainability & Static Metrics', level: 'Intermediate', percent: 74 },
+            { name: 'JUnit, Maven & JaCoCo', context: 'Unit Testing · Code Coverage · Software Quality', level: 'Upper-Intermediate', percent: 78 },
+            { name: 'Flask & Vite (PWA)', context: 'Web Servers · Service Workers · Offline-First Apps', level: 'Upper-Intermediate', percent: 78 }
+          ]
+        },
+        {
+          id: 'systems',
+          group: 'tools',
+          title: 'Networks, Systems & Tooling',
+          items: [
+            { name: 'Git & GitHub', context: 'Version Control · Branch Workflows · GitHub Pages', level: 'Advanced', percent: 88 },
+            { name: 'TCP/IP Networks & Cisco Packet Tracer', context: 'VLANs · HSRP · DHCP · NAT · SNMPv2 · NetFlow', level: 'Upper-Intermediate', percent: 82 },
+            { name: 'Docker & Linux Environments', context: 'Containers · Reproducible Deployment', level: 'Intermediate', percent: 70 }
+          ]
+        }
+      ],
       softSkills: ['Teamwork', 'Problem solving'],
       languages: [
         { name: 'English', level: 'Upper-Intermediate (B2)', percent: 75 },
@@ -327,12 +395,12 @@
       winAboutTitle: 'Sobre mí — Rafael García',
       winProjectsTitle: 'Proyectos — Rafael García',
       winEduTitle: 'Experiencia y Formación',
-      winGithubTitle: 'Monitor GitHub — @Rafags04',
+      winTechTitle: 'Tecnologías y Dominio',
       winContactTitle: 'Contactos — Rafael García',
       appAboutName: 'Sobre mí',
       appProjectsName: 'Proyectos',
       appEduName: 'Trayectoria',
-      appGithubName: 'Monitor GitHub',
+      appTechName: 'Tecnologías',
       appContactName: 'Contactos',
       winClose: 'Cerrar ventana',
       winMinimize: 'Minimizar al Dock',
@@ -342,8 +410,6 @@
       tabOverview: 'Proyectos',
       tabLiveSim: 'Probar Simulador DGT',
       tabCode: 'Código',
-      githubSyncTag: 'GitHub · act.',
-      githubSyncedTag: 'Sincronizado con GitHub',
       zoomLabel: 'Ampliar',
       problemLabel: 'Problema',
       solutionLabel: 'Solución',
@@ -360,13 +426,12 @@
       dgtReset: 'Reiniciar examen',
       dgtPass: 'APTO',
       dgtFail: 'NO APTO',
-      githubSyncBtn: 'Actualizar',
-      githubLangHeading: 'Lenguajes por bytes',
-      githubReposHeading: 'Repositorios propios',
+      techFilterAll: 'Todas',
+      techFilterLangs: 'Lenguajes',
+      techFilterTools: 'Frameworks y Redes',
       eduExperienceTitle: 'Experiencia Profesional',
       eduAcademicTitle: 'Formación Académica',
       eduCoursesTitle: 'Certificaciones',
-      techSkillsHeading: 'Stack Técnico',
       languagesHeading: 'Idiomas',
       profileExtraHeading: 'Perfil y Disponibilidad',
       contactPhoneLabel: 'Teléfono',
@@ -378,16 +443,17 @@
       dockAbout: 'Sobre mí',
       dockProjects: 'Proyectos',
       dockEdu: 'Experiencia y Formación',
-      dockGithub: 'Monitor GitHub',
+      dockTech: 'Tecnologías',
       dockContact: 'Contactos',
       dockCv: 'Vista Previa CV',
       dockLinkedin: 'LinkedIn',
       dockGithubProfile: 'GitHub (@Rafags04)',
       dockPhone: 'Teléfono · 644 41 06 02',
       dockEmail: 'Email · rafags0407@gmail.com',
-      spotlightPlaceholder: 'Buscar en RafaOS (proyectos, CV, email, idioma…)',
+      spotlightPlaceholder: 'Buscar en RafaOS (proyectos, tecnologías, CV, email…)',
       spotlightEmpty: 'Sin resultados para tu búsqueda.',
       spActSim: 'Probar Simulador PDA DGT en vivo',
+      spActTech: 'Ver Tecnologías y niveles de dominio',
       spActCvPreview: 'Abrir Vista Previa del CV',
       spActCvDownload: 'Descargar CV Original (PDF)',
       spActCopyEmail: 'Copiar email (rafags0407@gmail.com)',
@@ -448,12 +514,12 @@
       winAboutTitle: 'About This Dev — Rafael García',
       winProjectsTitle: 'Projects — Rafael García',
       winEduTitle: 'Experience & Education',
-      winGithubTitle: 'GitHub Monitor — @Rafags04',
+      winTechTitle: 'Technologies & Proficiency',
       winContactTitle: 'Contacts — Rafael García',
       appAboutName: 'About Me',
       appProjectsName: 'Projects',
       appEduName: 'Experience',
-      appGithubName: 'GitHub Monitor',
+      appTechName: 'Technologies',
       appContactName: 'Contacts',
       winClose: 'Close window',
       winMinimize: 'Minimize to Dock',
@@ -463,8 +529,6 @@
       tabOverview: 'Projects',
       tabLiveSim: 'Live DGT Demo',
       tabCode: 'Code',
-      githubSyncTag: 'GitHub · upd.',
-      githubSyncedTag: 'Synced with GitHub',
       zoomLabel: 'Expand',
       problemLabel: 'Problem',
       solutionLabel: 'Solution',
@@ -481,13 +545,12 @@
       dgtReset: 'Reset exam',
       dgtPass: 'PASS',
       dgtFail: 'FAIL',
-      githubSyncBtn: 'Refresh',
-      githubLangHeading: 'Languages by bytes',
-      githubReposHeading: 'Own repositories',
+      techFilterAll: 'All',
+      techFilterLangs: 'Languages',
+      techFilterTools: 'Frameworks & Networks',
       eduExperienceTitle: 'Professional Experience',
       eduAcademicTitle: 'Academic Background',
       eduCoursesTitle: 'Certifications',
-      techSkillsHeading: 'Technical Stack',
       languagesHeading: 'Languages',
       profileExtraHeading: 'Profile & Availability',
       contactPhoneLabel: 'Phone',
@@ -499,16 +562,17 @@
       dockAbout: 'About Me',
       dockProjects: 'Projects',
       dockEdu: 'Experience & Education',
-      dockGithub: 'GitHub Monitor',
+      dockTech: 'Technologies',
       dockContact: 'Contacts',
       dockCv: 'CV Preview',
       dockLinkedin: 'LinkedIn',
       dockGithubProfile: 'GitHub (@Rafags04)',
       dockPhone: 'Phone · 644 41 06 02',
       dockEmail: 'Email · rafags0407@gmail.com',
-      spotlightPlaceholder: 'Search RafaOS (projects, CV, email, language…)',
+      spotlightPlaceholder: 'Search RafaOS (projects, technologies, CV, email…)',
       spotlightEmpty: 'No matching actions.',
       spActSim: 'Try Live DGT PDA Simulator',
+      spActTech: 'View Technologies & proficiency levels',
       spActCvPreview: 'Open CV Quick Preview',
       spActCvDownload: 'Download Original CV (PDF)',
       spActCopyEmail: 'Copy email (rafags0407@gmail.com)',

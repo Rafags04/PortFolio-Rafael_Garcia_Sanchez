@@ -31,11 +31,10 @@ PortFolio-Rafael_Garcia_Sanchez/
 │       ├── monterey.svg
 │       └── mojave.svg
 └── src/
-    ├── main.js                          # Gestor de ventanas, Dock, Spotlight, DGT live y CV modal
+    ├── main.js                          # Gestor de ventanas, Dock, Spotlight, Tecnologías, DGT live y CV modal
     ├── data/
-    │   └── profile.js                   # Fuente única bilingüe (ES/EN) del CV y proyectos
+    │   └── profile.js                   # Fuente única bilingüe (ES/EN) del CV, tecnologías y proyectos
     └── modules/
-        ├── github.js                    # API pública de GitHub (repos propios + bytes)
         └── modal.js                     # Diálogos accesibles (trampa y retorno de foco)
 ```
 

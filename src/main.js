@@ -15,7 +15,7 @@
 
   const state = {
     activeModalProjectId: null,
-    githubReposMap: new Map(),
+    techFilter: 'all',
     dgtFaults: { L: 0, D: 0, E: 0 },
     activeWinId: '',
     topZ: 20,
@@ -74,16 +74,6 @@
       }
       document.body.removeChild(temp);
     }
-  }
-
-  function formatShortDate(iso) {
-    if (!iso) return '';
-    const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return '';
-    return new Intl.DateTimeFormat(L() === 'en' ? 'en-GB' : 'es-ES', {
-      year: 'numeric',
-      month: 'short'
-    }).format(d);
   }
 
   function createContactIcon(type) {
@@ -161,7 +151,7 @@
       about: s.appAboutName,
       projects: s.appProjectsName,
       education: s.appEduName,
-      github: s.appGithubName,
+      tech: s.appTechName,
       contact: s.appContactName
     };
     return map[winId] || s.menuFinder || 'Finder';
@@ -191,7 +181,7 @@
       about: { width: 540, height: 390, x: Math.round(vw * 0.08), y: 74 },
       projects: { width: 860, height: 560, x: Math.max(24, vw - 900), y: 76 },
       education: { width: 620, height: 520, x: Math.round(vw * 0.14), y: 112 },
-      github: { width: 520, height: 470, x: Math.max(24, vw - 565), y: 130 },
+      tech: { width: 600, height: 530, x: Math.max(24, vw - 645), y: 108 },
       contact: { width: 410, height: 350, x: Math.round((vw - 410) / 2), y: 158 }
     };
     const base = defaults[winId] || { width: 520, height: 400, x: 80, y: 90 };
@@ -315,7 +305,7 @@
         about: { x: padX, y: topStart, width: aboutW, height: topH },
         projects: { x: padX + aboutW + gap, y: topStart, width: projW, height: topH },
         education: { x: padX, y: topStart + topH + gap, width: eduW, height: botH },
-        github: { x: padX + eduW + gap, y: topStart + topH + gap, width: ghW, height: botH },
+        tech: { x: padX + eduW + gap, y: topStart + topH + gap, width: ghW, height: botH },
         contact: { x: padX + eduW + ghW + gap * 2, y: topStart + topH + gap, width: contW, height: botH }
       };
 
@@ -885,15 +875,6 @@
       const body = document.createElement('div');
       body.className = 'project-card-body';
 
-      const liveRepo = project.repoName ? state.githubReposMap.get(project.repoName) : null;
-      if (liveRepo) {
-        const syncTag = document.createElement('span');
-        syncTag.className = 'repo-sync-tag';
-        const dateStr = formatShortDate(liveRepo.updated_at);
-        syncTag.textContent = dateStr ? `${s.githubSyncTag} ${dateStr}` : s.githubSyncedTag;
-        body.appendChild(syncTag);
-      }
-
       const title = document.createElement('h3');
       title.className = 'project-title';
       title.textContent = project.title;
@@ -1133,19 +1114,85 @@
     }
   }
 
+  function renderTechnologies() {
+    const container = document.getElementById('tech-categories-list');
+    if (!container) return;
+    container.textContent = '';
+
+    const categories = (P().techCategories || []).filter(
+      (cat) => state.techFilter === 'all' || cat.group === state.techFilter
+    );
+
+    for (const cat of categories) {
+      const box = document.createElement('div');
+      box.className = 'mac-group-box';
+
+      const h3 = document.createElement('h3');
+      h3.className = 'mac-section-label';
+      h3.textContent = cat.title;
+
+      const ul = document.createElement('ul');
+      ul.className = 'tech-items-list';
+
+      for (const item of cat.items) {
+        const li = document.createElement('li');
+        li.className = 'tech-item-row';
+
+        const top = document.createElement('div');
+        top.className = 'tech-item-top';
+
+        const info = document.createElement('div');
+        info.className = 'tech-item-info';
+
+        const name = document.createElement('strong');
+        name.className = 'tech-item-name';
+        name.textContent = item.name;
+
+        const ctx = document.createElement('span');
+        ctx.className = 'tech-item-context';
+        ctx.textContent = item.context;
+
+        info.append(name, ctx);
+
+        const pill = document.createElement('span');
+        pill.className = 'tech-level-pill';
+        pill.textContent = item.level;
+
+        top.append(info, pill);
+
+        const track = document.createElement('div');
+        track.className = 'language-bar-track';
+        const fill = document.createElement('div');
+        fill.className = 'tech-bar-fill';
+        fill.style.width = `${item.percent}%`;
+        track.appendChild(fill);
+
+        li.append(top, track);
+        ul.appendChild(li);
+      }
+
+      box.append(h3, ul);
+      container.appendChild(box);
+    }
+  }
+
+  function setupTechWindowInteractions() {
+    document.querySelectorAll('.mac-seg-btn[data-tech-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const nextFilter = btn.getAttribute('data-tech-filter') || 'all';
+        state.techFilter = nextFilter;
+        document.querySelectorAll('.mac-seg-btn[data-tech-filter]').forEach((b) => {
+          const active = b.getAttribute('data-tech-filter') === nextFilter;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-selected', String(active));
+        });
+        renderTechnologies();
+      });
+    });
+  }
+
   function renderCompetencies() {
     const profile = P();
-
-    const techList = document.getElementById('tech-skills-list');
-    if (techList) {
-      techList.textContent = '';
-      for (const skill of profile.technicalSkills) {
-        const li = document.createElement('li');
-        li.className = 'tag';
-        li.textContent = skill;
-        techList.appendChild(li);
-      }
-    }
 
     const langList = document.getElementById('languages-list');
     if (langList) {
@@ -1440,6 +1487,11 @@
         }
       },
       {
+        id: 'tech',
+        label: s.spActTech,
+        run: () => openOrFocusWindow('tech')
+      },
+      {
         id: 'cv-preview',
         label: s.spActCvPreview,
         run: () => cvModal.open(document.getElementById('btn-spotlight'))
@@ -1632,6 +1684,7 @@
     renderExperience();
     renderAcademicEducation();
     renderComplementaryCourses();
+    renderTechnologies();
     renderCompetencies();
     renderContact();
     renderCvSheet();
@@ -1643,9 +1696,6 @@
     }
     if (projectModal?.isOpen()) {
       renderProjectModalContent();
-    }
-    if (typeof Portfolio.refreshGitHubLanguage === 'function') {
-      Portfolio.refreshGitHubLanguage();
     }
 
     if (announceToast) {
@@ -1704,6 +1754,7 @@
     setupDockDesktopAndMenus(cvModal);
     setupProjectModal();
     setupProjectWindowInteractions();
+    setupTechWindowInteractions();
     setupThemeToggle();
     setupLanguageToggle(cvModal);
 
@@ -1722,18 +1773,6 @@
     if (printBtn) printBtn.addEventListener('click', () => window.print());
 
     setupSpotlight(cvModal);
-
-    if (typeof Portfolio.initGitHubSection === 'function') {
-      Portfolio.initGitHubSection({
-        username: P().contact.githubUser,
-        onStateChange: (nextState) => {
-          if (nextState.data && Array.isArray(nextState.data.repos)) {
-            state.githubReposMap = new Map(nextState.data.repos.map((r) => [r.name, r]));
-            renderProjects();
-          }
-        }
-      });
-    }
 
     applyTranslations(false, cvModal);
     setInterval(updateMenubarClock, 30000);
