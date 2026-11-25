@@ -14,14 +14,12 @@
   };
 
   const state = {
-    currentProjects: Portfolio.getProfile().featuredProjects.slice(),
-    modalProjectIndex: 0,
+    activeModalProjectId: null,
     githubReposMap: new Map(),
     dgtFaults: { L: 0, D: 0, E: 0 },
     activeWinId: '',
     topZ: 20,
     geometries: new Map(),
-    currentWallpaper: 'big-sur',
     spotlightSelectedIndex: 0
   };
 
@@ -518,7 +516,6 @@
      ------------------------------------------------------------------------ */
   function setWallpaper(wallpaperId, announce = false) {
     const validId = Object.prototype.hasOwnProperty.call(WALLPAPERS, wallpaperId) ? wallpaperId : 'big-sur';
-    state.currentWallpaper = validId;
     document.documentElement.style.setProperty('--wallpaper-url', `url('./assets/wallpapers/${validId}.svg')`);
 
     document.querySelectorAll('#wallpaper-dropdown [data-wallpaper]').forEach((btn) => {
@@ -538,31 +535,6 @@
   }
 
   function setupDockDesktopAndMenus(cvModal) {
-    const desktopEl = document.getElementById('desktop-stage');
-    const deskBtns = Array.from(document.querySelectorAll('#desktop-icons .desk-icon-btn'));
-
-    deskBtns.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        deskBtns.forEach((b) => b.classList.remove('is-selected'));
-        btn.classList.add('is-selected');
-        const target = btn.getAttribute('data-desk-open');
-        if (target) {
-          openOrFocusWindow(target);
-        } else if (btn.id === 'desk-btn-cv') {
-          cvModal.open(btn);
-        }
-      });
-    });
-
-    if (desktopEl) {
-      desktopEl.addEventListener('click', (e) => {
-        if (!e.target.closest('.desk-icon-btn')) {
-          deskBtns.forEach((b) => b.classList.remove('is-selected'));
-        }
-      });
-    }
-
     const dock = document.getElementById('mac-dock');
     if (dock) {
       dock.querySelectorAll('.dock-item[data-dock-target]').forEach((btn) => {
@@ -571,6 +543,26 @@
           if (target) openOrFocusWindow(target);
         });
       });
+
+      const phoneLink = document.getElementById('dock-phone-link');
+      if (phoneLink) {
+        phoneLink.addEventListener('click', (e) => {
+          if (window.matchMedia?.('(pointer: fine)').matches) {
+            e.preventDefault();
+            copyToClipboard(P().contact.phone, S().contactPhoneLabel);
+          }
+        });
+      }
+
+      const emailLink = document.getElementById('dock-email-link');
+      if (emailLink) {
+        emailLink.addEventListener('click', (e) => {
+          if (window.matchMedia?.('(pointer: fine)').matches) {
+            e.preventDefault();
+            copyToClipboard(P().contact.email, S().contactEmailLabel);
+          }
+        });
+      }
 
       const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
       const fine = window.matchMedia?.('(pointer: fine)').matches;
@@ -759,16 +751,13 @@
     });
   }
 
-  function renderProjectModalContent(projectIndex) {
+  function renderProjectModalContent(projectId) {
     const s = S();
-    const list = state.currentProjects.length ? state.currentProjects : P().featuredProjects;
-    const safeIdx = ((projectIndex % list.length) + list.length) % list.length;
-    state.modalProjectIndex = safeIdx;
-    const project = list[safeIdx];
+    const list = P().featuredProjects;
+    const project = list.find((p) => p.id === (projectId || state.activeModalProjectId)) || list[0];
+    if (!project) return;
+    state.activeModalProjectId = project.id;
 
-    const indexEl = document.getElementById('proj-modal-index');
-    const prevBtn = document.getElementById('btn-prev-project');
-    const navGroup = prevBtn ? prevBtn.parentElement : null;
     const titleEl = document.getElementById('proj-modal-title');
     const figureEl = document.getElementById('proj-modal-figure');
     const imgEl = document.getElementById('proj-modal-img');
@@ -777,12 +766,6 @@
     const stackPanel = document.getElementById('proj-tab-panel-stack');
     const linksGroup = document.getElementById('proj-modal-external-links');
 
-    const isMulti = list.length > 1;
-    if (indexEl) {
-      indexEl.hidden = !isMulti;
-      if (isMulti) indexEl.textContent = tpl(s.projModalIndex, { idx: safeIdx + 1, total: list.length });
-    }
-    if (navGroup) navGroup.hidden = !isMulti;
     if (titleEl) titleEl.textContent = project.title;
 
     if (figureEl && imgEl) {
@@ -853,25 +836,13 @@
       repoBtn.rel = 'noopener noreferrer';
       repoBtn.textContent = s.projModalOpenRepo;
       linksGroup.appendChild(repoBtn);
-
-      if (project.demoUrl) {
-        const demoBtn = document.createElement('a');
-        demoBtn.className = 'btn btn-ghost btn-sm';
-        demoBtn.href = project.demoUrl;
-        demoBtn.target = '_blank';
-        demoBtn.rel = 'noopener noreferrer';
-        demoBtn.textContent = s.projModalViewDemo;
-        linksGroup.appendChild(demoBtn);
-      }
     }
 
     setProjectModalTab('summary');
   }
 
   function openProjectModal(projectId, triggerEl) {
-    const list = state.currentProjects.length ? state.currentProjects : P().featuredProjects;
-    const idx = Math.max(0, list.findIndex((p) => p.id === projectId));
-    renderProjectModalContent(idx);
+    renderProjectModalContent(projectId);
     if (projectModal) projectModal.open(triggerEl);
   }
 
@@ -883,9 +854,7 @@
     if (!container) return;
 
     const projects = profile.featuredProjects;
-    state.currentProjects = projects;
     container.textContent = '';
-    container.classList.toggle('is-single', projects.length === 1);
 
     for (const project of projects) {
       const card = document.createElement('article');
@@ -971,16 +940,6 @@
       repoLink.rel = 'noopener noreferrer';
       repoLink.textContent = s.repoGithubBtn;
       links.appendChild(repoLink);
-
-      if (project.demoUrl) {
-        const demoLink = document.createElement('a');
-        demoLink.className = 'btn btn-ghost btn-sm';
-        demoLink.href = project.demoUrl;
-        demoLink.target = '_blank';
-        demoLink.rel = 'noopener noreferrer';
-        demoLink.textContent = s.viewWebBtn;
-        links.appendChild(demoLink);
-      }
 
       body.append(title, dl, stackList, links);
       card.appendChild(body);
@@ -1074,30 +1033,15 @@
     projectModal = Portfolio.createAccessibleModal('project-modal');
     const closeBtn = document.getElementById('btn-close-project-modal');
     const closeTlBtn = document.getElementById('btn-close-project-tl');
-    const prevBtn = document.getElementById('btn-prev-project');
-    const nextBtn = document.getElementById('btn-next-project');
     const tabBtns = document.querySelectorAll('.proj-tab-btn[data-proj-tab]');
 
     if (closeBtn) closeBtn.addEventListener('click', () => projectModal.close());
     if (closeTlBtn) closeTlBtn.addEventListener('click', () => projectModal.close());
-    if (prevBtn) prevBtn.addEventListener('click', () => renderProjectModalContent(state.modalProjectIndex - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => renderProjectModalContent(state.modalProjectIndex + 1));
 
     tabBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         setProjectModalTab(btn.getAttribute('data-proj-tab') || 'summary');
       });
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (!projectModal.isOpen() || state.currentProjects.length <= 1) return;
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        renderProjectModalContent(state.modalProjectIndex - 1);
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        renderProjectModalContent(state.modalProjectIndex + 1);
-      }
     });
   }
 
@@ -1244,6 +1188,16 @@
         href: encodeURI(profile.contact.linkedinUrl),
         external: true,
         copyLabel: null
+      },
+      {
+        icon: 'github',
+        label: s.contactGitHubLabel,
+        value: profile.contact.githubUrl,
+        displayValue: `@${profile.contact.githubUser} ↗`,
+        title: profile.contact.githubUrl,
+        href: profile.contact.githubUrl,
+        external: true,
+        copyLabel: null
       }
     ];
 
@@ -1257,7 +1211,7 @@
       iconBox.appendChild(createContactIcon(entry.icon));
 
       const heading = document.createElement('span');
-      heading.className = 'visually-hidden footer-item-label';
+      heading.className = 'visually-hidden';
       heading.textContent = entry.label;
 
       const valueBox = document.createElement('div');
@@ -1297,6 +1251,18 @@
     const dockLi = document.getElementById('dock-linkedin-link');
     if (dockLi && profile.contact.linkedinUrl) {
       dockLi.href = encodeURI(profile.contact.linkedinUrl);
+    }
+    const dockGh = document.getElementById('dock-github-link');
+    if (dockGh && profile.contact.githubUrl) {
+      dockGh.href = profile.contact.githubUrl;
+    }
+    const dockPhone = document.getElementById('dock-phone-link');
+    if (dockPhone && profile.contact.phoneHref) {
+      dockPhone.href = profile.contact.phoneHref;
+    }
+    const dockEmail = document.getElementById('dock-email-link');
+    if (dockEmail && profile.contact.email) {
+      dockEmail.href = `mailto:${profile.contact.email}`;
     }
   }
 
@@ -1607,22 +1573,6 @@
       langBtn.setAttribute('aria-label', s.langBtnAria);
     }
 
-    const spotlightBtn = document.getElementById('btn-spotlight');
-    if (spotlightBtn) spotlightBtn.setAttribute('aria-label', s.spotlightBtnAria);
-
-    const dockLabels = {
-      about: s.dockAbout,
-      projects: s.dockProjects,
-      education: s.dockEdu,
-      github: s.dockGithub,
-      contact: s.dockContact
-    };
-    document.querySelectorAll('#mac-dock .dock-item[data-dock-target]').forEach((btn) => {
-      const target = btn.getAttribute('data-dock-target');
-      if (dockLabels[target]) btn.setAttribute('aria-label', dockLabels[target]);
-    });
-    document.getElementById('dock-cv-btn')?.setAttribute('aria-label', s.dockCv);
-
     updateThemeButtonLabel();
     updateMenubarActiveApp();
     updateMenubarClock();
@@ -1641,7 +1591,7 @@
       renderSpotlightResults(cvModal, inputEl ? inputEl.value : '');
     }
     if (projectModal?.isOpen()) {
-      renderProjectModalContent(state.modalProjectIndex);
+      renderProjectModalContent();
     }
     if (typeof Portfolio.refreshGitHubLanguage === 'function') {
       Portfolio.refreshGitHubLanguage();

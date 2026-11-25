@@ -20,7 +20,6 @@
   const PROFILES = {
     es: {
       name: 'Rafael García Sánchez',
-      shortName: 'Rafael García',
       role: 'Estudiante de Ingeniería Informática',
       institution: 'Universidad de Castilla-La Mancha (UCLM)',
       avatar: './assets/profile-rafa.png',
@@ -54,8 +53,7 @@
           ],
           codeSnippet:
             'export function evaluateSimulation(faults = []) {\n  const counts = countFaults(faults);\n  const noApto =\n    counts.E >= 1 ||\n    counts.D >= 2 ||\n    (counts.D >= 1 && counts.L >= 5) ||\n    counts.L >= 10;\n  return { ...counts, result: noApto ? "NO APTO" : "APTO", noApto };\n}',
-          repoUrl: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB',
-          demoUrl: null
+          repoUrl: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB'
         }
       ],
       academicEducation: [
@@ -100,7 +98,6 @@
 
     en: {
       name: 'Rafael García Sánchez',
-      shortName: 'Rafael García',
       role: 'Computer Engineering Student',
       institution: 'University of Castilla-La Mancha (UCLM)',
       avatar: './assets/profile-rafa.png',
@@ -134,8 +131,7 @@
           ],
           codeSnippet:
             'export function evaluateSimulation(faults = []) {\n  const counts = countFaults(faults);\n  const noApto =\n    counts.E >= 1 ||\n    counts.D >= 2 ||\n    (counts.D >= 1 && counts.L >= 5) ||\n    counts.L >= 10;\n  return { ...counts, result: noApto ? "NO APTO" : "APTO", noApto };\n}',
-          repoUrl: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB',
-          demoUrl: null
+          repoUrl: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB'
         }
       ],
       academicEducation: [
@@ -194,12 +190,7 @@
       wpSequoia: 'macOS Sequoia (Ondas)',
       wpMonterey: 'macOS Monterey (Cañón)',
       wpMojave: 'macOS Mojave (Dunas)',
-      widgetHint: 'Haz clic en cualquier app del Dock o del escritorio para abrirla · ⌘K Spotlight',
-      deskIconAbout: 'Sobre mí',
-      deskIconSim: 'Simulador PDA',
-      deskIconCv: 'CV_Rafael.pdf',
-      deskIconGh: 'GitHub Live',
-      statusAvailable: 'Disponible · Ciudad Real',
+      widgetHint: 'Haz clic en cualquier aplicación del Dock para abrirla · ⌘K Spotlight',
       spotlightBtnAria: 'Buscar con Spotlight (⌘K)',
       langBtnText: 'EN',
       langBtnAria: 'Switch language to English',
@@ -230,7 +221,6 @@
       solutionLabel: 'Solución',
       viewDetailsBtn: 'Vista Rápida (Ampliar)',
       repoGithubBtn: 'Abrir en GitHub ↗',
-      viewWebBtn: 'Ver web',
       dgtSimTitle: 'Evaluador Oficial DGT — Permiso B',
       dgtSimRule: 'NO APTO con: 1 Eliminatoria · 2 Deficientes · 1 Deficiente + 5 Leves · 10 Leves',
       dgtMinorLabel: 'Leves',
@@ -254,6 +244,7 @@
       contactEmailLabel: 'Email',
       contactLocationLabel: 'Ubicación',
       contactLinkedInLabel: 'LinkedIn',
+      contactGitHubLabel: 'GitHub',
       copyBtn: 'Copiar',
       dockAbout: 'Sobre mí',
       dockProjects: 'Simulador PDA',
@@ -261,7 +252,10 @@
       dockGithub: 'Monitor GitHub',
       dockContact: 'Contactos',
       dockCv: 'Vista Previa CV',
-      dockLinkedin: 'LinkedIn ↗',
+      dockLinkedin: 'LinkedIn',
+      dockGithubProfile: 'GitHub (@Rafags04)',
+      dockPhone: 'Teléfono · 644 41 06 02',
+      dockEmail: 'Email · rafags0407@gmail.com',
       spotlightPlaceholder: 'Buscar en RafaOS (proyectos, CV, email, idioma…)',
       spotlightEmpty: 'Sin resultados para tu búsqueda.',
       spActSim: 'Probar Simulador PDA DGT en vivo',
@@ -274,16 +268,11 @@
       spActTile: 'Ordenar y mostrar todas las ventanas',
       spActLang: 'Cambiar idioma (Español / English)',
       spActTheme: 'Cambiar aspecto (Oscuro / Claro)',
-      projModalTitleDefault: 'Detalle del proyecto',
       projModalClose: 'Cerrar (Esc)',
       projModalTabSummary: 'Problema y Solución',
       projModalTabCode: 'Fragmento de Código',
       projModalTabStack: 'Stack y Puntos Clave',
-      projModalPrev: '← Anterior',
-      projModalNext: 'Siguiente →',
-      projModalIndex: 'Proyecto destacado {idx} de {total}',
       projModalOpenRepo: 'Abrir repositorio en GitHub',
-      projModalViewDemo: 'Ver demo',
       cvModalTitle: 'Vista Previa — Currículum Vitae',
       cvModalCloseTop: 'Cerrar (Esc)',
       cvModalOpenPdf: 'Abrir PDF original',
@@ -320,12 +309,7 @@
       wpSequoia: 'macOS Sequoia (Ribbons)',
       wpMonterey: 'macOS Monterey (Canyon)',
       wpMojave: 'macOS Mojave (Dunes)',
-      widgetHint: 'Click any app in the Dock or on the desktop to open it · ⌘K Spotlight',
-      deskIconAbout: 'About Me',
-      deskIconSim: 'PDA Simulator',
-      deskIconCv: 'CV_Rafael.pdf',
-      deskIconGh: 'GitHub Live',
-      statusAvailable: 'Available · Ciudad Real',
+      widgetHint: 'Click any app in the Dock to open it · ⌘K Spotlight',
       spotlightBtnAria: 'Spotlight Search (⌘K)',
       langBtnText: 'ES',
       langBtnAria: 'Cambiar idioma a Español',
@@ -356,7 +340,6 @@
       solutionLabel: 'Solution',
       viewDetailsBtn: 'Quick Look (Expand)',
       repoGithubBtn: 'Open on GitHub ↗',
-      viewWebBtn: 'Live site',
       dgtSimTitle: 'Official DGT Evaluator — Category B',
       dgtSimRule: 'FAIL at: 1 Disqualifying · 2 Major · 1 Major + 5 Minor · 10 Minor',
       dgtMinorLabel: 'Minor',
@@ -380,6 +363,7 @@
       contactEmailLabel: 'Email',
       contactLocationLabel: 'Location',
       contactLinkedInLabel: 'LinkedIn',
+      contactGitHubLabel: 'GitHub',
       copyBtn: 'Copy',
       dockAbout: 'About Me',
       dockProjects: 'PDA Simulator',
@@ -387,7 +371,10 @@
       dockGithub: 'GitHub Monitor',
       dockContact: 'Contacts',
       dockCv: 'CV Preview',
-      dockLinkedin: 'LinkedIn ↗',
+      dockLinkedin: 'LinkedIn',
+      dockGithubProfile: 'GitHub (@Rafags04)',
+      dockPhone: 'Phone · 644 41 06 02',
+      dockEmail: 'Email · rafags0407@gmail.com',
       spotlightPlaceholder: 'Search RafaOS (projects, CV, email, language…)',
       spotlightEmpty: 'No matching actions.',
       spActSim: 'Try Live DGT PDA Simulator',
@@ -400,16 +387,11 @@
       spActTile: 'Tile & show all windows',
       spActLang: 'Switch language (Español / English)',
       spActTheme: 'Toggle appearance (Dark / Light)',
-      projModalTitleDefault: 'Project details',
       projModalClose: 'Close (Esc)',
       projModalTabSummary: 'Problem & Solution',
       projModalTabCode: 'Code Snippet',
       projModalTabStack: 'Stack & Highlights',
-      projModalPrev: '← Previous',
-      projModalNext: 'Next →',
-      projModalIndex: 'Featured project {idx} of {total}',
       projModalOpenRepo: 'Open GitHub repository',
-      projModalViewDemo: 'View demo',
       cvModalTitle: 'Preview — Curriculum Vitae',
       cvModalCloseTop: 'Close (Esc)',
       cvModalOpenPdf: 'Open original PDF',
@@ -443,15 +425,12 @@
     // Ignorar si almacenamiento no disponible
   }
 
-  window.Portfolio.PROFILES = PROFILES;
   window.Portfolio.UI_STRINGS = UI_STRINGS;
-  window.Portfolio.PROFILE = PROFILES[currentLang];
   window.Portfolio.getLang = () => currentLang;
   window.Portfolio.getProfile = () => PROFILES[currentLang];
   window.Portfolio.getStrings = () => UI_STRINGS[currentLang];
   window.Portfolio.setLang = (lang) => {
     currentLang = lang === 'en' ? 'en' : 'es';
-    window.Portfolio.PROFILE = PROFILES[currentLang];
     try {
       localStorage.setItem('portfolio_lang', currentLang);
     } catch {

@@ -36,10 +36,7 @@
 
   --mac-blue: #0a84ff;
   --mac-blue-hover: #3b9cff;
-  --accent: #0a84ff;
-  --accent-ink: #ffffff;
   --mac-green: #30d158;
-  --mac-red: #ff453a;
   --spotlight: rgba(10, 132, 255, 0.16);
 
   --ok-bg: rgba(48, 209, 88, 0.16);
@@ -86,10 +83,7 @@
 
   --mac-blue: #007aff;
   --mac-blue-hover: #0062cc;
-  --accent: #007aff;
-  --accent-ink: #ffffff;
   --mac-green: #16a34a;
-  --mac-red: #dc2626;
   --spotlight: rgba(0, 122, 255, 0.12);
 
   --ok-bg: #dcfce7;
@@ -262,23 +256,6 @@ a:hover {
   opacity: 0.78;
 }
 
-.menubar-status {
-  display: none;
-  align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--mac-green);
-  box-shadow: 0 0 8px var(--mac-green);
-}
-
 .menubar-clock {
   font-variant-numeric: tabular-nums;
   font-weight: 600;
@@ -344,7 +321,7 @@ a:hover {
 }
 
 /* --------------------------------------------------------------------------
-   ESCRITORIO LIMPIO (WIDGET SONOMA + ACCESOS DIRECTOS DEL ESCRITORIO)
+   ESCRITORIO LIMPIO (WIDGET SONOMA)
    -------------------------------------------------------------------------- */
 .mac-desktop {
   width: 100%;
@@ -407,69 +384,6 @@ a:hover {
 .widget-hint {
   font-size: 0.8rem;
   color: var(--text-secondary);
-}
-
-.desktop-icons {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.desk-icon-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  padding: 8px 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  color: #ffffff;
-  transition: background-color 0.14s ease, border-color 0.14s ease, transform 0.14s ease;
-}
-
-.desk-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.desk-icon-btn:active {
-  transform: scale(0.96);
-}
-
-.desk-icon-btn.is-selected {
-  background: rgba(10, 132, 255, 0.34);
-  border-color: rgba(255, 255, 255, 0.42);
-}
-
-.desk-squircle {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.36);
-}
-
-.desk-label {
-  font-size: 11.5px;
-  font-weight: 600;
-  line-height: 1.25;
-  color: #ffffff;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.88);
-  padding: 2px 5px;
-  border-radius: 5px;
-  max-width: 100%;
-  word-break: normal;
-  overflow-wrap: break-word;
-  text-align: center;
-}
-
-.desk-icon-btn.is-selected .desk-label {
-  background: #0a84ff;
-  text-shadow: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -851,7 +765,6 @@ a:hover {
 .status-banner { padding: 9px 12px; border-radius: 8px; border: 1px solid var(--inset-border); background: var(--inset-group); color: var(--text-secondary); font-size: 0.82rem; }
 .status-ok { background: var(--ok-bg); border-color: var(--ok-border); color: var(--ok-text); }
 .status-demo { background: var(--spotlight); border-color: var(--mac-blue); color: var(--text); }
-.status-error { background: var(--err-bg); border-color: var(--err-border); color: var(--err-text); }
 .github-stack { display: flex; flex-direction: column; gap: 10px; }
 .lang-bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--seg-track); margin-bottom: 10px; }
 .lang-segment { display: block; height: 100%; }
@@ -891,8 +804,7 @@ a:hover {
   gap: 8px;
   padding: 7px 12px;
   max-width: calc(100vw - 16px);
-  overflow-x: auto;
-  scrollbar-width: none;
+  overflow: visible;
   border-radius: 20px;
   background: var(--dock-bg);
   backdrop-filter: blur(26px) saturate(185%);
@@ -901,18 +813,15 @@ a:hover {
   box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.mac-dock::-webkit-scrollbar { display: none; }
-
 .dock-item {
   position: relative;
   background: transparent;
   border: none;
-  padding: 0;
+  padding: 0 0 8px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
   text-decoration: none;
   flex-shrink: 0;
   transform: scale(var(--dock-scale, 1));
@@ -921,9 +830,9 @@ a:hover {
 }
 
 .dock-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -938,8 +847,15 @@ a:hover {
 .dock-ico-contact { background: linear-gradient(155deg, #a78bfa, #6d28d9); }
 .dock-ico-cv { background: linear-gradient(155deg, #fb7185, #e11d48); }
 .dock-ico-li { background: linear-gradient(155deg, #0a66c2, #004182); }
+.dock-ico-gh-profile { background: linear-gradient(155deg, #4b5563, #18181b); border: 1px solid rgba(255, 255, 255, 0.22); }
+.dock-ico-phone { background: linear-gradient(155deg, #4ade80, #16a34a); }
+.dock-ico-mail { background: linear-gradient(155deg, #60a5fa, #2563eb); }
 
 .dock-dot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 4px;
   height: 4px;
   border-radius: 50%;
@@ -953,19 +869,34 @@ a:hover {
 .dock-tooltip {
   display: none;
   position: absolute;
-  bottom: calc(100% + 10px);
+  bottom: calc(100% + 11px);
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  padding: 4px 10px;
-  border-radius: 7px;
+  padding: 5px 11px;
+  border-radius: 8px;
   background: var(--win-bg-focused);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
   border: 1px solid var(--win-border-focused);
   color: var(--text);
   font-size: 11.5px;
   font-weight: 600;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
   pointer-events: none;
+  z-index: 310;
+}
+
+.dock-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--win-bg-focused) transparent transparent transparent;
 }
 
 .dock-item:hover .dock-tooltip,
@@ -998,10 +929,8 @@ a:hover {
 .mac-modal-shell { width: 100%; max-width: 820px; background: var(--win-bg-focused); backdrop-filter: blur(30px) saturate(180%); border: 1px solid var(--win-border-focused); border-radius: var(--radius-win); box-shadow: var(--win-shadow-focused); overflow: hidden; margin-block: auto; }
 .modal-dialog-wide { max-width: 900px; }
 .modal-header { cursor: default; }
-.modal-title-center { text-align: center; min-width: 0; }
 .eyebrow { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mac-blue); }
 .modal-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 16px; background: var(--titlebar-bg); border-top: 1px solid var(--titlebar-border); }
-.modal-footer-between { justify-content: space-between; }
 .proj-modal-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
 .proj-modal-figure { border-radius: 10px; overflow: hidden; border: 1px solid var(--inset-border); background: #0d1117; }
 .proj-modal-img { width: 100%; max-height: 360px; object-fit: cover; display: block; }
@@ -1012,7 +941,6 @@ a:hover {
 .proj-tab-panel[hidden] { display: none; }
 .proj-code-block { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; background: #0b101b; color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 10px; padding: 14px; overflow-x: auto; white-space: pre; }
 .proj-highlights-list { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 5px; }
-.proj-nav-group { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .cv-sheet { background: #ffffff; color: #0f172a; padding: 24px; }
 .cv-header { border-bottom: 2px solid #082545; padding-bottom: 12px; margin-bottom: 14px; }
@@ -1073,11 +1001,31 @@ a:hover {
   .menubar-clock {
     font-size: 11px;
   }
+
+  .mac-dock {
+    gap: 4px;
+    padding: 6px 8px;
+    border-radius: 16px;
+  }
+
+  .dock-icon {
+    width: 29px;
+    height: 29px;
+    border-radius: 8px;
+  }
+
+  .dock-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .dock-divider {
+    height: 22px;
+    margin-inline: 1px;
+  }
 }
 
 @media (min-width: 768px) {
-  .menubar-status { display: inline-flex; }
-
   html, body {
     height: 100vh;
     overflow: hidden;
@@ -1110,21 +1058,6 @@ a:hover {
     left: 26px;
     max-width: 370px;
     pointer-events: auto;
-  }
-
-  .desktop-icons {
-    position: absolute;
-    top: 22px;
-    right: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    pointer-events: auto;
-  }
-
-  .desk-icon-btn {
-    width: 110px;
-    padding: 8px 4px;
   }
 
   .mac-window {
@@ -1161,7 +1094,7 @@ a:hover {
 }
 
 @media (min-width: 1024px) {
-  .projects-grid.is-single .project-card {
+  .projects-grid .project-card {
     display: grid;
     grid-template-columns: minmax(250px, 1.05fr) minmax(0, 1fr);
     gap: 18px;

@@ -69,12 +69,7 @@
     </div>
 
     <div class="menubar-right">
-      <span class="menubar-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span data-i18n="statusAvailable">Disponible · Ciudad Real</span>
-      </span>
-
-      <button type="button" id="btn-spotlight" class="menubar-icon-btn" aria-label="Buscar con Spotlight (⌘K)">
+      <button type="button" id="btn-spotlight" class="menubar-icon-btn" data-i18n-aria="spotlightBtnAria" aria-label="Buscar con Spotlight (⌘K)">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
         </svg>
@@ -97,7 +92,7 @@
        ESCRITORIO macOS LIMPIO AL ARRANQUE + VENTANAS FLOTANTES LIBRES
        ================================================================ -->
   <main id="desktop-stage" class="mac-desktop">
-    <!-- Capa base del escritorio: Widget Sonoma + Accesos directos del escritorio -->
+    <!-- Capa base del escritorio: Widget Sonoma limpio (accesos en el Dock) -->
     <div id="desktop-home" class="desktop-home">
       <section id="desktop-welcome-widget" class="desktop-widget" aria-label="Resumen de escritorio">
         <div class="widget-head">
@@ -109,51 +104,13 @@
             height="56"
             class="widget-avatar"
           >
-          <div class="widget-text">
+          <div>
             <h2 id="widget-name" class="widget-name">Rafael García Sánchez</h2>
             <p id="widget-role" class="widget-role">Estudiante de Ingeniería Informática · UCLM</p>
           </div>
         </div>
-        <p class="widget-hint" data-i18n="widgetHint">Haz clic en cualquier app del Dock o del escritorio para abrirla · ⌘K Spotlight</p>
+        <p class="widget-hint" data-i18n="widgetHint">Haz clic en cualquier aplicación del Dock para abrirla · ⌘K Spotlight</p>
       </section>
-
-      <div id="desktop-icons" class="desktop-icons" role="group" aria-label="Accesos directos del escritorio">
-        <button type="button" class="desk-icon-btn" data-desk-open="about">
-          <span class="desk-squircle dock-ico-finder" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/>
-            </svg>
-          </span>
-          <span class="desk-label" data-i18n="deskIconAbout">Sobre mí</span>
-        </button>
-
-        <button type="button" class="desk-icon-btn" data-desk-open="projects">
-          <span class="desk-squircle dock-ico-sim" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="6" y="2" width="12" height="20" rx="3"/><path d="M9 18h6"/><path d="m9.5 10.5 2 2 3.5-4"/>
-            </svg>
-          </span>
-          <span class="desk-label" data-i18n="deskIconSim">Simulador PDA</span>
-        </button>
-
-        <button type="button" id="desk-btn-cv" class="desk-icon-btn">
-          <span class="desk-squircle dock-ico-cv" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/>
-            </svg>
-          </span>
-          <span class="desk-label" data-i18n="deskIconCv">CV_Rafael.pdf</span>
-        </button>
-
-        <button type="button" class="desk-icon-btn" data-desk-open="github">
-          <span class="desk-squircle dock-ico-gh" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-            </svg>
-          </span>
-          <span class="desk-label" data-i18n="deskIconGh">GitHub Live</span>
-        </button>
-      </div>
     </div>
 
     <!-- VENTANA 1: SOBRE MÍ (INICIALMENTE MINIMIZADA AL DOCK) -->
@@ -168,7 +125,7 @@
         <span class="titlebar-spacer" aria-hidden="true"></span>
       </header>
 
-      <div class="mac-window-body about-window-body">
+      <div class="mac-window-body">
         <div class="hero-top-row">
           <div class="hero-avatar-wrap">
             <img
@@ -284,7 +241,7 @@
         <span class="titlebar-spacer" aria-hidden="true"></span>
       </header>
 
-      <div class="mac-window-body settings-body">
+      <div class="mac-window-body">
         <div class="settings-section">
           <h3 class="mac-section-label" data-i18n="eduAcademicTitle">Formación Académica</h3>
           <ol id="academic-list" class="mac-group-list"></ol>
@@ -326,7 +283,7 @@
         <button type="button" id="btn-retry-github" class="titlebar-action-btn" data-i18n="githubSyncBtn">Actualizar</button>
       </header>
 
-      <div class="mac-window-body github-window-body">
+      <div class="mac-window-body">
         <div id="github-status" class="status-banner" role="status" aria-live="polite">
           Consultando API pública de GitHub…
         </div>
@@ -373,7 +330,7 @@
        DOCK FLOTANTE INFERIOR ESTILO macOS
        ================================================================ -->
   <nav id="mac-dock" class="mac-dock" aria-label="Dock">
-    <button type="button" class="dock-item" data-dock-target="about" aria-label="Sobre mí">
+    <button type="button" class="dock-item" data-dock-target="about" data-i18n-aria="dockAbout" aria-label="Sobre mí">
       <span class="dock-tooltip" data-i18n="dockAbout">Sobre mí</span>
       <span class="dock-icon dock-ico-finder" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -383,7 +340,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item" data-dock-target="projects" aria-label="Simulador PDA">
+    <button type="button" class="dock-item" data-dock-target="projects" data-i18n-aria="dockProjects" aria-label="Simulador PDA">
       <span class="dock-tooltip" data-i18n="dockProjects">Simulador PDA</span>
       <span class="dock-icon dock-ico-sim" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -393,7 +350,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item" data-dock-target="education" aria-label="Formación">
+    <button type="button" class="dock-item" data-dock-target="education" data-i18n-aria="dockEdu" aria-label="Formación">
       <span class="dock-tooltip" data-i18n="dockEdu">Formación</span>
       <span class="dock-icon dock-ico-edu" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -403,7 +360,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item" data-dock-target="github" aria-label="Monitor GitHub">
+    <button type="button" class="dock-item" data-dock-target="github" data-i18n-aria="dockGithub" aria-label="Monitor GitHub">
       <span class="dock-tooltip" data-i18n="dockGithub">Monitor GitHub</span>
       <span class="dock-icon dock-ico-gh" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -413,7 +370,7 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item" data-dock-target="contact" aria-label="Contactos">
+    <button type="button" class="dock-item" data-dock-target="contact" data-i18n-aria="dockContact" aria-label="Contactos">
       <span class="dock-tooltip" data-i18n="dockContact">Contactos</span>
       <span class="dock-icon dock-ico-contact" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -425,15 +382,16 @@
 
     <span class="dock-divider" aria-hidden="true"></span>
 
-    <button type="button" id="dock-cv-btn" class="dock-item" aria-label="Vista Previa CV">
+    <button type="button" id="dock-cv-btn" class="dock-item" data-i18n-aria="dockCv" aria-label="Vista Previa CV">
       <span class="dock-tooltip" data-i18n="dockCv">Vista Previa CV</span>
       <span class="dock-icon dock-ico-cv" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/>
         </svg>
       </span>
-      <span class="dock-dot" aria-hidden="true"></span>
     </button>
+
+    <span class="dock-divider" aria-hidden="true"></span>
 
     <a
       id="dock-linkedin-link"
@@ -441,15 +399,62 @@
       href="https://www.linkedin.com/in/rafa-garc%C3%ADa-725b5a367/"
       target="_blank"
       rel="noopener noreferrer"
+      data-i18n-aria="dockLinkedin"
       aria-label="LinkedIn"
     >
-      <span class="dock-tooltip" data-i18n="dockLinkedin">LinkedIn ↗</span>
+      <span class="dock-tooltip" data-i18n="dockLinkedin">LinkedIn</span>
       <span class="dock-icon dock-ico-li" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
         </svg>
       </span>
-      <span class="dock-dot" aria-hidden="true"></span>
+    </a>
+
+    <a
+      id="dock-github-link"
+      class="dock-item"
+      href="https://github.com/Rafags04"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-i18n-aria="dockGithubProfile"
+      aria-label="GitHub (@Rafags04)"
+    >
+      <span class="dock-tooltip" data-i18n="dockGithubProfile">GitHub (@Rafags04)</span>
+      <span class="dock-icon dock-ico-gh-profile" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>
+        </svg>
+      </span>
+    </a>
+
+    <a
+      id="dock-phone-link"
+      class="dock-item"
+      href="tel:+34644410602"
+      data-i18n-aria="dockPhone"
+      aria-label="Teléfono · 644 41 06 02"
+    >
+      <span class="dock-tooltip" data-i18n="dockPhone">Teléfono · 644 41 06 02</span>
+      <span class="dock-icon dock-ico-phone" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </span>
+    </a>
+
+    <a
+      id="dock-email-link"
+      class="dock-item"
+      href="mailto:rafags0407@gmail.com"
+      data-i18n-aria="dockEmail"
+      aria-label="Email · rafags0407@gmail.com"
+    >
+      <span class="dock-tooltip" data-i18n="dockEmail">Email · rafags0407@gmail.com</span>
+      <span class="dock-icon dock-ico-mail" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+      </span>
     </a>
   </nav>
 
@@ -485,10 +490,7 @@
         <div class="traffic-lights">
           <button type="button" id="btn-close-project-tl" class="tl-btn tl-close" data-i18n-aria="projModalClose" aria-label="Cerrar (Esc)"><span aria-hidden="true">×</span></button>
         </div>
-        <div class="modal-title-center">
-          <p class="eyebrow" id="proj-modal-index">Proyecto destacado 1 de 1</p>
-          <h2 id="proj-modal-title" class="mac-window-title">Detalle del proyecto</h2>
-        </div>
+        <h2 id="proj-modal-title" class="mac-window-title">Detalle del proyecto</h2>
         <button type="button" id="btn-close-project-modal" class="btn btn-ghost btn-sm" data-i18n="projModalClose">
           Cerrar (Esc)
         </button>
@@ -510,13 +512,7 @@
         <div id="proj-tab-panel-stack" class="proj-tab-panel" role="tabpanel" hidden></div>
       </div>
 
-      <footer class="modal-footer modal-footer-between">
-        <div class="proj-nav-group">
-          <button type="button" id="btn-prev-project" class="btn btn-secondary btn-sm" data-i18n="projModalPrev">← Anterior</button>
-          <button type="button" id="btn-next-project" class="btn btn-secondary btn-sm" data-i18n="projModalNext">Siguiente →</button>
-        </div>
-        <div id="proj-modal-external-links" class="proj-nav-group"></div>
-      </footer>
+      <footer id="proj-modal-external-links" class="modal-footer"></footer>
     </div>
   </div>
 

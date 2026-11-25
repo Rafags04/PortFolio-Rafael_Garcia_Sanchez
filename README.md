@@ -3,9 +3,9 @@
 Portfolio interactivo estilo **macOS Sequoia / Sonoma** construido con **HTML5 + CSS3 + JavaScript (ES6+)** sin dependencias externas a partir del currículum oficial de **Rafael García Sánchez** y sus repositorios públicos en GitHub. Funciona tanto al abrir [index.html](index.html) directamente en local (`file://`) como publicado en **GitHub Pages**.
 
 ## Características principales
-- **Arranque limpio de escritorio macOS:** todas las aplicaciones inician minimizadas como al encender el Mac, mostrando un widget estilo macOS Sonoma, accesos directos en el escritorio y el Dock flotante inferior.
+- **Arranque limpio de escritorio macOS:** todas las aplicaciones inician minimizadas como al encender el Mac, mostrando únicamente el widget de bienvenida estilo macOS Sonoma y el Dock flotante inferior (sin iconos en el escritorio).
 - **Barra de menú superior fija:** muestra la app activa (`Finder`, `Sobre mí`, etc.), menús **Ventana** (`Ordenar en mosaico`, `Mostrar todas`, `Minimizar todas`, `Descargar CV.pdf`) y **Fondo** para elegir entre **4 fondos nativos de Mac** (`Big Sur`, `Sequoia`, `Monterey` y `Mojave`), además de **Spotlight (`⌘K`)**, selector `EN / ES`, aspecto **Oscuro / Claro** y reloj en vivo.
-- **5 ventanas flotantes libres:** se abren desde el Dock o escritorio y se pueden **arrastrar libremente por cualquier zona**, **redimensionar** desde la esquina inferior derecha, minimizar al Dock (`–`), cerrar (`×`) o ampliar (`+` / doble clic en barra).
+- **Dock interactivo con etiquetas flotantes y contactos ampliados:** al pasar el ratón sobre cualquier icono aparece su etiqueta flotante (`Sobre mí`, `Simulador PDA`, `Formación`, etc.) y junto a **LinkedIn** incluye accesos directos a **GitHub**, **Teléfono** y **Email**. Las 5 ventanas se pueden **arrastrar libremente**, **redimensionar** desde la esquina inferior derecha, minimizar al Dock (`–`), cerrar (`×`) o ampliar (`+` / doble clic en barra).
 - **Probador en vivo del Simulador PDA DGT:** pestaña interactiva dentro de *SimuladorPDA_PermisoB.app* para registrar faltas (`Leves`, `Deficientes`, `Eliminatorias`) y calcular `APTO` / `NO APTO` según el reglamento real.
 
 ## Estructura de carpetas
