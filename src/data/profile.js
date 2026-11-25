@@ -54,6 +54,33 @@
           codeSnippet:
             'export function evaluateSimulation(faults = []) {\n  const counts = countFaults(faults);\n  const noApto =\n    counts.E >= 1 ||\n    counts.D >= 2 ||\n    (counts.D >= 1 && counts.L >= 5) ||\n    counts.L >= 10;\n  return { ...counts, result: noApto ? "NO APTO" : "APTO", noApto };\n}',
           repoUrl: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB'
+        },
+        {
+          id: 'qiskit-maintainability-case-study',
+          repoName: 'qiskit-maintainability-case-study',
+          title: 'qiskit-maintainability-case-study — Análisis Estático de Mantenibilidad en Qiskit',
+          image: './assets/projects/qiskit-case-study.png',
+          imageAlt:
+            'Vista del caso de estudio de análisis estático y circuito cuántico Qiskit con los 8 algoritmos de referencia',
+          problem:
+            'Disponer de un conjunto reproducible e inalterado de algoritmos cuánticos reales en Qiskit para evaluar métricas estáticas de calidad y mantenibilidad del software cuántico sin depender de simuladores ni ejecución en hardware.',
+          solution:
+            'Repositorio de estudio con 8 algoritmos cuánticos de referencia procedentes de QCRAFT-Scheduler (Bernstein-Vazirani, Deutsch-Jozsa, Grover, Phase Estimation, Shor, Simon, Teleportation y TSP) preparados para herramientas de análisis estático de métricas cuánticas.',
+          stack: [
+            'Python',
+            'Qiskit',
+            'Circuitos Cuánticos',
+            'Análisis Estático',
+            'Calidad del Software'
+          ],
+          highlights: [
+            'Corpus de 8 algoritmos cuánticos en examples/ preservados sin modificaciones desde QCRAFT-Scheduler.',
+            'Circuitos con QuantumRegister, ClassicalRegister, puertas H, CX, fase P(π/4), barreras y control clásico c_if.',
+            'Alineado con ingeniería y calidad del software cuántico mediante inspección estática de métricas.'
+          ],
+          codeSnippet:
+            "from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit\nfrom numpy import pi\n\nqreg_q = QuantumRegister(3, 'q')\ncreg_crzz = ClassicalRegister(3, 'crzz')\ncreg_crxx = ClassicalRegister(4, 'crxx')\ncircuit = QuantumCircuit(qreg_q, creg_crzz, creg_crxx)\n\ncircuit.h(qreg_q[1])\ncircuit.cx(qreg_q[1], qreg_q[2])\ncircuit.p(pi / 4, qreg_q[0])\ncircuit.cx(qreg_q[0], qreg_q[1])\ncircuit.h(qreg_q[0])\ncircuit.measure(qreg_q[0], creg_crzz[0])\ncircuit.measure(qreg_q[1], creg_crxx[0])\ncircuit.z(qreg_q[2]).c_if(creg_crzz, 1)\ncircuit.x(qreg_q[2]).c_if(creg_crxx, 1)",
+          repoUrl: 'https://github.com/Rafags04/qiskit-maintainability-case-study'
         }
       ],
       academicEducation: [
@@ -129,9 +156,36 @@
             'Offline-first IndexedDB local history, built-in timers, and PDF/JSON export.',
             'Production-ready with PWA Service Worker, Flask static server (app.py), and Docker Compose.'
           ],
-          codeSnippet:
+           codeSnippet:
             'export function evaluateSimulation(faults = []) {\n  const counts = countFaults(faults);\n  const noApto =\n    counts.E >= 1 ||\n    counts.D >= 2 ||\n    (counts.D >= 1 && counts.L >= 5) ||\n    counts.L >= 10;\n  return { ...counts, result: noApto ? "NO APTO" : "APTO", noApto };\n}',
           repoUrl: 'https://github.com/Rafags04/SimuladorPDA-PermisoConduccionB'
+        },
+        {
+          id: 'qiskit-maintainability-case-study',
+          repoName: 'qiskit-maintainability-case-study',
+          title: 'qiskit-maintainability-case-study — Quantum Maintainability Static Analysis',
+          image: './assets/projects/qiskit-case-study.png',
+          imageAlt:
+            'Static analysis workspace and Qiskit quantum circuit across the 8 benchmark quantum algorithms',
+          problem:
+            'Provide an unmodified, reproducible corpus of real Qiskit quantum algorithms to evaluate static quantum software quality and maintainability metrics without relying on simulators or quantum hardware execution.',
+          solution:
+            'Case study repository featuring 8 reference quantum algorithms sourced from QCRAFT-Scheduler (Bernstein-Vazirani, Deutsch-Jozsa, Grover, Phase Estimation, Shor, Simon, Teleportation, and TSP) prepared for static quantum metrics tools.',
+          stack: [
+            'Python',
+            'Qiskit',
+            'Quantum Circuits',
+            'Static Analysis',
+            'Software Quality'
+          ],
+          highlights: [
+            'Benchmark suite of 8 canonical quantum algorithms in examples/ preserved unmodified from QCRAFT-Scheduler.',
+            'Circuits built with QuantumRegister, ClassicalRegister, H, CX, phase P(π/4) gates, barriers, and classical c_if control.',
+            'Aligned with quantum software engineering and maintainability research via static code inspection.'
+          ],
+          codeSnippet:
+            "from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit\nfrom numpy import pi\n\nqreg_q = QuantumRegister(3, 'q')\ncreg_crzz = ClassicalRegister(3, 'crzz')\ncreg_crxx = ClassicalRegister(4, 'crxx')\ncircuit = QuantumCircuit(qreg_q, creg_crzz, creg_crxx)\n\ncircuit.h(qreg_q[1])\ncircuit.cx(qreg_q[1], qreg_q[2])\ncircuit.p(pi / 4, qreg_q[0])\ncircuit.cx(qreg_q[0], qreg_q[1])\ncircuit.h(qreg_q[0])\ncircuit.measure(qreg_q[0], creg_crzz[0])\ncircuit.measure(qreg_q[1], creg_crxx[0])\ncircuit.z(qreg_q[2]).c_if(creg_crzz, 1)\ncircuit.x(qreg_q[2]).c_if(creg_crxx, 1)",
+          repoUrl: 'https://github.com/Rafags04/qiskit-maintainability-case-study'
         }
       ],
       academicEducation: [
@@ -197,12 +251,12 @@
       themeToLight: 'Modo Claro',
       themeToDark: 'Modo Oscuro',
       winAboutTitle: 'Sobre mí — Rafael García',
-      winProjectsTitle: 'SimuladorPDA_PermisoB.app',
+      winProjectsTitle: 'Proyectos — Rafael García',
       winEduTitle: 'Formación y Competencias',
       winGithubTitle: 'Monitor GitHub — @Rafags04',
       winContactTitle: 'Contactos — Rafael García',
       appAboutName: 'Sobre mí',
-      appProjectsName: 'Simulador PDA',
+      appProjectsName: 'Proyectos',
       appEduName: 'Formación',
       appGithubName: 'Monitor GitHub',
       appContactName: 'Contactos',
@@ -211,7 +265,7 @@
       winZoom: 'Ampliar / Restaurar ventana',
       heroDownloadCv: 'Descargar CV (PDF)',
       heroOpenCv: 'Vista Previa CV…',
-      tabOverview: 'Vista General',
+      tabOverview: 'Proyectos',
       tabLiveSim: 'Probar Simulador DGT',
       tabCode: 'Código',
       githubSyncTag: 'GitHub · act.',
@@ -247,7 +301,7 @@
       contactGitHubLabel: 'GitHub',
       copyBtn: 'Copiar',
       dockAbout: 'Sobre mí',
-      dockProjects: 'Simulador PDA',
+      dockProjects: 'Proyectos',
       dockEdu: 'Formación',
       dockGithub: 'Monitor GitHub',
       dockContact: 'Contactos',
@@ -316,12 +370,12 @@
       themeToLight: 'Light Mode',
       themeToDark: 'Dark Mode',
       winAboutTitle: 'About This Dev — Rafael García',
-      winProjectsTitle: 'SimuladorPDA_PermisoB.app',
+      winProjectsTitle: 'Projects — Rafael García',
       winEduTitle: 'Education & Skills',
       winGithubTitle: 'GitHub Monitor — @Rafags04',
       winContactTitle: 'Contacts — Rafael García',
       appAboutName: 'About Me',
-      appProjectsName: 'PDA Simulator',
+      appProjectsName: 'Projects',
       appEduName: 'Education',
       appGithubName: 'GitHub Monitor',
       appContactName: 'Contacts',
@@ -330,7 +384,7 @@
       winZoom: 'Zoom / Restore window',
       heroDownloadCv: 'Download CV (PDF)',
       heroOpenCv: 'Quick Look CV…',
-      tabOverview: 'Overview',
+      tabOverview: 'Projects',
       tabLiveSim: 'Live DGT Demo',
       tabCode: 'Code',
       githubSyncTag: 'GitHub · upd.',
@@ -366,7 +420,7 @@
       contactGitHubLabel: 'GitHub',
       copyBtn: 'Copy',
       dockAbout: 'About Me',
-      dockProjects: 'PDA Simulator',
+      dockProjects: 'Projects',
       dockEdu: 'Education',
       dockGithub: 'GitHub Monitor',
       dockContact: 'Contacts',

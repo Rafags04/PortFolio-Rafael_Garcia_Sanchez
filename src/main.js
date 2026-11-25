@@ -189,7 +189,7 @@
     const vh = window.innerHeight;
     const defaults = {
       about: { width: 540, height: 390, x: Math.round(vw * 0.08), y: 74 },
-      projects: { width: 820, height: 490, x: Math.max(24, vw - 860), y: 86 },
+      projects: { width: 860, height: 560, x: Math.max(24, vw - 900), y: 76 },
       education: { width: 620, height: 520, x: Math.round(vw * 0.14), y: 112 },
       github: { width: 520, height: 470, x: Math.max(24, vw - 565), y: 130 },
       contact: { width: 410, height: 350, x: Math.round((vw - 410) / 2), y: 158 }
@@ -946,23 +946,33 @@
       container.appendChild(card);
     }
 
-    if (codePanel && projects[0]) {
-      const p = projects[0];
+    if (codePanel) {
       codePanel.textContent = '';
-      const pre = document.createElement('pre');
-      pre.className = 'proj-code-block';
-      pre.textContent = p.codeSnippet || '';
-      codePanel.appendChild(pre);
+      for (const p of projects) {
+        const block = document.createElement('div');
+        block.className = 'mac-group-box proj-inline-code-panel';
 
-      if (Array.isArray(p.highlights) && p.highlights.length > 0) {
-        const ul = document.createElement('ul');
-        ul.className = 'proj-highlights-list';
-        for (const h of p.highlights) {
-          const li = document.createElement('li');
-          li.textContent = h;
-          ul.appendChild(li);
+        const heading = document.createElement('h4');
+        heading.className = 'mac-section-label';
+        heading.textContent = p.repoName || p.title;
+
+        const pre = document.createElement('pre');
+        pre.className = 'proj-code-block';
+        pre.textContent = p.codeSnippet || '';
+
+        block.append(heading, pre);
+
+        if (Array.isArray(p.highlights) && p.highlights.length > 0) {
+          const ul = document.createElement('ul');
+          ul.className = 'proj-highlights-list';
+          for (const h of p.highlights) {
+            const li = document.createElement('li');
+            li.textContent = h;
+            ul.appendChild(li);
+          }
+          block.appendChild(ul);
         }
-        codePanel.appendChild(ul);
+        codePanel.appendChild(block);
       }
     }
   }

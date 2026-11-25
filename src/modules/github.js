@@ -34,6 +34,14 @@
     ],
     repos: [
       {
+        name: 'qiskit-maintainability-case-study',
+        description:
+          'Static analysis benchmark of quantum metrics across 8 Qiskit quantum algorithm circuits.',
+        language: 'Python',
+        html_url: 'https://github.com/Rafags04/qiskit-maintainability-case-study',
+        updated_at: '2026-11-25T08:18:29Z'
+      },
+      {
         name: 'SimuladorPDA-PermisoConduccionB',
         description:
           'Simulador para profesores de Autoescuela que permite simular la PDA de los examinadores de la DGT, para realizar simulaciones de exámenes en las clases.',
@@ -42,11 +50,11 @@
         updated_at: '2026-11-24T09:37:32Z'
       },
       {
-        name: 'PortFolio',
+        name: 'Portfolio-Rafael_Garcia_Sanchez',
         description:
           'Portfolio interactivo estilo macOS en GitHub Pages basado en mi currículum oficial y API de GitHub.',
         language: 'JavaScript',
-        html_url: 'https://github.com/Rafags04/PortFolio',
+        html_url: 'https://github.com/Rafags04/Portfolio-Rafael_Garcia_Sanchez',
         updated_at: '2026-11-24T12:00:00Z'
       },
       {

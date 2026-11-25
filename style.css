@@ -679,8 +679,9 @@ a:hover {
 .btn-ghost:hover { background: var(--spotlight); border-color: var(--mac-blue); }
 
 /* Proyectos */
-.projects-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.projects-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
 .project-card { display: flex; flex-direction: column; gap: 14px; }
+.project-card + .project-card { padding-top: 18px; border-top: 1px solid var(--titlebar-border); }
 .project-card-body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .repo-sync-tag { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); align-self: flex-start; }
 
