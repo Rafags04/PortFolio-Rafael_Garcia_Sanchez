@@ -12,6 +12,7 @@ Portfolio interactivo estilo **macOS Sequoia / Sonoma** construido con **HTML5 +
 
 ```text
 PortFolio-Rafael_Garcia_Sanchez/
+├── .gitignore                           # Exclusión de secretos, claves, cachés y archivos locales
 ├── index.html                           # Escritorio macOS semántico y scripts defer
 ├── 404.html                             # Página de error 404 para GitHub Pages
 ├── style.css                            # Escritorio libre, Vibrancy cristal, semáforos y Dock
