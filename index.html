@@ -217,15 +217,15 @@
       <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
 
-    <!-- VENTANA 3: EXPERIENCIA, FORMACIÓN Y COMPETENCIAS (INICIALMENTE MINIMIZADA AL DOCK) -->
-    <section id="win-education" class="mac-window" data-window="education" aria-labelledby="win-edu-title" hidden>
+    <!-- VENTANA 3: EXPERIENCIA LABORAL (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-experience" class="mac-window" data-window="experience" aria-labelledby="win-exp-title" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
           <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
           <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
           <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
         </div>
-        <h2 id="win-edu-title" class="mac-window-title" data-i18n="winEduTitle">Experiencia y Formación</h2>
+        <h2 id="win-exp-title" class="mac-window-title" data-i18n="winExpTitle">Experiencia Laboral — Rafael García</h2>
         <span class="titlebar-spacer" aria-hidden="true"></span>
       </header>
 
@@ -235,6 +235,27 @@
           <ol id="experience-list" class="mac-group-list"></ol>
         </div>
 
+        <div class="mac-group-box">
+          <h3 class="mac-section-label" data-i18n="profileExtraHeading">Perfil y Disponibilidad</h3>
+          <ul id="profile-extra-list" class="bullet-list"></ul>
+        </div>
+      </div>
+      <div class="mac-resize-handle" aria-hidden="true"></div>
+    </section>
+
+    <!-- VENTANA 4: FORMACIÓN ACADÉMICA Y CERTIFICACIONES (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <section id="win-education" class="mac-window" data-window="education" aria-labelledby="win-edu-title" hidden>
+      <header class="mac-titlebar">
+        <div class="traffic-lights">
+          <button type="button" class="tl-btn tl-close" data-win-action="close" data-i18n-aria="winClose" aria-label="Cerrar ventana"><span aria-hidden="true">×</span></button>
+          <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
+          <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
+        </div>
+        <h2 id="win-edu-title" class="mac-window-title" data-i18n="winEduTitle">Formación Académica y Certificaciones</h2>
+        <span class="titlebar-spacer" aria-hidden="true"></span>
+      </header>
+
+      <div class="mac-window-body">
         <div class="settings-section">
           <h3 class="mac-section-label" data-i18n="eduAcademicTitle">Formación Académica</h3>
           <ol id="academic-list" class="mac-group-list"></ol>
@@ -245,15 +266,9 @@
           <ol id="courses-list" class="mac-group-list"></ol>
         </div>
 
-        <div class="settings-two-col">
-          <div class="mac-group-box">
-            <h3 class="mac-section-label" data-i18n="languagesHeading">Idiomas</h3>
-            <div id="languages-list" class="languages-stack"></div>
-          </div>
-          <div class="mac-group-box">
-            <h3 class="mac-section-label" data-i18n="profileExtraHeading">Perfil y Disponibilidad</h3>
-            <ul id="profile-extra-list" class="bullet-list"></ul>
-          </div>
+        <div class="mac-group-box">
+          <h3 class="mac-section-label" data-i18n="languagesHeading">Idiomas</h3>
+          <div id="languages-list" class="languages-stack"></div>
         </div>
       </div>
       <div class="mac-resize-handle" aria-hidden="true"></div>
@@ -327,8 +342,18 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item" data-dock-target="education" data-i18n-aria="dockEdu" aria-label="Experiencia y Formación">
-      <span class="dock-tooltip" data-i18n="dockEdu">Experiencia y Formación</span>
+    <button type="button" class="dock-item" data-dock-target="experience" data-i18n-aria="dockExp" aria-label="Experiencia Laboral">
+      <span class="dock-tooltip" data-i18n="dockExp">Experiencia Laboral</span>
+      <span class="dock-icon dock-ico-exp" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        </svg>
+      </span>
+      <span class="dock-dot" aria-hidden="true"></span>
+    </button>
+
+    <button type="button" class="dock-item" data-dock-target="education" data-i18n-aria="dockEdu" aria-label="Formación">
+      <span class="dock-tooltip" data-i18n="dockEdu">Formación</span>
       <span class="dock-icon dock-ico-edu" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/>
