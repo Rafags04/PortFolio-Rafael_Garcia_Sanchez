@@ -289,9 +289,7 @@
 
   const UI_STRINGS = {
     es: {
-      pageTitle: 'Rafael García Sánchez | Ingeniero Informático en formación (UCLM) — Portfolio RafaOS',
-      metaDescription:
-        'Portfolio oficial de Rafael García Sánchez (@Rafags04), estudiante de Ingeniería Informática en la UCLM (Ciudad Real). Proyectos en desarrollo web PWA, software cuántico Qiskit y diseño de redes corporativas en Cisco Packet Tracer.',
+      pageTitle: 'Rafael García Sánchez | RafaOS — Portfolio macOS',
       skipLink: 'Saltar al escritorio',
       menuFinder: 'Finder',
       menuWindow: 'Ventana',
@@ -410,9 +408,7 @@
     },
 
     en: {
-      pageTitle: 'Rafael García Sánchez | Computer Engineering Student (UCLM) — RafaOS Portfolio',
-      metaDescription:
-        'Official portfolio of Rafael García Sánchez (@Rafags04), Computer Engineering student at UCLM (Ciudad Real, Spain). Projects in PWA web development, IBM Qiskit quantum software quality, and Cisco Packet Tracer corporate network design.',
+      pageTitle: 'Rafael García Sánchez | RafaOS — macOS Portfolio',
       skipLink: 'Skip to desktop',
       menuFinder: 'Finder',
       menuWindow: 'Window',
@@ -533,14 +529,8 @@
 
   let currentLang = 'es';
   try {
-    const urlLang =
-      typeof window.location !== 'undefined'
-        ? new URLSearchParams(window.location.search).get('lang')
-        : null;
     const savedLang = localStorage.getItem('portfolio_lang');
-    if (urlLang === 'en' || urlLang === 'es') {
-      currentLang = urlLang;
-    } else if (savedLang === 'en' || savedLang === 'es') {
+    if (savedLang === 'en' || savedLang === 'es') {
       currentLang = savedLang;
     }
   } catch {

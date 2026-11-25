@@ -12,14 +12,10 @@ Portfolio interactivo estilo **macOS Sequoia / Sonoma** construido con **HTML5 +
 
 ```text
 PortFolio-Rafael_Garcia_Sanchez/
-├── index.html                           # Escritorio macOS semántico, JSON-LD SEO, hreflang y Open Graph
+├── index.html                           # Escritorio macOS semántico y scripts defer
 ├── 404.html                             # Página de error 404 para GitHub Pages
 ├── style.css                            # Escritorio libre, Vibrancy cristal, semáforos y Dock
 ├── favicon.svg                          # Favicon vectorial
-├── manifest.webmanifest                 # Web App Manifest (PWA / SEO móvil)
-├── robots.txt                           # Directivas de indexación para buscadores
-├── sitemap.xml                          # Sitemap multilingüe + Google Image Sitemap
-├── llms.txt                             # Índice estructurado para buscadores IA / LLMs
 ├── README.md                            # Documentación
 ├── assets/
 │   ├── CV-Rafael-Garcia-Sanchez.pdf     # CV oficial descargable

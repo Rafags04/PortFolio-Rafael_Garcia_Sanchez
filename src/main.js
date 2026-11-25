@@ -1555,14 +1555,6 @@
 
     document.documentElement.lang = lang;
     document.title = s.pageTitle;
-    if (s.metaDescription) {
-      document.querySelector('meta[name="description"]')?.setAttribute('content', s.metaDescription);
-      document.querySelector('meta[property="og:description"]')?.setAttribute('content', s.metaDescription);
-      document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', s.metaDescription);
-    }
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', s.pageTitle);
-    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', s.pageTitle);
-    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', lang === 'en' ? 'en_GB' : 'es_ES');
 
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
