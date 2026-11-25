@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7aa7e8"/>
+      <stop offset="0.45" stop-color="#f3c7a6"/>
+      <stop offset="0.7" stop-color="#f9e2b8"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.72" cy="0.5" r="0.4">
+      <stop offset="0" stop-color="#fff6d6" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#fff6d6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="h1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9b27a"/>
+      <stop offset="1" stop-color="#9d8a52"/>
+    </linearGradient>
+    <linearGradient id="h2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8fa05a"/>
+      <stop offset="1" stop-color="#5f7a3a"/>
+    </linearGradient>
+    <linearGradient id="h3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f7a3a"/>
+      <stop offset="1" stop-color="#274a2c"/>
+    </linearGradient>
+    <linearGradient id="h4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f5a35"/>
+      <stop offset="1" stop-color="#173320"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1200" fill="url(#sky)"/>
+  <rect width="1920" height="1200" fill="url(#sun)"/>
+  <path d="M0 640 C300 560 520 600 820 570 C1120 540 1400 610 1920 560 L1920 1200 L0 1200 Z" fill="url(#h1)" opacity="0.85"/>
+  <path d="M0 720 C280 650 560 700 860 670 C1180 640 1500 720 1920 650 L1920 1200 L0 1200 Z" fill="url(#h2)"/>
+  <path d="M0 810 C320 740 600 800 940 770 C1260 740 1560 820 1920 760 L1920 1200 L0 1200 Z" fill="url(#h3)"/>
+  <path d="M0 930 C340 870 680 930 1000 900 C1320 870 1620 940 1920 890 L1920 1200 L0 1200 Z" fill="url(#h4)"/>
+  <g fill="none" stroke="#e9f3c4" stroke-opacity="0.16" stroke-width="3">
+    <path d="M0 860 C340 800 600 860 940 830 C1260 800 1560 880 1920 820"/>
+    <path d="M0 900 C340 840 640 900 980 870 C1300 840 1600 910 1920 860"/>
+    <path d="M0 990 C340 930 700 990 1020 960 C1340 930 1640 1000 1920 950"/>
+  </g>
+</svg>

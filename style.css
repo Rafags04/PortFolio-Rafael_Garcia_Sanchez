@@ -3,7 +3,7 @@
    ========================================================================== */
 
 :root {
-  --wallpaper-url: url('./assets/wallpapers/big-sur.svg');
+  --wallpaper-url: url('./assets/wallpapers/sonoma.svg');
   --wallpaper-scrim: linear-gradient(180deg, rgba(6, 9, 20, 0.22), rgba(6, 9, 20, 0.36));
   --wallpaper:
     radial-gradient(ellipse 75% 60% at 15% 18%, rgba(88, 86, 214, 0.42), transparent 60%),
@@ -833,6 +833,7 @@ a:hover {
 .dock-ico-finder { background: linear-gradient(155deg, #38bdf8, #0284c7); }
 .dock-ico-sim { background: linear-gradient(155deg, #34d399, #059669); }
 .dock-ico-edu { background: linear-gradient(155deg, #fbbf24, #d97706); }
+.dock-ico-exp { background: linear-gradient(155deg, #fb923c, #c2410c); }
 .dock-ico-tech { background: linear-gradient(155deg, #6366f1, #0ea5e9); }
 .dock-ico-contact { background: linear-gradient(155deg, #a78bfa, #6d28d9); }
 .dock-ico-cv { background: linear-gradient(155deg, #fb7185, #e11d48); }
@@ -993,14 +994,14 @@ a:hover {
   }
 
   .mac-dock {
-    gap: 4px;
-    padding: 6px 8px;
+    gap: 3px;
+    padding: 6px 7px;
     border-radius: 16px;
   }
 
   .dock-icon {
-    width: 29px;
-    height: 29px;
+    width: 27px;
+    height: 27px;
     border-radius: 8px;
   }
 

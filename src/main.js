@@ -10,7 +10,8 @@
     'big-sur': 'wpBigSur',
     sequoia: 'wpSequoia',
     monterey: 'wpMonterey',
-    mojave: 'wpMojave'
+    mojave: 'wpMojave',
+    sonoma: 'wpSonoma'
   };
 
   const state = {
@@ -150,6 +151,7 @@
     const map = {
       about: s.appAboutName,
       projects: s.appProjectsName,
+      experience: s.appExpName,
       education: s.appEduName,
       tech: s.appTechName,
       contact: s.appContactName
@@ -180,6 +182,7 @@
     const defaults = {
       about: { width: 540, height: 390, x: Math.round(vw * 0.08), y: 74 },
       projects: { width: 860, height: 560, x: Math.max(24, vw - 900), y: 76 },
+      experience: { width: 560, height: 470, x: Math.round(vw * 0.1), y: 96 },
       education: { width: 620, height: 520, x: Math.round(vw * 0.14), y: 112 },
       tech: { width: 600, height: 530, x: Math.max(24, vw - 645), y: 108 },
       contact: { width: 410, height: 350, x: Math.round((vw - 410) / 2), y: 158 }
@@ -297,16 +300,18 @@
       const aboutW = Math.round((availW - gap) * 0.42);
       const projW = availW - aboutW - gap;
 
-      const eduW = Math.round((availW - gap * 2) * 0.4);
-      const ghW = Math.round((availW - gap * 2) * 0.34);
-      const contW = availW - eduW - ghW - gap * 2;
+      const expW = Math.round((availW - gap * 3) * 0.26);
+      const eduW = Math.round((availW - gap * 3) * 0.28);
+      const ghW = Math.round((availW - gap * 3) * 0.26);
+      const contW = availW - expW - eduW - ghW - gap * 3;
 
       const tiled = {
         about: { x: padX, y: topStart, width: aboutW, height: topH },
         projects: { x: padX + aboutW + gap, y: topStart, width: projW, height: topH },
-        education: { x: padX, y: topStart + topH + gap, width: eduW, height: botH },
-        tech: { x: padX + eduW + gap, y: topStart + topH + gap, width: ghW, height: botH },
-        contact: { x: padX + eduW + ghW + gap * 2, y: topStart + topH + gap, width: contW, height: botH }
+        experience: { x: padX, y: topStart + topH + gap, width: expW, height: botH },
+        education: { x: padX + expW + gap, y: topStart + topH + gap, width: eduW, height: botH },
+        tech: { x: padX + expW + eduW + gap * 2, y: topStart + topH + gap, width: ghW, height: botH },
+        contact: { x: padX + expW + eduW + ghW + gap * 3, y: topStart + topH + gap, width: contW, height: botH }
       };
 
       Object.entries(tiled).forEach(([id, geom]) => {
@@ -633,7 +638,7 @@
       });
     });
 
-    let initialWp = 'big-sur';
+    let initialWp = 'sonoma';
     try {
       const savedWp = localStorage.getItem('portfolio_wallpaper');
       if (savedWp && WALLPAPERS[savedWp]) initialWp = savedWp;
@@ -1058,6 +1063,12 @@
       org.textContent = item.organization;
 
       li.append(period, title, org);
+      if (item.summary) {
+        const sum = document.createElement('p');
+        sum.className = 'course-provider';
+        sum.textContent = item.summary;
+        li.appendChild(sum);
+      }
       list.appendChild(li);
     }
   }
@@ -1485,6 +1496,11 @@
           openOrFocusWindow('projects');
           setProjectWindowTab('simulator');
         }
+      },
+      {
+        id: 'exp',
+        label: s.spActExp,
+        run: () => openOrFocusWindow('experience')
       },
       {
         id: 'tech',
