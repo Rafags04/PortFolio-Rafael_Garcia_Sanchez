@@ -20,12 +20,20 @@
   const PROFILES = {
     es: {
       name: 'Rafael García Sánchez',
-      role: 'Estudiante de Ingeniería Informática',
+      role: 'Personal I+D en Grupo Alarcos · Estudiante de Ingeniería Informática',
       institution: 'Universidad de Castilla-La Mancha (UCLM)',
       avatar: './assets/profile-rafa.png',
       about:
-        'Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.',
+        'Personal de I+D en el Grupo de Investigación Alarcos (desde marzo de 2026) y estudiante del Grado en Ingeniería Informática en la UCLM. Motivado por aplicar sus conocimientos en entornos profesionales y de investigación tecnológica, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.',
       contact: SHARED_CONTACT,
+      experience: [
+        {
+          title: 'Personal I+D',
+          organization: 'Grupo de Investigación Alarcos · Universidad de Castilla-La Mancha (UCLM)',
+          period: 'Marzo 2026 - Actual',
+          highlight: true
+        }
+      ],
       featuredProjects: [
         {
           id: 'simulador-pda-permiso-b',
@@ -154,12 +162,20 @@
 
     en: {
       name: 'Rafael García Sánchez',
-      role: 'Computer Engineering Student',
+      role: 'R&D Staff at Alarcos Group · Computer Engineering Student',
       institution: 'University of Castilla-La Mancha (UCLM)',
       avatar: './assets/profile-rafa.png',
       about:
-        'Computer Engineering student seeking a first professional opportunity in the tech sector. Motivated to apply technical knowledge in a real-world engineering environment, eager to keep learning and growing while contributing commitment, responsibility, and strong teamwork.',
+        'R&D Staff member at the Alarcos Research Group (since March 2026) and Computer Engineering student at UCLM. Motivated to apply engineering knowledge across professional and technology research environments, eager to keep learning and growing while contributing commitment, responsibility, and strong teamwork.',
       contact: SHARED_CONTACT,
+      experience: [
+        {
+          title: 'R&D Staff (Personal I+D)',
+          organization: 'Alarcos Research Group · University of Castilla-La Mancha (UCLM)',
+          period: 'March 2026 - Present',
+          highlight: true
+        }
+      ],
       featuredProjects: [
         {
           id: 'simulador-pda-permiso-b',
@@ -310,12 +326,12 @@
       themeToDark: 'Modo Oscuro',
       winAboutTitle: 'Sobre mí — Rafael García',
       winProjectsTitle: 'Proyectos — Rafael García',
-      winEduTitle: 'Formación y Competencias',
+      winEduTitle: 'Experiencia y Formación',
       winGithubTitle: 'Monitor GitHub — @Rafags04',
       winContactTitle: 'Contactos — Rafael García',
       appAboutName: 'Sobre mí',
       appProjectsName: 'Proyectos',
-      appEduName: 'Formación',
+      appEduName: 'Trayectoria',
       appGithubName: 'Monitor GitHub',
       appContactName: 'Contactos',
       winClose: 'Cerrar ventana',
@@ -347,6 +363,7 @@
       githubSyncBtn: 'Actualizar',
       githubLangHeading: 'Lenguajes por bytes',
       githubReposHeading: 'Repositorios propios',
+      eduExperienceTitle: 'Experiencia Profesional',
       eduAcademicTitle: 'Formación Académica',
       eduCoursesTitle: 'Certificaciones',
       techSkillsHeading: 'Stack Técnico',
@@ -360,7 +377,7 @@
       copyBtn: 'Copiar',
       dockAbout: 'Sobre mí',
       dockProjects: 'Proyectos',
-      dockEdu: 'Formación',
+      dockEdu: 'Experiencia y Formación',
       dockGithub: 'Monitor GitHub',
       dockContact: 'Contactos',
       dockCv: 'Vista Previa CV',
@@ -391,6 +408,7 @@
       cvModalPrint: 'Imprimir / Guardar PDF',
       cvModalClose: 'Cerrar',
       cvSecAbout: 'Sobre mí',
+      cvSecExp: 'Experiencia Profesional',
       cvSecEdu: 'Formación Académica',
       cvSecProj: 'Proyectos Destacados',
       cvSecCourses: 'Certificaciones',
@@ -429,12 +447,12 @@
       themeToDark: 'Dark Mode',
       winAboutTitle: 'About This Dev — Rafael García',
       winProjectsTitle: 'Projects — Rafael García',
-      winEduTitle: 'Education & Skills',
+      winEduTitle: 'Experience & Education',
       winGithubTitle: 'GitHub Monitor — @Rafags04',
       winContactTitle: 'Contacts — Rafael García',
       appAboutName: 'About Me',
       appProjectsName: 'Projects',
-      appEduName: 'Education',
+      appEduName: 'Experience',
       appGithubName: 'GitHub Monitor',
       appContactName: 'Contacts',
       winClose: 'Close window',
@@ -466,6 +484,7 @@
       githubSyncBtn: 'Refresh',
       githubLangHeading: 'Languages by bytes',
       githubReposHeading: 'Own repositories',
+      eduExperienceTitle: 'Professional Experience',
       eduAcademicTitle: 'Academic Background',
       eduCoursesTitle: 'Certifications',
       techSkillsHeading: 'Technical Stack',
@@ -479,7 +498,7 @@
       copyBtn: 'Copy',
       dockAbout: 'About Me',
       dockProjects: 'Projects',
-      dockEdu: 'Education',
+      dockEdu: 'Experience & Education',
       dockGithub: 'GitHub Monitor',
       dockContact: 'Contacts',
       dockCv: 'CV Preview',
@@ -510,6 +529,7 @@
       cvModalPrint: 'Print / Save as PDF',
       cvModalClose: 'Close',
       cvSecAbout: 'About me',
+      cvSecExp: 'Professional Experience',
       cvSecEdu: 'Academic Background',
       cvSecProj: 'Featured Projects',
       cvSecCourses: 'Certifications',

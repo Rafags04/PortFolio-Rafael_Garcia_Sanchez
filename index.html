@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rafael García Sánchez | RafaOS — Portfolio macOS</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
 
   <!-- Scripts diferidos ordenados: funcionan en local (file://) y en GitHub Pages -->
@@ -92,7 +95,7 @@
           >
           <div>
             <h2 id="widget-name" class="widget-name">Rafael García Sánchez</h2>
-            <p id="widget-role" class="widget-role">Estudiante de Ingeniería Informática · UCLM</p>
+            <p id="widget-role" class="widget-role">Personal I+D en Grupo Alarcos · Estudiante de Ingeniería Informática</p>
           </div>
         </div>
         <p class="widget-hint" data-i18n="widgetHint">Haz clic en cualquier aplicación del Dock para abrirla · ⌘K Spotlight</p>
@@ -125,12 +128,12 @@
           </div>
           <div class="hero-id-text">
             <h1 id="hero-name" class="hero-title">Rafael García Sánchez</h1>
-            <p id="hero-role" class="hero-role">Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha (UCLM)</p>
+            <p id="hero-role" class="hero-role">Personal I+D en Grupo Alarcos · Estudiante de Ingeniería Informática · Universidad de Castilla-La Mancha (UCLM)</p>
           </div>
         </div>
 
         <p id="hero-about" class="hero-lead">
-          Estudiante de Ingeniería Informática en búsqueda de su primer empleo en el sector tecnológico. Motivado por aplicar sus conocimientos en un entorno profesional, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
+          Personal de I+D en el Grupo de Investigación Alarcos (desde marzo de 2026) y estudiante del Grado en Ingeniería Informática en la UCLM. Motivado por aplicar sus conocimientos en entornos profesionales y de investigación tecnológica, con interés en seguir aprendiendo y desarrollándose, aportando compromiso, responsabilidad y capacidad de trabajo en equipo.
         </p>
 
         <div class="hero-actions">
@@ -215,7 +218,7 @@
       <div class="mac-resize-handle" aria-hidden="true"></div>
     </section>
 
-    <!-- VENTANA 3: FORMACIÓN Y COMPETENCIAS (INICIALMENTE MINIMIZADA AL DOCK) -->
+    <!-- VENTANA 3: EXPERIENCIA, FORMACIÓN Y COMPETENCIAS (INICIALMENTE MINIMIZADA AL DOCK) -->
     <section id="win-education" class="mac-window" data-window="education" aria-labelledby="win-edu-title" hidden>
       <header class="mac-titlebar">
         <div class="traffic-lights">
@@ -223,11 +226,16 @@
           <button type="button" class="tl-btn tl-min" data-win-action="min" data-i18n-aria="winMinimize" aria-label="Minimizar al Dock"><span aria-hidden="true">–</span></button>
           <button type="button" class="tl-btn tl-zoom" data-win-action="zoom" data-i18n-aria="winZoom" aria-label="Ampliar / Restaurar ventana"><span aria-hidden="true">+</span></button>
         </div>
-        <h2 id="win-edu-title" class="mac-window-title" data-i18n="winEduTitle">Formación y Competencias</h2>
+        <h2 id="win-edu-title" class="mac-window-title" data-i18n="winEduTitle">Experiencia y Formación</h2>
         <span class="titlebar-spacer" aria-hidden="true"></span>
       </header>
 
       <div class="mac-window-body">
+        <div class="settings-section">
+          <h3 class="mac-section-label" data-i18n="eduExperienceTitle">Experiencia Profesional</h3>
+          <ol id="experience-list" class="mac-group-list"></ol>
+        </div>
+
         <div class="settings-section">
           <h3 class="mac-section-label" data-i18n="eduAcademicTitle">Formación Académica</h3>
           <ol id="academic-list" class="mac-group-list"></ol>
@@ -336,8 +344,8 @@
       <span class="dock-dot" aria-hidden="true"></span>
     </button>
 
-    <button type="button" class="dock-item" data-dock-target="education" data-i18n-aria="dockEdu" aria-label="Formación">
-      <span class="dock-tooltip" data-i18n="dockEdu">Formación</span>
+    <button type="button" class="dock-item" data-dock-target="education" data-i18n-aria="dockEdu" aria-label="Experiencia y Formación">
+      <span class="dock-tooltip" data-i18n="dockEdu">Experiencia y Formación</span>
       <span class="dock-icon dock-ico-edu" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/>

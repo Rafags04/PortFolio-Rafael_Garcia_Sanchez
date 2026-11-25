@@ -699,7 +699,7 @@
     if (nameEl) nameEl.textContent = profile.name;
     if (wName) wName.textContent = profile.name;
     if (roleEl) roleEl.textContent = `${profile.role} · ${profile.institution}`;
-    if (wRole) wRole.textContent = `${profile.role} · UCLM`;
+    if (wRole) wRole.textContent = profile.role;
     if (aboutEl) aboutEl.textContent = profile.about;
 
     if (downloadCvBtn) {
@@ -1055,6 +1055,32 @@
     });
   }
 
+  function renderExperience() {
+    const list = document.getElementById('experience-list');
+    if (!list) return;
+    list.textContent = '';
+
+    for (const item of P().experience || []) {
+      const li = document.createElement('li');
+      li.className = `settings-row ${item.highlight ? 'is-featured' : ''}`;
+
+      const period = document.createElement('span');
+      period.className = 'academic-period';
+      period.textContent = item.period;
+
+      const title = document.createElement('h4');
+      title.className = 'academic-title';
+      title.textContent = item.title;
+
+      const org = document.createElement('p');
+      org.className = 'academic-institution';
+      org.textContent = item.organization;
+
+      li.append(period, title, org);
+      list.appendChild(li);
+    }
+  }
+
   function renderAcademicEducation() {
     const list = document.getElementById('academic-list');
     if (!list) return;
@@ -1328,6 +1354,20 @@
     aboutP.textContent = profile.about;
     aboutSec.appendChild(aboutP);
 
+    if (Array.isArray(profile.experience) && profile.experience.length > 0) {
+      const expSec = addSection(s.cvSecExp);
+      for (const exp of profile.experience) {
+        const item = document.createElement('div');
+        item.className = 'cv-item';
+        const strong = document.createElement('strong');
+        strong.textContent = exp.title;
+        const p = document.createElement('p');
+        p.textContent = `${exp.organization} | ${exp.period}`;
+        item.append(strong, p);
+        expSec.appendChild(item);
+      }
+    }
+
     const eduSec = addSection(s.cvSecEdu);
     for (const edu of profile.academicEducation) {
       const item = document.createElement('div');
@@ -1589,6 +1629,7 @@
     renderHero();
     renderProjects();
     updateDgtSimulatorDisplay();
+    renderExperience();
     renderAcademicEducation();
     renderComplementaryCourses();
     renderCompetencies();

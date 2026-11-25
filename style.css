@@ -47,8 +47,9 @@
   --err-border: rgba(255, 69, 58, 0.48);
   --err-text: #fecaca;
 
-  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'SF Mono', ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'SF Mono', ui-monospace, 'Menlo', 'Monaco', 'Cascadia Mono', Consolas, monospace;
 
   --radius-win: 13px;
 }
@@ -110,6 +111,9 @@ html {
 
 body {
   font-family: var(--font-sans);
+  font-optical-sizing: auto;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'cv02' 1, 'cv03' 1, 'cv04' 1, 'cv11' 1;
+  letter-spacing: -0.011em;
   background-color: #0b1020;
   background-image: var(--wallpaper-scrim), var(--wallpaper-url), var(--wallpaper);
   background-size: cover;
@@ -117,10 +121,17 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.48;
   min-height: 100vh;
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, .widget-name, .hero-title {
+  font-family: var(--font-display);
+  letter-spacing: -0.022em;
 }
 
 body.modal-open {
@@ -189,7 +200,8 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 12.5px;
+  font-size: 13px;
+  letter-spacing: -0.008em;
   user-select: none;
 }
 
@@ -208,7 +220,7 @@ a:hover {
 }
 
 .menubar-app-name {
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text);
   white-space: nowrap;
 }
@@ -368,8 +380,8 @@ a:hover {
 }
 
 .widget-name {
-  font-size: 1.08rem;
-  font-weight: 750;
+  font-size: 1.06rem;
+  font-weight: 650;
   color: var(--text);
   line-height: 1.2;
 }
@@ -513,8 +525,9 @@ a:hover {
 }
 
 .mac-window-title {
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
+  letter-spacing: -0.008em;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -625,10 +638,10 @@ a:hover {
 }
 
 .hero-title {
-  font-size: clamp(1.3rem, 2.3vw, 1.75rem);
-  line-height: 1.15;
-  font-weight: 750;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.3rem, 2.3vw, 1.72rem);
+  line-height: 1.16;
+  font-weight: 680;
+  letter-spacing: -0.024em;
   color: var(--text);
 }
 
